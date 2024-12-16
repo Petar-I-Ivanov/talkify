@@ -1,0 +1,59 @@
+server:
+
+  servlet:
+    session:
+      persistent: true
+      cookie:
+        same-site: None
+        secure: true
+    encoding.charset: UTF-8
+
+  compression:
+    enabled: true
+    mime-types: text/html,text/plain,text/css,text/javascript,application/json
+    min-response-size: 1024
+
+  http2.enabled: true
+  forward-headers-strategy: native
+  error.include-stacktrace: never
+
+spring:
+  application:
+    name: talkify
+
+  transaction.default-timeout: 30
+
+  datasource.hikari.maximum-pool-size: 20
+
+  resources.cache.cachecontrol:
+    max-age: 365D
+    must-revalidate: true
+    cache-public: true
+
+  jackson:
+    default-property-inclusion: non_null
+
+  datasource:
+    url: jdbc:h2:file:./src/main/resources/db/talkify-db
+    user: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    open-in-view: true
+    show-sql: true
+    properties:
+      hibernate.ddl-auto: validate
+      hibernate.session.events.log.LOG_QUERIES_SLOWER_THAN_MS: 500
+      hibernate.orm.cache.use_query_cache: true
+      hibernate.orm.cache.use_second_level_cache: true
+      hibernate.orm.cache.region.factory_class: org.hibernate.cache.jcache.internal.JCacheRegionFactory
+      hibernate.jdbc.batch_size: 1000
+      hibernate.id.db_structure_naming_strategy: single
+
+  h2.console:
+    enabled: true
+    path: /h2-console
+
+  flyway:
+    enabled: true

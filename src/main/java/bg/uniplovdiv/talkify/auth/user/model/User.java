@@ -8,6 +8,7 @@ import bg.uniplovdiv.talkify.auth.permission.model.PermissionValues;
 import bg.uniplovdiv.talkify.auth.role.model.Role;
 import bg.uniplovdiv.talkify.auth.role.model.RoleName;
 import bg.uniplovdiv.talkify.common.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -30,10 +31,13 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = PRIVATE)
 public class User extends BaseEntity {
 
+  @Column(length = 64, nullable = false, unique = true)
   String username;
 
+  @Column(length = 150, nullable = false, unique = true)
   String email;
 
+  @Column(length = 150, nullable = false)
   String password;
 
   @Builder.Default

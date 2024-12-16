@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.permission.model.Permission;
 import bg.uniplovdiv.talkify.common.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
@@ -27,6 +28,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = PRIVATE)
 public class Role extends BaseEntity {
 
+  @Column(length = 100, nullable = false, unique = true)
   @Enumerated(STRING)
   RoleName name;
 

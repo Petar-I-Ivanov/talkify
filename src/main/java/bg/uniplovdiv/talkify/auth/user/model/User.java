@@ -7,7 +7,6 @@ import static org.apache.commons.collections4.SetUtils.union;
 
 import bg.uniplovdiv.talkify.auth.permission.model.ChannelPermissions;
 import bg.uniplovdiv.talkify.auth.permission.model.Permission;
-import bg.uniplovdiv.talkify.auth.permission.model.PermissionValues;
 import bg.uniplovdiv.talkify.auth.role.model.Role;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.common.entity.BaseEntity;
@@ -73,7 +72,6 @@ public class User extends BaseEntity {
         .map(Role::getPermissions)
         .flatMap(Set::stream)
         .map(Permission::getValue)
-        .map(PermissionValues::getValue)
         .collect(toSet());
   }
 

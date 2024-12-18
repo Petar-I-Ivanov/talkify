@@ -2,18 +2,14 @@ package bg.uniplovdiv.talkify.auth.permission.model;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
+import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@FieldDefaults(level = PRIVATE)
-public enum PermissionValues {
-  USER_SEARCH("user:search"),
-  USER_CREATE("user:create"),
-  CHANNEL_CREATE("channel:create"),
-  CHANNEL_SEARCH("channel:search");
+@NoArgsConstructor(access = PRIVATE)
+public class PermissionValues {
 
-  String value;
+  public static final String USER_CREATE = "user:create";
+  public static final String USER_SEARCH = "user:search";
+
+  public static final String CHANNEL_CREATE = "channel:create";
+  public static final String CHANNEL_SEARCH = "channel:search";
 }

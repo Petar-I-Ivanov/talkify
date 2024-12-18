@@ -11,6 +11,7 @@ import bg.uniplovdiv.talkify.auth.user.model.UserRepository;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
 import jakarta.transaction.Transactional;
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -46,16 +47,15 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(user);
   }
 
-  // should return optional? add check for active = true
   @Override
-  public User getByUsernameOrEmail(String usernameOrEmail) {
-    return userRepository.findByUsernameOrEmail(usernameOrEmail).orElseThrow();
+  public Optional<User> getByUsernameOrEmail(String usernameOrEmail) {
+    return userRepository.findByUsernameOrEmailAndActiveTrue(usernameOrEmail);
   }
 
   // remove hard-coded string with username from SpringSecurity context
   @Override
   public User getCurrentUser() {
-    return userRepository.findByUsernameOrEmail("test").orElse(null);
+    return getByUsernameOrEmail("test").orElse(null);
   }
 
   @Override

@@ -2,6 +2,7 @@ package bg.uniplovdiv.talkify.auth.role.model;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.permission.model.Permission;
@@ -33,6 +34,6 @@ public class Role extends BaseEntity {
   RoleName name;
 
   @Builder.Default
-  @OneToMany(mappedBy = "role", cascade = ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "role", orphanRemoval = true, cascade = ALL, fetch = LAZY)
   Set<Permission> permissions = new LinkedHashSet<>();
 }

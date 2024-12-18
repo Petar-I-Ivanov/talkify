@@ -52,6 +52,12 @@ public class UserServiceImpl implements UserService {
     return userRepository.findByUsernameOrEmail(usernameOrEmail).orElseThrow();
   }
 
+  // remove hard-coded string with username from SpringSecurity context
+  @Override
+  public User getCurrentUser() {
+    return userRepository.findByUsernameOrEmail("test").orElse(null);
+  }
+
   @Override
   public User getById(Long id) {
     return userRepository.getReferenceById(id);

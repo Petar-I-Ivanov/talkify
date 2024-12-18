@@ -1,5 +1,6 @@
 package bg.uniplovdiv.talkify.auth.permission.model;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.role.model.Role;
@@ -27,7 +28,7 @@ public class Permission extends BaseEntity {
   @Column(length = 255, nullable = false, unique = true)
   PermissionValues value;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY, optional = false)
   @JoinColumn(name = "role_id", nullable = false)
   Role role;
 }

@@ -11,6 +11,8 @@ public interface UserService {
 
   User createUser(UserCreateRequest request);
 
+  User getCurrentUser();
+
   User getById(Long id);
 
   User getByUsernameOrEmail(String usernameOrEmail);

@@ -31,7 +31,7 @@ public class Role extends BaseEntity {
 
   @Column(length = 100, nullable = false, unique = true)
   @Enumerated(STRING)
-  RoleName name;
+  String name;
 
   @Builder.Default
   @OneToMany(mappedBy = "role", orphanRemoval = true, cascade = ALL, fetch = LAZY)

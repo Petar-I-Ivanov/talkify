@@ -1,6 +1,6 @@
 package bg.uniplovdiv.talkify.auth.user.service;
 
-import static bg.uniplovdiv.talkify.auth.role.model.RoleName.USER;
+import static bg.uniplovdiv.talkify.auth.role.model.RoleNames.USER;
 import static bg.uniplovdiv.talkify.auth.user.model.UserPredicates.buildPredicates;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchPrincipal;
 import static lombok.AccessLevel.PRIVATE;

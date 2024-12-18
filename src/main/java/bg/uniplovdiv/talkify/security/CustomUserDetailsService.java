@@ -3,6 +3,7 @@ package bg.uniplovdiv.talkify.security;
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
+import bg.uniplovdiv.talkify.auth.role.model.Role;
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CustomUserDetailsService implements UserDetailsService {
@@ -36,6 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         .email(user.getEmail())
         .password(user.getPassword())
         .enabled(user.isActive())
+        .roles(user.getRoles().stream().map(Role::getName).toList())
         .authorities(
             user.getAllPermissions().stream().map(SimpleGrantedAuthority::new).collect(toSet()))
         .build();

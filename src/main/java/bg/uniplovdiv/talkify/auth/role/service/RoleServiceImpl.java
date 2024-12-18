@@ -3,7 +3,6 @@ package bg.uniplovdiv.talkify.auth.role.service;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.role.model.Role;
-import bg.uniplovdiv.talkify.auth.role.model.RoleName;
 import bg.uniplovdiv.talkify.auth.role.model.RoleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class RoleServiceImpl implements RoleService {
   RoleRepository roleRepository;
 
   @Override
-  public Role getRoleByName(RoleName name) {
+  public Role getRoleByName(String name) {
     return roleRepository.findByName(name);
   }
 }

@@ -11,16 +11,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.userdetails.User;
 
 @NoArgsConstructor(access = PRIVATE)
 public class SecurityUtils {
 
   public static final String fetchPrincipal() {
-    return getAuthenticatedAuthentication()
-        .map(Authentication::getPrincipal)
-        .map(SecurityUtils::resolvePrincipal)
-        .orElse("anonymous");
+    return getAuthenticatedAuthentication().map(Authentication::getName).orElse("anonymous");
   }
 
   public static final boolean isAuthenticated() {
@@ -45,23 +41,22 @@ public class SecurityUtils {
                     : permission.matches(auth.replace("*", ".*")));
   }
 
+  public static final boolean hasRole(String role) {
+    return getAuthenticatedAuthentication()
+        .map(Authentication::getPrincipal)
+        .filter(CustomUserDetails.class::isInstance)
+        .map(CustomUserDetails.class::cast)
+        .map(CustomUserDetails::getRoles)
+        .stream()
+        .flatMap(Collection::stream)
+        .anyMatch(role::equals);
+  }
+
   private static final Optional<Authentication> getAuthentication() {
     return Optional.ofNullable(getContext()).map(SecurityContext::getAuthentication);
   }
 
   private static final Optional<Authentication> getAuthenticatedAuthentication() {
     return getAuthentication().filter(Authentication::isAuthenticated);
-  }
-
-  private static final String resolvePrincipal(Object principal) {
-    if (principal instanceof CustomUserDetails details) {
-      return details.getUsername();
-    }
-
-    if (principal instanceof User user) {
-      return user.getUsername();
-    }
-
-    return principal.toString();
   }
 }

@@ -9,7 +9,6 @@ import bg.uniplovdiv.talkify.auth.permission.model.ChannelPermissions;
 import bg.uniplovdiv.talkify.auth.permission.model.Permission;
 import bg.uniplovdiv.talkify.auth.permission.model.PermissionValues;
 import bg.uniplovdiv.talkify.auth.role.model.Role;
-import bg.uniplovdiv.talkify.auth.role.model.RoleName;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.common.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -64,10 +63,6 @@ public class User extends BaseEntity {
   @Builder.Default
   @ManyToMany(mappedBy = "guests", fetch = LAZY)
   Set<Channel> guestChannels = new LinkedHashSet<>();
-
-  public boolean hasRole(RoleName role) {
-    return roles.stream().map(Role::getName).anyMatch(role::equals);
-  }
 
   public Set<String> getAllPermissions() {
     return union(getRolePermissions(), getChannelPermissions());

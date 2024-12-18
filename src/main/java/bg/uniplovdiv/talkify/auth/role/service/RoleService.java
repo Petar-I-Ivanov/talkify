@@ -4,5 +4,5 @@ import bg.uniplovdiv.talkify.auth.role.model.Role;
 
 public interface RoleService {
 
-  Role getRoleByName(String name);
+  Role getByName(String name);
 }

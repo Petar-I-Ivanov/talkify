@@ -1,7 +1,6 @@
 package bg.uniplovdiv.talkify.auth.role.model;
 
 import static jakarta.persistence.CascadeType.ALL;
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -9,7 +8,6 @@ import bg.uniplovdiv.talkify.auth.permission.model.Permission;
 import bg.uniplovdiv.talkify.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -30,7 +28,6 @@ import lombok.experimental.FieldDefaults;
 public class Role extends BaseEntity {
 
   @Column(length = 100, nullable = false, unique = true)
-  @Enumerated(STRING)
   String name;
 
   @Builder.Default

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 import lombok.NoArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -21,6 +22,11 @@ public class SecurityUtils {
 
   public static final boolean isAuthenticated() {
     return getAuthenticatedAuthentication().isPresent();
+  }
+
+  public static final boolean isPermitted(Long channelId, String channelPermission) {
+    var permission = channelId + ":" + channelPermission;
+    return isPermitted(permission);
   }
 
   public static final boolean isPermitted(String permission) {
@@ -50,6 +56,12 @@ public class SecurityUtils {
         .stream()
         .flatMap(Collection::stream)
         .anyMatch(role::equals);
+  }
+
+  public static final void throwIfNotAllowed(boolean isAllowed) {
+    if (!isAllowed) {
+      throw new AccessDeniedException("User is not allowed to execute the operation!");
+    }
   }
 
   private static final Optional<Authentication> getAuthentication() {

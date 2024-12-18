@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChannelRepository
-    extends JpaRepository<Channel, Long>, QuerydslPredicateExecutor<Channel> {}
+    extends JpaRepository<Channel, Long>, QuerydslPredicateExecutor<Channel> {
+
+  boolean existsByNameAndIdNot(String name, Long id);
+
+  boolean existsByName(String name);
+}

@@ -1,5 +1,7 @@
 package bg.uniplovdiv.talkify.auth.user.service;
 
+import bg.uniplovdiv.talkify.auth.user.model.UniqueEmailRequest;
+import bg.uniplovdiv.talkify.auth.user.model.UniqueUsernameRequest;
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.model.UserCreateRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
@@ -10,7 +12,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-  User createUser(UserCreateRequest request);
+  boolean canCreate();
+
+  User create(UserCreateRequest request);
+
+  boolean isUsernameExists(UniqueUsernameRequest request);
+
+  boolean isEmailExists(UniqueEmailRequest request);
 
   User getCurrentUser();
 
@@ -18,9 +26,13 @@ public interface UserService {
 
   Optional<User> getByUsernameOrEmail(String usernameOrEmail);
 
-  Page<User> getUsersByCriteria(UserSearchCriteria criteria, Pageable page);
+  Page<User> getAllByCriteria(UserSearchCriteria criteria, Pageable page);
 
-  User updateUser(Long id, UserUpdateRequest request);
+  boolean canUpdate(User user);
 
-  void deleteUser(Long id);
+  User update(Long id, UserUpdateRequest request);
+
+  boolean canDelete(User user);
+
+  void delete(Long id);
 }

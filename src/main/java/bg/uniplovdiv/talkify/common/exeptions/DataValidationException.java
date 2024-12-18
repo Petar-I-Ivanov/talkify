@@ -14,4 +14,11 @@ public class DataValidationException extends RuntimeException {
   private static final long serialVersionUID = -4730484141342973914L;
 
   String message;
+
+  // move from here
+  public static final void throwIfCondition(boolean isCondition, String message) {
+    if (isCondition) {
+      throw new DataValidationException(message);
+    }
+  }
 }

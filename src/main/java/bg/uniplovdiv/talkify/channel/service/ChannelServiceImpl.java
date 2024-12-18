@@ -63,7 +63,7 @@ public class ChannelServiceImpl implements ChannelService {
   }
 
   @Override
-  public Page<Channel> getChannelsByCriteria(ChannelSearchCriteria criteria, Pageable page) {
+  public Page<Channel> getAllByCriteria(ChannelSearchCriteria criteria, Pageable page) {
     return channelRepository.findAll(buildPredicates(criteria), page);
   }
 

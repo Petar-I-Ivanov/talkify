@@ -46,6 +46,20 @@ public class UserPredicates {
 
     predicate =
         Optional.ofNullable(criteria)
+            .map(UserSearchCriteria::inChannelId)
+            .map(
+                channelId ->
+                    user.adminChannels
+                        .any()
+                        .id
+                        .eq(channelId)
+                        .or(user.adminChannels.any().id.eq(channelId))
+                        .or(user.guestChannels.any().id.eq(channelId)))
+            .map(predicate::and)
+            .orElse(predicate);
+
+    predicate =
+        Optional.ofNullable(criteria)
             .map(UserSearchCriteria::active)
             .map(user.active::eq)
             .map(predicate::and)

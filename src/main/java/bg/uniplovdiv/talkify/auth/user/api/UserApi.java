@@ -26,6 +26,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,14 +67,14 @@ public class UserApi {
   @UserGet
   @GetMapping("/{id}")
   @ResponseStatus(OK)
-  public UserModel getById(Long id) {
+  public UserModel getById(@PathVariable Long id) {
     return userModelAssembler.toModel(userService.getById(id));
   }
 
   @Authenticated
   @GetMapping("/current")
   @ResponseStatus(OK)
-  public UserModel getCurrent(Long id) {
+  public UserModel getCurrent() {
     return userModelAssembler.toModel(userService.getCurrentUser());
   }
 
@@ -87,14 +88,14 @@ public class UserApi {
   @UserUpdate
   @PutMapping("/{id}")
   @ResponseStatus(OK)
-  public UserModel update(Long id, UserUpdateRequest request) {
+  public UserModel update(@PathVariable Long id, UserUpdateRequest request) {
     return userModelAssembler.toModel(userService.update(id, request));
   }
 
   @UserDelete
   @DeleteMapping("/{id}")
   @ResponseStatus(NO_CONTENT)
-  public ResponseEntity<Void> delete(Long id) {
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
     userService.delete(id);
     return ResponseEntity.status(NO_CONTENT.value()).build();
   }

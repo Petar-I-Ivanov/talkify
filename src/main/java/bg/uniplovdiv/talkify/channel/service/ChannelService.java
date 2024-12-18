@@ -17,7 +17,7 @@ public interface ChannelService {
 
   Channel getById(Long id);
 
-  Page<Channel> getChannelsByCriteria(ChannelSearchCriteria criteria, Pageable page);
+  Page<Channel> getAllByCriteria(ChannelSearchCriteria criteria, Pageable page);
 
   boolean canUpdate(Channel channel);
 

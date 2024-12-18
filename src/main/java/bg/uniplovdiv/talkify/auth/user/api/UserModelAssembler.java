@@ -17,7 +17,7 @@ public class UserModelAssembler extends PagedRepresentationAssembler<User, UserM
   UserService userService;
 
   public UserModelAssembler(UserService userService) {
-    super(UserModel.class, UserModel.class);
+    super(UserApi.class, UserModel.class);
     this.userService = userService;
   }
 

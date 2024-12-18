@@ -2,6 +2,7 @@ package bg.uniplovdiv.talkify.auth.user.service;
 
 import static bg.uniplovdiv.talkify.auth.role.model.RoleName.USER;
 import static bg.uniplovdiv.talkify.auth.user.model.UserPredicates.buildPredicates;
+import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchPrincipal;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.role.service.RoleService;
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
   // remove hard-coded string with username from SpringSecurity context
   @Override
   public User getCurrentUser() {
-    return getByUsernameOrEmail("test").orElse(null);
+    return getByUsernameOrEmail(fetchPrincipal()).orElse(null);
   }
 
   @Override

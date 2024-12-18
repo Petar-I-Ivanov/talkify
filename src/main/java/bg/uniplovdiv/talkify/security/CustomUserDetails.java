@@ -4,7 +4,6 @@ import static lombok.AccessLevel.PRIVATE;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;

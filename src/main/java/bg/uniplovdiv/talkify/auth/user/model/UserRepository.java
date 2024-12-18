@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredicateExecutor<User> {
 
-  Optional<User> findByUsernameOrEmailAndActiveTrue(String usernameOrEmail);
+  Optional<User> findByUsernameOrEmail(String usernameOrEmail);
 
   boolean existsByUsernameAndIdNot(String username, Long id);
 

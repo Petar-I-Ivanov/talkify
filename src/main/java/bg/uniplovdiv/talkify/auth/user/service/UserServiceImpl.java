@@ -1,6 +1,8 @@
 package bg.uniplovdiv.talkify.auth.user.service;
 
 import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.USER_CREATE;
+import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.USER_DELETE;
+import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.USER_UPDATE;
 import static bg.uniplovdiv.talkify.auth.role.model.RoleNames.USER;
 import static bg.uniplovdiv.talkify.auth.user.model.UserPredicates.buildPredicates;
 import static bg.uniplovdiv.talkify.common.exeptions.DataValidationException.throwIfCondition;
@@ -85,12 +87,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Optional<User> getByUsernameOrEmail(String usernameOrEmail) {
-    return userRepository.findByUsernameOrEmailAndActiveTrue(usernameOrEmail);
+    return userRepository.findByUsernameOrEmail(usernameOrEmail);
   }
 
   @Override
   public User getCurrentUser() {
-    return getByUsernameOrEmail(fetchPrincipal()).orElse(null);
+    return getByUsernameOrEmail(fetchPrincipal()).filter(User::isActive).orElse(null);
   }
 
   @Override
@@ -105,7 +107,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean canUpdate(User user) {
-    return user.getUsername().equals(fetchPrincipal());
+    return isPermitted(USER_UPDATE) && user.getUsername().equals(fetchPrincipal());
   }
 
   @Override
@@ -123,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean canDelete(User user) {
-    return user.getUsername().equals(fetchPrincipal());
+    return isPermitted(USER_DELETE) && user.getUsername().equals(fetchPrincipal());
   }
 
   @Override

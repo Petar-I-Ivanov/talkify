@@ -1,6 +1,6 @@
 package bg.uniplovdiv.talkify.security.annotations.permissions.channel;
 
-import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.CHANNEL_SEARCH;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_SEARCH;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -10,5 +10,5 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Target(METHOD)
 @Retention(RUNTIME)
-@PreAuthorize("@accessService.hasPermission('" + CHANNEL_SEARCH + "')")
+@PreAuthorize("@accessService.hasAllPermissions('" + CHANNEL_SEARCH + "')")
 public @interface ChannelSearch {}

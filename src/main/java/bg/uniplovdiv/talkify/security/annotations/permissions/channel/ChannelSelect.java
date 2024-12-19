@@ -1,6 +1,6 @@
-package bg.uniplovdiv.talkify.security.annotations.roles;
+package bg.uniplovdiv.talkify.security.annotations.permissions.channel;
 
-import static bg.uniplovdiv.talkify.auth.role.model.RoleNames.CHANNEL_OWNER;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_SELECT;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -10,5 +10,5 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Target(METHOD)
 @Retention(RUNTIME)
-@PreAuthorize("@accessService.hasRole('" + CHANNEL_OWNER + "')")
-public @interface ChannelOwnerRole {}
+@PreAuthorize("@accessService.hasAllPermissions('" + CHANNEL_SELECT + "')")
+public @interface ChannelSelect {}

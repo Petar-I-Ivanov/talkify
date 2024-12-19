@@ -1,6 +1,6 @@
 package bg.uniplovdiv.talkify.security.annotations.permissions.user;
 
-import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.USER_GET;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_SELECT;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -10,5 +10,5 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Target(METHOD)
 @Retention(RUNTIME)
-@PreAuthorize("@accessService.hasPermission('" + USER_GET + "')")
-public @interface UserGet {}
+@PreAuthorize("@accessService.hasAllPermissions('" + USER_SELECT + "')")
+public @interface UserSelect {}

@@ -5,11 +5,11 @@ import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.collections4.SetUtils.union;
 
-import bg.uniplovdiv.talkify.auth.permission.model.ChannelPermissions;
 import bg.uniplovdiv.talkify.auth.permission.model.Permission;
 import bg.uniplovdiv.talkify.auth.role.model.Role;
 import bg.uniplovdiv.talkify.channel.model.Channel;
-import bg.uniplovdiv.talkify.common.entity.BaseEntity;
+import bg.uniplovdiv.talkify.common.models.BaseEntity;
+import bg.uniplovdiv.talkify.utils.constants.ChannelPermissions;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

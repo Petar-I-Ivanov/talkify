@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             () -> new UsernameNotFoundException("User not found with username:" + username));
   }
 
-  private static final UserDetails userToUserDetails(User user) {
+  private static UserDetails userToUserDetails(User user) {
     return CustomUserDetails.builder()
         .id(user.getId())
         .username(user.getUsername())

@@ -5,18 +5,17 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
-import bg.uniplovdiv.talkify.auth.user.model.UniqueEmailRequest;
-import bg.uniplovdiv.talkify.auth.user.model.UniqueUsernameRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserCreateRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
+import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
 import bg.uniplovdiv.talkify.security.annotations.PublicAccess;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserCreate;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserDelete;
-import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserGet;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserSearch;
+import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserSelect;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserUpdate;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,18 +52,18 @@ public class UserApi {
   @PublicAccess
   @GetMapping("/exists/username")
   @ResponseStatus(OK)
-  public boolean existsByName(UniqueUsernameRequest request) {
+  public boolean existsByName(UniqueValueRequest request) {
     return userService.isUsernameExists(request);
   }
 
   @PublicAccess
   @GetMapping("/exists/email")
   @ResponseStatus(OK)
-  public boolean existsByEmail(UniqueEmailRequest request) {
+  public boolean existsByEmail(UniqueValueRequest request) {
     return userService.isEmailExists(request);
   }
 
-  @UserGet
+  @UserSelect
   @GetMapping("/{id}")
   @ResponseStatus(OK)
   public UserModel getById(@PathVariable Long id) {

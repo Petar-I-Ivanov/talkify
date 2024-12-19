@@ -1,24 +1,22 @@
 package bg.uniplovdiv.talkify.auth.user.service;
 
-import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.USER_CREATE;
-import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.USER_DELETE;
-import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.USER_UPDATE;
-import static bg.uniplovdiv.talkify.auth.role.model.RoleNames.USER;
 import static bg.uniplovdiv.talkify.auth.user.model.UserPredicates.buildPredicates;
-import static bg.uniplovdiv.talkify.common.exeptions.DataValidationException.throwIfCondition;
+import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwIfCondition;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchPrincipal;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_CREATE;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_DELETE;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_UPDATE;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.role.service.RoleService;
-import bg.uniplovdiv.talkify.auth.user.model.UniqueEmailRequest;
-import bg.uniplovdiv.talkify.auth.user.model.UniqueUsernameRequest;
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.model.UserCreateRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserRepository;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
+import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
@@ -50,14 +48,13 @@ public class UserServiceImpl implements UserService {
     throwIfNotAllowed(canCreate());
 
     throwIfCondition(
-        isUsernameExists(new UniqueUsernameRequest(request.username(), null)),
-        "Username is taken.");
+        isUsernameExists(new UniqueValueRequest(request.username(), null)), "Username is taken.");
     throwIfCondition(
-        isEmailExists(new UniqueEmailRequest(request.email(), null)), "Email is taken.");
+        isEmailExists(new UniqueValueRequest(request.email(), null)), "Email is taken.");
     throwIfCondition(
         !request.password().matches(request.confirmPassword()), "Passwords doesn't match.");
 
-    var userRole = roleService.getByName(USER);
+    var userRole = roleService.getUserRole();
     var encodedPass = passwordEncoder.encode(request.password());
     var user =
         User.builder()
@@ -66,23 +63,24 @@ public class UserServiceImpl implements UserService {
             .password(encodedPass)
             .roles(Set.of(userRole))
             .build();
+    user.setActive(true);
     return userRepository.save(user);
   }
 
   @Override
-  public boolean isUsernameExists(UniqueUsernameRequest request) {
+  public boolean isUsernameExists(UniqueValueRequest request) {
     return Optional.ofNullable(request)
-        .map(UniqueUsernameRequest::exceptId)
-        .map(exceptId -> userRepository.existsByUsernameAndIdNot(request.username(), exceptId))
-        .orElseGet(() -> userRepository.existsByUsername(request.username()));
+        .map(UniqueValueRequest::exceptId)
+        .map(exceptId -> userRepository.existsByUsernameAndIdNot(request.value(), exceptId))
+        .orElseGet(() -> userRepository.existsByUsername(request.value()));
   }
 
   @Override
-  public boolean isEmailExists(UniqueEmailRequest request) {
+  public boolean isEmailExists(UniqueValueRequest request) {
     return Optional.ofNullable(request)
-        .map(UniqueEmailRequest::exceptId)
-        .map(exceptId -> userRepository.existsByEmailAndIdNot(request.email(), exceptId))
-        .orElseGet(() -> userRepository.existsByEmail(request.email()));
+        .map(UniqueValueRequest::exceptId)
+        .map(exceptId -> userRepository.existsByEmailAndIdNot(request.value(), exceptId))
+        .orElseGet(() -> userRepository.existsByEmail(request.value()));
   }
 
   @Override
@@ -116,8 +114,8 @@ public class UserServiceImpl implements UserService {
     throwIfNotAllowed(canUpdate(user));
 
     throwIfCondition(
-        isUsernameExists(new UniqueUsernameRequest(request.username(), id)), "Username is taken.");
-    throwIfCondition(isEmailExists(new UniqueEmailRequest(request.email(), id)), "Email is taken.");
+        isUsernameExists(new UniqueValueRequest(request.username(), id)), "Username is taken.");
+    throwIfCondition(isEmailExists(new UniqueValueRequest(request.email(), id)), "Email is taken.");
 
     user = user.toBuilder().username(request.username()).email(request.email()).build();
     return userRepository.save(user);

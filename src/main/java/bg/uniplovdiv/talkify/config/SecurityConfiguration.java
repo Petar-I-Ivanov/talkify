@@ -20,7 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfiguration {
 
-  private static final String APIS = "/api/**";
+  private static String APIS = "/api/**";
 
   @Order(1)
   @Bean

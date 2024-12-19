@@ -3,7 +3,7 @@ package bg.uniplovdiv.talkify.channel.service;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
-import bg.uniplovdiv.talkify.channel.model.UniqueNameRequest;
+import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,7 +13,7 @@ public interface ChannelService {
 
   Channel create(ChannelCreateUpdateRequest request);
 
-  boolean isNameExists(UniqueNameRequest request);
+  boolean isNameExists(UniqueValueRequest request);
 
   Channel getById(Long id);
 

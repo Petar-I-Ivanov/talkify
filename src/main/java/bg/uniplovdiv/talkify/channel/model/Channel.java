@@ -4,7 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.user.model.User;
-import bg.uniplovdiv.talkify.common.entity.BaseEntity;
+import bg.uniplovdiv.talkify.common.models.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

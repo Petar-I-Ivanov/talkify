@@ -1,12 +1,12 @@
 package bg.uniplovdiv.talkify.channel.service;
 
-import static bg.uniplovdiv.talkify.auth.permission.model.ChannelPermissions.CHANGE_NAME;
-import static bg.uniplovdiv.talkify.auth.permission.model.ChannelPermissions.DELETE_CHANNEL;
-import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.CHANNEL_CREATE;
 import static bg.uniplovdiv.talkify.channel.model.ChannelPredicates.buildPredicates;
-import static bg.uniplovdiv.talkify.common.exeptions.DataValidationException.throwIfCondition;
+import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwIfCondition;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
+import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.CHANGE_NAME;
+import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.DELETE_CHANNEL;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_CREATE;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
@@ -14,7 +14,7 @@ import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelRepository;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
-import bg.uniplovdiv.talkify.channel.model.UniqueNameRequest;
+import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class ChannelServiceImpl implements ChannelService {
   @Override
   public Channel create(ChannelCreateUpdateRequest request) {
     throwIfNotAllowed(canCreate());
-    throwIfCondition(isNameExists(new UniqueNameRequest(request.name(), null)), "Name is taken.");
+    throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), null)), "Name is taken.");
 
     var channel = new Channel();
     channel.setName(request.name());
@@ -50,11 +50,11 @@ public class ChannelServiceImpl implements ChannelService {
   }
 
   @Override
-  public boolean isNameExists(UniqueNameRequest request) {
+  public boolean isNameExists(UniqueValueRequest request) {
     return Optional.ofNullable(request)
-        .map(UniqueNameRequest::exceptId)
-        .map(exceptId -> channelRepository.existsByNameAndIdNot(request.name(), exceptId))
-        .orElseGet(() -> channelRepository.existsByName(request.name()));
+        .map(UniqueValueRequest::exceptId)
+        .map(exceptId -> channelRepository.existsByNameAndIdNot(request.value(), exceptId))
+        .orElseGet(() -> channelRepository.existsByName(request.value()));
   }
 
   @Override
@@ -77,7 +77,7 @@ public class ChannelServiceImpl implements ChannelService {
     var channel = getById(id);
     throwIfNotAllowed(canUpdate(channel));
 
-    throwIfCondition(isNameExists(new UniqueNameRequest(request.name(), id)), "Name is taken.");
+    throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), id)), "Name is taken.");
 
     channel.setName(request.name());
     return channelRepository.save(channel);

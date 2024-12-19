@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public class ChannelPredicates {
 
-  private static final QChannel channel = QChannel.channel;
+  private static QChannel channel = QChannel.channel;
 
   public static final Predicate buildPredicates(ChannelSearchCriteria criteria) {
     var predicate = new BooleanBuilder();

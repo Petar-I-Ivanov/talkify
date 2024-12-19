@@ -64,11 +64,11 @@ public class SecurityUtils {
     }
   }
 
-  private static final Optional<Authentication> getAuthentication() {
+  private static Optional<Authentication> getAuthentication() {
     return Optional.ofNullable(getContext()).map(SecurityContext::getAuthentication);
   }
 
-  private static final Optional<Authentication> getAuthenticatedAuthentication() {
+  private static Optional<Authentication> getAuthenticatedAuthentication() {
     return getAuthentication().filter(Authentication::isAuthenticated);
   }
 }

@@ -1,6 +1,6 @@
 package bg.uniplovdiv.talkify.auth.user.model;
 
-import static bg.uniplovdiv.talkify.utils.Constants.PASSWORD_PTRN;
+import static bg.uniplovdiv.talkify.utils.constants.Regex.PASSWORD_PTRN;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

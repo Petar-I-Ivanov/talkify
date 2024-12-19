@@ -1,11 +1,12 @@
-package bg.uniplovdiv.talkify.auth.role.model;
+package bg.uniplovdiv.talkify.utils.constants;
 
 import static lombok.AccessLevel.PRIVATE;
 
 import lombok.NoArgsConstructor;
 
+// have to be manually synchronized with database names
 @NoArgsConstructor(access = PRIVATE)
-public class RoleNames {
+public class Roles {
 
   public static final String USER = "USER";
   public static final String CHANNEL_OWNER = "CHANNEL_OWNER";

@@ -1,6 +1,6 @@
 package bg.uniplovdiv.talkify.security.annotations.permissions.channel;
 
-import static bg.uniplovdiv.talkify.auth.permission.model.PermissionValues.CHANNEL_UPDATE;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_UPDATE;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -10,5 +10,5 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Target(METHOD)
 @Retention(RUNTIME)
-@PreAuthorize("@accessService.hasPermission('" + CHANNEL_UPDATE + "')")
+@PreAuthorize("@accessService.hasAllPermissions('" + CHANNEL_UPDATE + "')")
 public @interface ChannelUpdate {}

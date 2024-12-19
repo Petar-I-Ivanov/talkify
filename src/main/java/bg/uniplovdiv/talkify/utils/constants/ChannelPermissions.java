@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.auth.permission.model;
+package bg.uniplovdiv.talkify.utils.constants;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -33,19 +33,19 @@ public class ChannelPermissions {
     return buildChannelPermissions(channel, guestPermissions);
   }
 
-  private static final String getJoinedGuestPermissions() {
+  private static String getJoinedGuestPermissions() {
     return SEND_MESSAGE;
   }
 
-  private static final String getJoinedAdminPermissions() {
+  private static String getJoinedAdminPermissions() {
     return String.join(",", getJoinedGuestPermissions(), CHANGE_NAME, ADD_GUEST);
   }
 
-  private static final String getJoinedOwnerPermissions() {
+  private static String getJoinedOwnerPermissions() {
     return ALL;
   }
 
-  private static final String buildChannelPermissions(Channel channel, String joinedPermissions) {
+  private static String buildChannelPermissions(Channel channel, String joinedPermissions) {
     return Optional.ofNullable(channel)
         .map(Channel::getId)
         .map(String::valueOf)

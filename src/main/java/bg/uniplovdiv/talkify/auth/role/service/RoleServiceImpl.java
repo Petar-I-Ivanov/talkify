@@ -1,5 +1,6 @@
 package bg.uniplovdiv.talkify.auth.role.service;
 
+import static bg.uniplovdiv.talkify.utils.constants.Roles.USER;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.role.model.Role;
@@ -20,5 +21,10 @@ public class RoleServiceImpl implements RoleService {
   @Override
   public Role getByName(String name) {
     return roleRepository.findByName(name);
+  }
+
+  @Override
+  public Role getUserRole() {
+    return getByName(USER);
   }
 }

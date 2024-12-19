@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public class UserPredicates {
 
-  private static final QUser user = QUser.user;
+  private static QUser user = QUser.user;
 
   public static final Predicate buildPredicates(UserSearchCriteria criteria) {
     var predicate = new BooleanBuilder();

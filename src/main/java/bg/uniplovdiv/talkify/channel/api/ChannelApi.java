@@ -8,10 +8,12 @@ import static org.springframework.http.HttpStatus.OK;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
+import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelCreate;
+import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelCreateOrUpdate;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelDelete;
-import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelGet;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelSearch;
+import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelSelect;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelUpdate;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +47,14 @@ public class ChannelApi {
     return channelModelAssembler.toModel(channelService.create(request));
   }
 
-  @ChannelGet
+  @ChannelCreateOrUpdate
+  @GetMapping("/exists/name")
+  @ResponseStatus(OK)
+  public boolean existsByName(UniqueValueRequest request) {
+    return channelService.isNameExists(request);
+  }
+
+  @ChannelSelect
   @GetMapping("/{id}")
   @ResponseStatus(OK)
   public ChannelModel getById(@PathVariable Long id) {

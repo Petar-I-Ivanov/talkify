@@ -5,7 +5,6 @@ import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwI
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchPrincipal;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
-import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_CREATE;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_DELETE;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_UPDATE;
 import static lombok.AccessLevel.PRIVATE;
@@ -40,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean canCreate() {
-    return isPermitted(USER_CREATE);
+    return true;
   }
 
   @Override

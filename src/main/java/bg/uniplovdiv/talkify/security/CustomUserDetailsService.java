@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 import bg.uniplovdiv.talkify.auth.role.model.Role;
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class CustomUserDetailsService implements UserDetailsService {

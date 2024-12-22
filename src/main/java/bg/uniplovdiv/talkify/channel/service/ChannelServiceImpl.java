@@ -9,6 +9,7 @@ import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.DELETE_CH
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_CREATE;
 import static lombok.AccessLevel.PRIVATE;
 
+import bg.uniplovdiv.talkify.auth.role.service.RoleService;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
@@ -31,6 +32,7 @@ public class ChannelServiceImpl implements ChannelService {
 
   ChannelRepository channelRepository;
   UserService userService;
+  RoleService roleService;
 
   @Override
   public boolean canCreate() {
@@ -42,10 +44,13 @@ public class ChannelServiceImpl implements ChannelService {
     throwIfNotAllowed(canCreate());
     throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), null)), "Name is taken.");
 
+    var owner = userService.getCurrentUser();
+    owner.getRoles().add(roleService.getChannelAdminRole());
+
     var channel = new Channel();
     channel.setName(request.name());
     channel.setActive(true);
-    channel.setOwner(userService.getCurrentUser());
+    channel.setOwner(owner);
     return channelRepository.save(channel);
   }
 

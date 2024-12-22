@@ -7,4 +7,10 @@ public interface RoleService {
   Role getByName(String name);
 
   Role getUserRole();
+
+  Role getChannelOwenrRole();
+
+  Role getChannelAdminRole();
+
+  Role getChannelGuestRole();
 }

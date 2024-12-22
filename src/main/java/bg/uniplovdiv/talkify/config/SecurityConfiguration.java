@@ -43,19 +43,18 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain htmlFilterChain(
       HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
-    return http.csrf(csfr -> csfr.ignoringRequestMatchers("/login", "/logout"))
+    return http.csrf(csfr -> csfr.ignoringRequestMatchers("/login", "/logout", "/h2-console/**"))
+        .cors(CorsConfigurer::disable)
         .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
         .requestCache(Customizer.withDefaults())
-        .cors(CorsConfigurer::disable)
-        .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/**").disable())
-        .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
         .authorizeHttpRequests(
             requests ->
                 requests
                     .dispatcherTypeMatchers(FORWARD)
                     .permitAll()
                     .requestMatchers(
-                        "/**",
+                        "/",
+                        "/error",
                         "/sign-in",
                         "/sign-up",
                         "/login",

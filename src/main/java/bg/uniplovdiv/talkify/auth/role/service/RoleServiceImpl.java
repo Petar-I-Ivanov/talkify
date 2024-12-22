@@ -1,6 +1,6 @@
 package bg.uniplovdiv.talkify.auth.role.service;
 
-import static bg.uniplovdiv.talkify.utils.constants.Roles.USER;
+import static bg.uniplovdiv.talkify.utils.constants.Roles.*;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.role.model.Role;
@@ -26,5 +26,20 @@ public class RoleServiceImpl implements RoleService {
   @Override
   public Role getUserRole() {
     return getByName(USER);
+  }
+
+  @Override
+  public Role getChannelOwenrRole() {
+    return getByName(CHANNEL_OWNER);
+  }
+
+  @Override
+  public Role getChannelAdminRole() {
+    return getByName(CHANNEL_ADMIN);
+  }
+
+  @Override
+  public Role getChannelGuestRole() {
+    return getByName(CHANNEL_GUEST);
   }
 }

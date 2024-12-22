@@ -2,7 +2,7 @@ SET @user_r = nextval('hibernate_sequence');
 SET @owner_r = nextval('hibernate_sequence');
 SET @admin_r = nextval('hibernate_sequence');
 
-INSERT INTO `role` VALUES
+INSERT INTO `roles` VALUES
     (@user_r, true, 'USER'),
     (@owner_r, true, 'CHANNEL_OWNER'),
     (@admin_r, true, 'CHANNEL_ADMIN'),
@@ -19,6 +19,7 @@ VALUES
     (nextval('hibernate_sequence'), true, 'channel:select', @user_r),
     (nextval('hibernate_sequence'), true, 'channel:search', @user_r),
     (nextval('hibernate_sequence'), true, 'channel:update', @admin_r),
+    (nextval('hibernate_sequence'), true, 'channel:update', @owner_r),
     (nextval('hibernate_sequence'), true, 'channel:delete', @owner_r);
 
 -- password is Pe123456

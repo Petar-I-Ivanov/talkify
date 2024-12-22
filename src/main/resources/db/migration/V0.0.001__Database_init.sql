@@ -1,6 +1,6 @@
 CREATE SEQUENCE `hibernate_sequence` START WITH 1 INCREMENT BY 1;
 
-CREATE TABLE `role` (
+CREATE TABLE `roles` (
     `id` BIGINT PRIMARY KEY,
     `active` BOOLEAN NOT NULL,
     `name` VARCHAR(100) NOT NULL UNIQUE
@@ -9,9 +9,10 @@ CREATE TABLE `role` (
 CREATE TABLE `permission` (
     `id` BIGINT PRIMARY KEY,
     `active` BOOLEAN NOT NULL,
-    `value` VARCHAR(255) NOT NULL UNIQUE,
+    `name` VARCHAR(255) NOT NULL,
     `role_id` BIGINT NOT NULL,
-    FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE
+    CONSTRAINT `unique_value_role` UNIQUE (`name`, `role_id`),
+    FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `users` (
@@ -27,5 +28,5 @@ CREATE TABLE `user_role` (
     `role_id` BIGINT NOT NULL,
     PRIMARY KEY (`user_id`, `role_id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE
+    FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 );

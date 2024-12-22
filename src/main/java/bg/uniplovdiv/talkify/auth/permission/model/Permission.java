@@ -21,8 +21,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = PRIVATE)
 public class Permission extends BaseEntity {
 
-  @Column(length = 255, nullable = false, unique = true)
-  String value;
+  @Column(length = 255, nullable = false)
+  String name;
 
   @ManyToOne(fetch = LAZY, optional = false)
   @JoinColumn(name = "role_id", nullable = false)

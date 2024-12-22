@@ -9,6 +9,7 @@ import bg.uniplovdiv.talkify.common.models.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Table(name = "roles")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

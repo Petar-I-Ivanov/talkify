@@ -16,6 +16,10 @@ import org.springframework.security.core.context.SecurityContext;
 @NoArgsConstructor(access = PRIVATE)
 public class SecurityUtils {
 
+  public static final Long fetchUserId() {
+    return getCustomerUserDetails().map(CustomUserDetails::getId).orElse(null);
+  }
+
   public static final String fetchPrincipal() {
     return getAuthenticatedAuthentication().map(Authentication::getName).orElse("anonymous");
   }
@@ -48,12 +52,7 @@ public class SecurityUtils {
   }
 
   public static final boolean hasRole(String role) {
-    return getAuthenticatedAuthentication()
-        .map(Authentication::getPrincipal)
-        .filter(CustomUserDetails.class::isInstance)
-        .map(CustomUserDetails.class::cast)
-        .map(CustomUserDetails::getRoles)
-        .stream()
+    return getCustomerUserDetails().map(CustomUserDetails::getRoles).stream()
         .flatMap(Collection::stream)
         .anyMatch(role::equals);
   }
@@ -70,5 +69,12 @@ public class SecurityUtils {
 
   private static Optional<Authentication> getAuthenticatedAuthentication() {
     return getAuthentication().filter(Authentication::isAuthenticated);
+  }
+
+  private static Optional<CustomUserDetails> getCustomerUserDetails() {
+    return getAuthenticatedAuthentication()
+        .map(Authentication::getPrincipal)
+        .filter(CustomUserDetails.class::isInstance)
+        .map(CustomUserDetails.class::cast);
   }
 }

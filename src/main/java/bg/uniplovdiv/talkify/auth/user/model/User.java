@@ -71,8 +71,10 @@ public class User extends BaseEntity {
 
   private Set<String> getRolePermissions() {
     return roles.stream()
+        .filter(Role::isActive)
         .map(Role::getPermissions)
         .flatMap(Set::stream)
+        .filter(Permission::isActive)
         .map(Permission::getName)
         .collect(toSet());
   }

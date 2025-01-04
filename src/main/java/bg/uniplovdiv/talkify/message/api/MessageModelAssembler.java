@@ -1,9 +1,12 @@
 package bg.uniplovdiv.talkify.message.api;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.hateoas.server.core.DummyInvocationUtils.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import bg.uniplovdiv.talkify.common.PagedRepresentationAssembler;
 import bg.uniplovdiv.talkify.message.model.Message;
+import bg.uniplovdiv.talkify.message.service.MessageService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +14,11 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class MessageModelAssembler extends PagedRepresentationAssembler<Message, MessageModel> {
 
-  public MessageModelAssembler() {
-    super(Message.class, MessageModel.class);
+  MessageService messageService;
+
+  public MessageModelAssembler(MessageService messageService) {
+    super(MessageApi.class, MessageModel.class);
+    this.messageService = messageService;
   }
 
   @Override
@@ -23,6 +29,13 @@ public class MessageModelAssembler extends PagedRepresentationAssembler<Message,
         .sentAt(message.getSentAt())
         .editedAt(message.getEditedAt())
         .isCurrentUserSender(message.isCurrentUserSender())
-        .build();
+        .build()
+        .addIf(
+            messageService.canUpdate(message),
+            () ->
+                linkTo(methodOn(MessageApi.class).update(message.getId(), null)).withRel("update"))
+        .addIf(
+            messageService.canDelete(message),
+            () -> linkTo(methodOn(MessageApi.class).delete(message.getId())).withRel("delete"));
   }
 }

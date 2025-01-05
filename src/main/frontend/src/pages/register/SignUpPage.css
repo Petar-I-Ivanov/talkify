@@ -1,0 +1,24 @@
+.RegisterPage-Container {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > div {
+    width: 25rem;
+  }
+}
+
+.RegisterForm {
+  & > * {
+    margin-bottom: 1rem;
+  }
+
+  & > .RegisterForm-Header > div > button {
+    text-decoration: none;
+  }
+}

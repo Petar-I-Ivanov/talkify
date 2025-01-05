@@ -1,20 +1,8 @@
 import { SWRConfig } from "swr";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import fetcher from "./services/apis/fetcher";
-import SignInPage from "./pages/login-register/SignInPage";
-import SignUpPage from "./pages/login-register/SignUpPage";
+import { Outlet } from "react-router";
 
 const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/sign-in" element={<SignInPage />} />
-      <Route path="/sign-up" element={<SignUpPage />} />
-      <Route path="/" element={<Root />}></Route>
-    </Routes>
-  </BrowserRouter>
-);
-
-const Root = () => (
   <AppConfig>
     <Outlet />
   </AppConfig>

@@ -7,11 +7,25 @@ import User from "../../models/user/User";
 import UserCreateRequest from "../../models/user/UserCreateRequest";
 import UserSearchCriteria from "../../models/user/UserSearchCriteria";
 import UserUpdateRequest from "../../models/user/UserUpdateRequest";
+import UserLogin from "../../models/user/UserLogin";
 
 const baseUrl = "/api/v1/users";
 
 const reloadUsers = async (mutate: MatchMutate) =>
   await mutate(new RegExp(baseUrl));
+
+export const login = async (request: UserLogin) =>
+  await fetcher.post("/login", {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ ...request }),
+  });
+
+export const logout = async () =>
+  await fetcher
+    .get("/logout")
+    .then((response) => window.location.replace(response.url));
 
 export const createUser = async (
   request: UserCreateRequest,

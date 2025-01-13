@@ -37,7 +37,7 @@ const fetcherInternal = async (url: string, options: RequestInit = {}) => {
     }
   }
 
-  if (response.status === 400) {
+  if (response.status === 400 || response.status === 403) {
     const error: ApiError = await response.json();
     throw new ApiException(error);
   }

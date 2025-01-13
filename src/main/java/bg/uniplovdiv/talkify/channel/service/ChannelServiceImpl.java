@@ -45,7 +45,7 @@ public class ChannelServiceImpl implements ChannelService {
     throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), null)), "Name is taken.");
 
     var owner = userService.getCurrentUser();
-    owner.getRoles().add(roleService.getChannelAdminRole());
+    owner.getRoles().add(roleService.getChannelOwenrRole());
 
     var channel = new Channel();
     channel.setName(request.name());

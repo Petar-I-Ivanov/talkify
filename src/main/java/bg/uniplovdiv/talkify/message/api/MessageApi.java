@@ -44,7 +44,8 @@ public class MessageApi {
   @Authenticated
   @GetMapping
   @ResponseStatus(OK)
-  public PagedModel<MessageModel> getAllByCriteria(MessageSearchCriteria criteria, Pageable page) {
+  public PagedModel<MessageModel> getAllByCriteria(
+      @Valid MessageSearchCriteria criteria, Pageable page) {
     return messageModelAssembler.toPagedModel(messageService.getByCriteria(criteria, page));
   }
 

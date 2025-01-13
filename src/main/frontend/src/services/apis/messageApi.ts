@@ -5,6 +5,8 @@ import MatchMutate from "../../models/common/MatchMutate";
 import MessageCreateUpdateRequest from "../../models/messages/MessageCreateUpdateRequest";
 import Message from "../../models/messages/Message";
 import MessageSearchCriteria from "../../models/messages/MessageSearchCriteria";
+import useSWRInfinite from "swr/infinite";
+import laggy from "../utils/laggy";
 
 const baseUrl = "/api/v1/messages";
 
@@ -29,8 +31,22 @@ export const getMessagesByCriteria = async (
 ): Promise<PagedModel<Message>> =>
   await fetcher.get(stringifyUrl(baseUrl, criteria));
 
-export const useMessagesByCriteria = (criteria: MessageSearchCriteria) => {
-  const { data, error, isLoading } = useSWR(stringifyUrl(baseUrl, criteria));
+export const useMessagesForInfiniteScrolling = (
+  criteria?: MessageSearchCriteria
+) =>
+  useSWRInfinite<PagedModel<Message>>(
+    (page, previousPageData) =>
+      previousPageData && !previousPageData._embedded
+        ? null
+        : stringifyUrl(baseUrl, { ...criteria, page }),
+    fetcher.get,
+    { use: [laggy] }
+  );
+
+export const useMessagesByCriteria = (criteria?: MessageSearchCriteria) => {
+  const { data, error, isLoading } = useSWR(
+    criteria && stringifyUrl(baseUrl, criteria)
+  );
   return {
     data: (data?._embedded?.messages ?? []) as EntityModel<Message>[],
     error,

@@ -1,0 +1,11 @@
+.rce-mlist {
+  display: flex !important;
+  flex-direction: column-reverse;
+  margin-bottom: 1rem;
+}
+
+.rce-input {
+  background-color: whitesmoke;
+  border: 1px solid black !important;
+  color: black !important;
+}

@@ -39,6 +39,7 @@ public class MessageServiceImpl implements MessageService {
             .sentAt(LocalDateTime.now())
             .channel(channelService.getById(request.channelId()))
             .build();
+    message.setActive(true);
     return messageRepository.save(message);
   }
 
@@ -49,6 +50,10 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public Page<Message> getByCriteria(MessageSearchCriteria criteria, Pageable page) {
+    if (criteria.channelId() != null) {
+      throwIfNotAllowed(isPermitted(criteria.channelId(), SEND_MESSAGE));
+    }
+
     return messageRepository.findAllByChannelId(criteria.channelId(), page);
   }
 

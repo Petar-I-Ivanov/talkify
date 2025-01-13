@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router";
 import router from "./router.ts";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-chat-elements/dist/main.css";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(

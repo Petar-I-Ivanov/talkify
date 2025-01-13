@@ -1,3 +1,5 @@
 package bg.uniplovdiv.talkify.message.model;
 
-public record MessageSearchCriteria(Long channelId) {}
+import jakarta.validation.constraints.NotNull;
+
+public record MessageSearchCriteria(@NotNull Long channelId) {}

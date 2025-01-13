@@ -29,8 +29,12 @@ const SignInPage = () => {
           onSubmit={handleSubmit(
             async (data) =>
               await login(data).then((response) => {
-                console.log(response);
-                setError(response?.url?.includes("/sign-in?error=true"));
+                if (!response?.includes("/sign-in?error=true")) {
+                  window.location.replace(response);
+                  return;
+                }
+
+                setError(true);
               })
           )}
         >

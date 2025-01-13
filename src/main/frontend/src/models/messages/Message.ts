@@ -5,7 +5,7 @@ interface Message extends HateoasModel {
   text?: string;
   sentAt: Date;
   editedAt?: Date;
-  isCurrentUserSender: boolean;
+  currentUserSender: boolean;
 }
 
 export default Message;

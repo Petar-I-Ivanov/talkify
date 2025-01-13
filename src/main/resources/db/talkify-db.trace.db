@@ -1,0 +1,6 @@
+2025-01-13 22:09:06.090691+02:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (USER_ROLE: ""ROLE_ID"" BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."USER_ROLE"("USER_ID","ROLE_ID")VALUES(?,?) [22018-232]
+2025-01-13 22:09:06.094318+02:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (USER_ROLE: ""ROLE_ID"" BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."USER_ROLE"("USER_ID","ROLE_ID")VALUES(?,?) [22018-232]

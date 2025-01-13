@@ -2,6 +2,7 @@ package bg.uniplovdiv.talkify.config;
 
 import static jakarta.servlet.DispatcherType.FORWARD;
 import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +13,14 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -31,6 +35,7 @@ public class SecurityConfiguration {
   public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
     return http.securityMatcher(APIS)
         .requestCache(Customizer.withDefaults())
+        .csrf(CsrfConfigurer::disable)
         .authorizeHttpRequests(
             requests ->
                 requests
@@ -55,7 +60,6 @@ public class SecurityConfiguration {
                     .dispatcherTypeMatchers(FORWARD)
                     .permitAll()
                     .requestMatchers(
-                        "/",
                         "/error",
                         "/sign-in",
                         "/sign-up",
@@ -81,8 +85,8 @@ public class SecurityConfiguration {
                 formLogin
                     .loginPage("/sign-in")
                     .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/", true)
-                    .failureUrl("/sign-in?error=true"))
+                    .successHandler(onSuccess("/"))
+                    .failureHandler(onFailure("/sign-in?error=true")))
         .authenticationProvider(authenticationProvider)
         .build();
   }
@@ -106,6 +110,22 @@ public class SecurityConfiguration {
       new AntPathRequestMatcher("/api/v1/users", POST.name()),
       new AntPathRequestMatcher("/api/v1/users/exists/username", GET.name()),
       new AntPathRequestMatcher("/api/v1/users/exists/email", GET.name())
+    };
+  }
+
+  private static AuthenticationSuccessHandler onSuccess(String redirectUrl) {
+    return (request, response, authentication) -> {
+      response.setContentType(APPLICATION_JSON_VALUE);
+      response.getWriter().write("\"" + redirectUrl + "\"");
+      response.getWriter().flush();
+    };
+  }
+
+  private static AuthenticationFailureHandler onFailure(String redirectUrl) {
+    return (request, response, exception) -> {
+      response.setContentType(APPLICATION_JSON_VALUE);
+      response.getWriter().write("\"" + redirectUrl + "\"");
+      response.getWriter().flush();
     };
   }
 }

@@ -1,5 +1,7 @@
 import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import { EntityModel, PagedModel } from "hateoas-hal-types";
+import laggy from "../utils/laggy";
 import fetcher, { stringifyUrl } from "./fetcher";
 import MatchMutate from "../../models/common/MatchMutate";
 import UniqueValueRequest from "../../models/common/UniqueValueRequest";
@@ -34,6 +36,18 @@ export const getChannelsByCriteria = async (
   criteria: ChannelSearchCriteria
 ): Promise<PagedModel<Channel>> =>
   await fetcher.get(stringifyUrl(baseUrl, criteria));
+
+export const useChannelsForInfiniteScrolling = (
+  criteria: ChannelSearchCriteria
+) =>
+  useSWRInfinite<PagedModel<Channel>>(
+    (page, previousPageData) =>
+      previousPageData && !previousPageData._embedded
+        ? null
+        : stringifyUrl(baseUrl, { ...criteria, page }),
+    fetcher.get,
+    { use: [laggy] }
+  );
 
 export const useChannelsByCriteria = (criteria: ChannelSearchCriteria) => {
   const { data, error, isLoading } = useSWR(stringifyUrl(baseUrl, criteria));

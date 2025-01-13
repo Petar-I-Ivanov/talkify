@@ -40,15 +40,15 @@ public class Channel extends BaseEntity {
   @ManyToMany(fetch = LAZY)
   @JoinTable(
       name = "channel_admin",
-      joinColumns = @JoinColumn(name = "admin_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "channel_id", referencedColumnName = "id"))
+      joinColumns = @JoinColumn(name = "channel_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "admin_id", referencedColumnName = "id"))
   Set<User> admins = new LinkedHashSet<>();
 
   @Builder.Default
   @ManyToMany(fetch = LAZY)
   @JoinTable(
       name = "channel_guest",
-      joinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "channel_id", referencedColumnName = "id"))
+      joinColumns = @JoinColumn(name = "channel_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"))
   Set<User> guests = new LinkedHashSet<>();
 }

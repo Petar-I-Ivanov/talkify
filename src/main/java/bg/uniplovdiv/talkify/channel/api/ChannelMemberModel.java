@@ -1,8 +1,7 @@
-package bg.uniplovdiv.talkify.message.api;
+package bg.uniplovdiv.talkify.channel.api;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -11,14 +10,11 @@ import org.springframework.hateoas.server.core.Relation;
 
 @Getter
 @Builder
-@Relation(collectionRelation = "messages")
+@Relation(collectionRelation = "channelMembers")
 @FieldDefaults(level = PRIVATE)
-public class MessageModel extends RepresentationModel<MessageModel> {
+public class ChannelMemberModel extends RepresentationModel<ChannelMemberModel> {
 
   Long id;
-  String text;
-  String sender;
-  LocalDateTime sentAt;
-  LocalDateTime editedAt;
-  boolean isCurrentUserSender;
+  String username;
+  ChannelMemberRole role;
 }

@@ -31,7 +31,7 @@ const ChatPreview = () => {
           id: message.id,
           position: message.currentUserSender ? "right" : "left",
           text: message.text ?? "",
-          title: "",
+          title: message.sender,
           focus: false,
           date: message.sentAt,
           titleColor: "black",

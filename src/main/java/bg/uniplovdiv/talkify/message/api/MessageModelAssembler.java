@@ -26,6 +26,7 @@ public class MessageModelAssembler extends PagedRepresentationAssembler<Message,
     return MessageModel.builder()
         .id(message.getId())
         .text(message.isActive() ? message.getText() : null)
+        .sender(message.getSender().getUsername())
         .sentAt(message.getSentAt())
         .editedAt(message.getEditedAt())
         .isCurrentUserSender(message.isCurrentUserSender())

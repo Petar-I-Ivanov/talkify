@@ -4,8 +4,11 @@ import static bg.uniplovdiv.talkify.channel.model.ChannelPredicates.buildPredica
 import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwIfCondition;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
+import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.ADD_GUEST;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.CHANGE_NAME;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.DELETE_CHANNEL;
+import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.MAKE_ADMIN;
+import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.REMOVE_GUEST;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_CREATE;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -70,6 +73,21 @@ public class ChannelServiceImpl implements ChannelService {
   @Override
   public Page<Channel> getAllByCriteria(ChannelSearchCriteria criteria, Pageable page) {
     return channelRepository.findAll(buildPredicates(criteria), page);
+  }
+
+  @Override
+  public boolean canAddMember(Channel channel) {
+    return isPermitted(channel.getId(), ADD_GUEST);
+  }
+
+  @Override
+  public boolean canRemoveMember(Channel channel) {
+    return isPermitted(channel.getId(), REMOVE_GUEST);
+  }
+
+  @Override
+  public boolean canMakeChannelAdmin(Channel channel) {
+    return isPermitted(channel.getId(), MAKE_ADMIN);
   }
 
   @Override

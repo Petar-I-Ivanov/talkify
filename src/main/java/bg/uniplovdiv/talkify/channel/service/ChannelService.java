@@ -19,6 +19,12 @@ public interface ChannelService {
 
   Page<Channel> getAllByCriteria(ChannelSearchCriteria criteria, Pageable page);
 
+  boolean canAddMember(Channel channel);
+
+  boolean canRemoveMember(Channel channel);
+
+  boolean canMakeChannelAdmin(Channel channel);
+
   boolean canUpdate(Channel channel);
 
   Channel update(Long id, ChannelCreateUpdateRequest request);

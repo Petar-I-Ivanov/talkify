@@ -12,5 +12,5 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @Target(METHOD)
 @Retention(RUNTIME)
 @PreAuthorize(
-    "@accessService.hasAnyPermissions({'" + CHANNEL_CREATE + "','" + CHANNEL_UPDATE + "})")
+    "@accessService.hasAnyPermissions({'" + CHANNEL_CREATE + "','" + CHANNEL_UPDATE + "'})")
 public @interface ChannelCreateOrUpdate {}

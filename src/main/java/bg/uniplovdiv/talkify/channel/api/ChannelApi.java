@@ -16,6 +16,7 @@ import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelSea
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelSelect;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelUpdate;
 import jakarta.validation.Valid;
+import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +53,13 @@ public class ChannelApi {
   @ResponseStatus(OK)
   public boolean existsByName(UniqueValueRequest request) {
     return channelService.isNameExists(request);
+  }
+
+  @ChannelSelect
+  @GetMapping("/{id}/members")
+  @ResponseStatus(OK)
+  public Collection<ChannelMemberModel> getChannelMembers(@PathVariable Long id) {
+    return channelModelAssembler.toChannelMembers(channelService.getById(id));
   }
 
   @ChannelSelect

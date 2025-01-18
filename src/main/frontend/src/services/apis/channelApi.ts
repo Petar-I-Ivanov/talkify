@@ -8,6 +8,7 @@ import UniqueValueRequest from "../../models/common/UniqueValueRequest";
 import Channel from "../../models/channel/Channel";
 import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
 import ChannelSearchCriteria from "../../models/channel/ChannelSearchCriteria";
+import ChannelMember from "../../models/channel/ChannelMember";
 
 const baseUrl = "/api/v1/channels";
 
@@ -28,6 +29,9 @@ export const getChannelsExistsByName = async (
   request: UniqueValueRequest
 ): Promise<boolean> =>
   await fetcher.get(stringifyUrl(`${baseUrl}/exists/name`, request));
+
+export const useChannelMembers = (id: number) =>
+  useSWR<ChannelMember[]>(`${baseUrl}/${id}/members`);
 
 export const getChannelById = async (id: number): Promise<Channel> =>
   await fetcher.get(`${baseUrl}/${id}`);

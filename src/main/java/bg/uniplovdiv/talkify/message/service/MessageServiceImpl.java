@@ -35,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
     var message =
         Message.builder()
             .text(request.text())
-            .senderId(userService.getCurrentUser().getId())
+            .sender(userService.getCurrentUser())
             .sentAt(LocalDateTime.now())
             .channel(channelService.getById(request.channelId()))
             .build();

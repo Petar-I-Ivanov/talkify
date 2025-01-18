@@ -49,7 +49,7 @@ public class UserPredicates {
             .map(UserSearchCriteria::inChannelId)
             .map(
                 channelId ->
-                    user.adminChannels
+                    user.ownedChannels
                         .any()
                         .id
                         .eq(channelId)

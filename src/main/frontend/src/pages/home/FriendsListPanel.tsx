@@ -19,7 +19,7 @@ const FriendsListPanel = () => {
 
   return (
     <>
-      <h4>Friends list</h4>
+      <h4>Users list</h4>
       <Form.Control
         className="mb-2"
         {...register("search")}
@@ -29,7 +29,7 @@ const FriendsListPanel = () => {
       <div style={{ height: "70%", overflow: "auto", scrollbarWidth: "thin" }}>
         <InfiniteScroll
           swr={users}
-          emptyIndicator={<p>No friends to show</p>}
+          emptyIndicator={<p>No users to show</p>}
           isAll={(swr, page) =>
             (swr?.data?.[swr?.data?.length - 1]?.page.totalPages ?? 0) <= page
           }

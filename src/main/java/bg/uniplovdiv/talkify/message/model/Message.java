@@ -4,6 +4,7 @@ import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 
+import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.common.models.BaseEntity;
 import jakarta.persistence.Column;
@@ -30,8 +31,9 @@ public class Message extends BaseEntity {
   @Column(nullable = false, columnDefinition = "TEXT")
   String text;
 
-  @Column(nullable = false)
-  Long senderId;
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "sender_id", nullable = false)
+  User sender;
 
   @Column(nullable = false)
   LocalDateTime sentAt;
@@ -43,6 +45,6 @@ public class Message extends BaseEntity {
   Channel channel;
 
   public boolean isCurrentUserSender() {
-    return senderId.equals(fetchUserId());
+    return sender.getId().equals(fetchUserId());
   }
 }

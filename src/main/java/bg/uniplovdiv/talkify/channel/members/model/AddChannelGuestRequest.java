@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.channel.model;
+package bg.uniplovdiv.talkify.channel.members.model;
 
 import jakarta.validation.constraints.NotNull;
 

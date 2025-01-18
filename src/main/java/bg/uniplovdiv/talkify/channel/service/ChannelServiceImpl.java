@@ -16,7 +16,7 @@ import static lombok.AccessLevel.PRIVATE;
 import bg.uniplovdiv.talkify.auth.role.service.RoleService;
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
-import bg.uniplovdiv.talkify.channel.model.AddChannelGuestRequest;
+import bg.uniplovdiv.talkify.channel.members.model.AddChannelGuestRequest;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelRepository;

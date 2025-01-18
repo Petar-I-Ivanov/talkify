@@ -1,7 +1,7 @@
 package bg.uniplovdiv.talkify.channel.service;
 
 import bg.uniplovdiv.talkify.auth.user.model.User;
-import bg.uniplovdiv.talkify.channel.model.AddChannelGuestRequest;
+import bg.uniplovdiv.talkify.channel.members.model.AddChannelGuestRequest;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;

@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.channel.api;
+package bg.uniplovdiv.talkify.channel.members.api;
 
 public enum ChannelMemberRole {
   GUEST,

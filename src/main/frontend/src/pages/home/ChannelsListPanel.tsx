@@ -13,20 +13,22 @@ import {
 } from "../../services/utils/reactHookFormValidations";
 import { useUsersByCriteria } from "../../services/apis/userApi";
 import {
-  addChannelMember,
   createChannel,
   deleteChannel,
   getChannelsExistsByName,
-  makeAdmin,
-  removeMember,
   updateChannel,
-  useChannelMembers,
   useChannelsForInfiniteScrolling,
 } from "../../services/apis/channelApi";
+import {
+  addChannelMember,
+  makeAdmin,
+  removeMember,
+  useChannelMembers,
+} from "../../services/apis/channelMemberApi";
 import Channel from "../../models/channel/Channel";
 import ChannelSearchCriteria from "../../models/channel/ChannelSearchCriteria";
 import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
-import AddChannelGuestRequest from "../../models/channel/AddChannelGuestRequest";
+import AddChannelGuestRequest from "../../models/channel/member/AddChannelGuestRequest";
 
 import UserIcon from "../../assets/icons/user-icon.svg?react";
 import EditIcon from "../../assets/icons/edit-icon.svg?react";

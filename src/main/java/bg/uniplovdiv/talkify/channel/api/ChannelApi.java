@@ -5,7 +5,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
-import bg.uniplovdiv.talkify.channel.model.AddChannelGuestRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
@@ -20,12 +19,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -58,13 +55,6 @@ public class ChannelApi {
   }
 
   @ChannelSelect
-  @GetMapping("/{id}/members")
-  @ResponseStatus(OK)
-  public CollectionModel<ChannelMemberModel> getChannelMembers(@PathVariable Long id) {
-    return CollectionModel.of(channelModelAssembler.toChannelMembers(channelService.getById(id)));
-  }
-
-  @ChannelSelect
   @GetMapping("/{id}")
   @ResponseStatus(OK)
   public ChannelModel getById(@PathVariable Long id) {
@@ -76,31 +66,6 @@ public class ChannelApi {
   @ResponseStatus(OK)
   public PagedModel<ChannelModel> getAllByCriteria(ChannelSearchCriteria criteria, Pageable page) {
     return channelModelAssembler.toPagedModel(channelService.getAllByCriteria(criteria, page));
-  }
-
-  @ChannelUpdate
-  @PostMapping("/{id}/members")
-  @ResponseStatus(OK)
-  public ResponseEntity<Void> addMember(
-      @PathVariable Long id, @Valid @RequestBody AddChannelGuestRequest request) {
-    channelService.addMember(id, request);
-    return ResponseEntity.ok().build();
-  }
-
-  @ChannelUpdate
-  @DeleteMapping("/{id}/members/{userId}")
-  @ResponseStatus(OK)
-  public ResponseEntity<Void> removeMember(@PathVariable Long id, @PathVariable Long userId) {
-    channelService.removeGuest(id, userId);
-    return ResponseEntity.ok().build();
-  }
-
-  @ChannelUpdate
-  @PatchMapping("/{id}/members/{userId}/admin")
-  @ResponseStatus(OK)
-  public ResponseEntity<Void> makeMemberAdmin(@PathVariable Long id, @PathVariable Long userId) {
-    channelService.makeChannelAdmin(id, userId);
-    return ResponseEntity.ok().build();
   }
 
   @ChannelUpdate

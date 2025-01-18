@@ -9,6 +9,7 @@ import Channel from "../../models/channel/Channel";
 import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
 import ChannelSearchCriteria from "../../models/channel/ChannelSearchCriteria";
 import ChannelMember from "../../models/channel/ChannelMember";
+import AddChannelGuestRequest from "../../models/channel/AddChannelGuestRequest";
 
 const baseUrl = "/api/v1/channels";
 
@@ -30,8 +31,14 @@ export const getChannelsExistsByName = async (
 ): Promise<boolean> =>
   await fetcher.get(stringifyUrl(`${baseUrl}/exists/name`, request));
 
-export const useChannelMembers = (id: number) =>
-  useSWR<ChannelMember[]>(`${baseUrl}/${id}/members`);
+export const useChannelMembers = (id: number) => {
+  const { data, error, isLoading } = useSWR(`${baseUrl}/${id}/members`);
+  return {
+    data: (data?._embedded?.channelMembers ?? []) as ChannelMember[],
+    error,
+    isLoading,
+  };
+};
 
 export const getChannelById = async (id: number): Promise<Channel> =>
   await fetcher.get(`${baseUrl}/${id}`);
@@ -61,6 +68,17 @@ export const useChannelsByCriteria = (criteria: ChannelSearchCriteria) => {
     isLoading,
   };
 };
+
+export const addChannelMember = async (
+  channel: Channel,
+  request: AddChannelGuestRequest,
+  mutate: MatchMutate
+) =>
+  channel?._links?.addMember?.href &&
+  request.userId &&
+  (await fetcher
+    .post(channel._links.addMember.href, { body: JSON.stringify(request) })
+    .then(() => reloadChannels(mutate)));
 
 export const removeMember = async (
   member: ChannelMember,

@@ -1,6 +1,19 @@
-import { useForm } from "react-hook-form";
-import ChannelSearchCriteria from "../../models/channel/ChannelSearchCriteria";
+import React, { useState } from "react";
+import Select from "react-select";
+import { Controller, useForm } from "react-hook-form";
+import { Button, Form, ListGroup, Modal } from "react-bootstrap";
+import InfiniteScroll from "../../components/InfiniteScroll";
+import IconButton from "../../components/IconButton";
+import { useSelectedChannelId } from "../../services/utils/useSelectedChannelId";
+import useMatchMutate from "../../services/utils/useMatchMutate";
 import {
+  maxLength,
+  minLength,
+  REQUIRED_MSG,
+} from "../../services/utils/reactHookFormValidations";
+import { useUsersByCriteria } from "../../services/apis/userApi";
+import {
+  addChannelMember,
   createChannel,
   deleteChannel,
   getChannelsExistsByName,
@@ -10,24 +23,17 @@ import {
   useChannelMembers,
   useChannelsForInfiniteScrolling,
 } from "../../services/apis/channelApi";
-import { Button, Form, ListGroup, Modal } from "react-bootstrap";
-import InfiniteScroll from "../../components/InfiniteScroll";
-import { useSelectedChannelId } from "../../services/utils/useSelectedChannelId";
-import IconButton from "../../components/IconButton";
+import Channel from "../../models/channel/Channel";
+import ChannelSearchCriteria from "../../models/channel/ChannelSearchCriteria";
+import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
+import AddChannelGuestRequest from "../../models/channel/AddChannelGuestRequest";
+
 import UserIcon from "../../assets/icons/user-icon.svg?react";
 import EditIcon from "../../assets/icons/edit-icon.svg?react";
 import BinIcon from "../../assets/icons/bin-icon.svg?react";
 import PlusIcon from "../../assets/icons/plus-icon.svg?react";
 import AdminIcon from "../../assets/icons/admin-icon.svg?react";
-import React, { useState } from "react";
-import Channel from "../../models/channel/Channel";
-import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
-import {
-  maxLength,
-  minLength,
-  REQUIRED_MSG,
-} from "../../services/utils/reactHookFormValidations";
-import useMatchMutate from "../../services/utils/useMatchMutate";
+import UserAddIcon from "../../assets/icons/user-add-icon.svg?react";
 
 const ChannelsListPanel = () => {
   const { channelId, setChannelId } = useSelectedChannelId();
@@ -41,6 +47,7 @@ const ChannelsListPanel = () => {
   const channels = useChannelsForInfiniteScrolling(watch());
 
   const [createChannel, setCreateChannel] = useState<boolean>(false);
+  const [addMember, setAddMember] = useState<Channel>();
   const [showMembers, setShowMembers] = useState<Channel>();
   const [editChannel, setEditChannel] = useState<Channel>();
   const [deleteChannel, setDeleteChannel] = useState<Channel>();
@@ -100,6 +107,17 @@ const ChannelsListPanel = () => {
                       <>{channel.name}</>
                     )}
                     <div className="ms-auto">
+                      {channel?._links?.addMember?.href && (
+                        <IconButton
+                          icon={UserAddIcon}
+                          tooltipId="AddChannelMember"
+                          tooltip={<span>Add channel member</span>}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAddMember(channel);
+                          }}
+                        />
+                      )}
                       <IconButton
                         icon={UserIcon}
                         tooltipId="MembersShow"
@@ -157,7 +175,81 @@ const ChannelsListPanel = () => {
           onClose={() => setShowMembers(undefined)}
         />
       )}
+
+      {addMember && (
+        <AddChannelMemberModal
+          channel={addMember}
+          onClose={() => setAddMember(undefined)}
+        />
+      )}
     </>
+  );
+};
+
+const AddChannelMemberModal: React.FC<{
+  channel: Channel;
+  onClose: () => void;
+}> = ({ channel, onClose }) => {
+  const mutate = useMatchMutate();
+  const { data: users } = useUsersByCriteria({
+    active: true,
+    notInChannelId: channel.id,
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AddChannelGuestRequest>();
+
+  return (
+    <Modal show>
+      <Modal.Header>
+        <Modal.Title>{`Select user to join ${channel.name} channel`}</Modal.Title>
+      </Modal.Header>
+      <Form
+        onSubmit={handleSubmit(async (data) =>
+          addChannelMember(channel, data, mutate).then(onClose)
+        )}
+      >
+        <Modal.Body>
+          <Controller
+            control={control}
+            name="userId"
+            rules={{ required: REQUIRED_MSG }}
+            render={({ field: { value, onChange } }) => (
+              <Select
+                styles={{
+                  menuPortal: (base) => ({
+                    ...base,
+                    zIndex: 9999,
+                  }),
+                }}
+                menuPortalTarget={document.body}
+                menuPlacement="auto"
+                placeholder="Select a user"
+                options={users}
+                value={users?.find((user) => user.id === value) ?? null}
+                getOptionLabel={(option) => option.username}
+                getOptionValue={(option) => option.id + ""}
+                onChange={(option) => onChange(option?.id ?? null)}
+                isClearable
+              />
+            )}
+          />
+
+          {errors.userId?.message && (
+            <Form.Text className="error">{errors.userId.message}</Form.Text>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button type="submit">Add in channel</Button>
+          <Button variant="secondary" onClick={onClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 };
 

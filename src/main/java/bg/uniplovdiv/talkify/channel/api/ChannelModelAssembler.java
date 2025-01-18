@@ -33,6 +33,11 @@ public class ChannelModelAssembler extends PagedRepresentationAssembler<Channel,
         .name(channel.getName())
         .build()
         .addIf(
+            channelService.canAddMember(channel),
+            () ->
+                linkTo(methodOn(ChannelApi.class).addMember(channel.getId(), null))
+                    .withRel("addMember"))
+        .addIf(
             channelService.canUpdate(channel),
             () ->
                 linkTo(methodOn(ChannelApi.class).update(channel.getId(), null)).withRel("update"))

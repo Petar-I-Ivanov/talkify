@@ -5,5 +5,6 @@ public record UserSearchCriteria(
     String username,
     String email,
     Long inChannelId,
+    Long notInChannelId,
     Boolean onlyFriends,
     Boolean active) {}

@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
+import bg.uniplovdiv.talkify.channel.model.AddChannelGuestRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
@@ -16,10 +17,10 @@ import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelSea
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelSelect;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelUpdate;
 import jakarta.validation.Valid;
-import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,8 +60,8 @@ public class ChannelApi {
   @ChannelSelect
   @GetMapping("/{id}/members")
   @ResponseStatus(OK)
-  public Collection<ChannelMemberModel> getChannelMembers(@PathVariable Long id) {
-    return channelModelAssembler.toChannelMembers(channelService.getById(id));
+  public CollectionModel<ChannelMemberModel> getChannelMembers(@PathVariable Long id) {
+    return CollectionModel.of(channelModelAssembler.toChannelMembers(channelService.getById(id)));
   }
 
   @ChannelSelect
@@ -78,10 +79,11 @@ public class ChannelApi {
   }
 
   @ChannelUpdate
-  @PostMapping("/{id}/members/{userId}")
+  @PostMapping("/{id}/members")
   @ResponseStatus(OK)
-  public ResponseEntity<Void> addMember(@PathVariable Long id, @PathVariable Long userId) {
-    channelService.addMember(id, userId);
+  public ResponseEntity<Void> addMember(
+      @PathVariable Long id, @Valid @RequestBody AddChannelGuestRequest request) {
+    channelService.addMember(id, request);
     return ResponseEntity.ok().build();
   }
 

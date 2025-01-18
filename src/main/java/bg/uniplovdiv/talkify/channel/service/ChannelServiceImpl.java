@@ -16,6 +16,7 @@ import static lombok.AccessLevel.PRIVATE;
 import bg.uniplovdiv.talkify.auth.role.service.RoleService;
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
+import bg.uniplovdiv.talkify.channel.model.AddChannelGuestRequest;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelRepository;
@@ -83,12 +84,12 @@ public class ChannelServiceImpl implements ChannelService {
   }
 
   @Override
-  public void addMember(Long channelId, Long userId) {
+  public void addMember(Long channelId, AddChannelGuestRequest request) {
     var channel = getById(channelId);
     throwIfNotAllowed(canAddMember(channel));
     throwIfCondition(
-        channel.isUserAlreadyInChannel(userId), "User is already part of the channel!");
-    var user = userService.getById(userId);
+        channel.isUserAlreadyInChannel(request.userId()), "User is already part of the channel!");
+    var user = userService.getById(request.userId());
     channel.getGuests().add(user);
     channelRepository.save(channel);
   }
@@ -96,7 +97,8 @@ public class ChannelServiceImpl implements ChannelService {
   @Override
   public boolean canRemoveGuest(User user, Channel channel) {
     return isPermitted(channel.getId(), REMOVE_GUEST)
-        && channel.getGuests().stream().map(User::getId).noneMatch(user.getId()::equals);
+        && !channel.getOwner().getId().equals(user.getId())
+        && channel.isUserAlreadyInChannel(user.getId());
   }
 
   @Override
@@ -105,8 +107,12 @@ public class ChannelServiceImpl implements ChannelService {
     var guest = userService.getById(guestId);
     throwIfNotAllowed(canRemoveGuest(guest, channel));
 
+    var removedAdminList =
+        channel.getAdmins().stream().filter(user -> !user.getId().equals(guestId)).collect(toSet());
     var removedGuestList =
         channel.getGuests().stream().filter(user -> !user.getId().equals(guestId)).collect(toSet());
+
+    channel.setAdmins(removedAdminList);
     channel.setGuests(removedGuestList);
     channelRepository.save(channel);
   }

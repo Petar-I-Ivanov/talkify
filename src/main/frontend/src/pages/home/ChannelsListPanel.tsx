@@ -60,6 +60,7 @@ const ChannelsListPanel = () => {
         <h4>Channels list</h4>
         <IconButton
           icon={PlusIcon}
+          variant="outline-success"
           tooltipId="ChannelAdd"
           tooltip={<span>Create channel</span>}
           onClick={() => setCreateChannel(true)}
@@ -112,6 +113,7 @@ const ChannelsListPanel = () => {
                       {channel?._links?.addMember?.href && (
                         <IconButton
                           icon={UserAddIcon}
+                          variant="outline-success"
                           tooltipId="AddChannelMember"
                           tooltip={<span>Add channel member</span>}
                           onClick={(e) => {
@@ -132,6 +134,7 @@ const ChannelsListPanel = () => {
                       {channel?._links?.update?.href && (
                         <IconButton
                           icon={EditIcon}
+                          variant="outline-danger"
                           tooltipId="ChannelUpdate"
                           tooltip={<span>Update channel name</span>}
                           onClick={(e) => {
@@ -143,6 +146,7 @@ const ChannelsListPanel = () => {
                       {channel?._links?.delete?.href && (
                         <IconButton
                           icon={BinIcon}
+                          variant="outline-warning"
                           tooltipId="ChannelDelete"
                           tooltip={<span>Delete channel</span>}
                           onClick={(e) => {
@@ -312,7 +316,7 @@ const ChannelDeleteConfirm: React.FC<{
       <Modal.Footer>
         <Button
           onClick={async () =>
-            await deleteChannel(channel, mutate).then(() => onClose)
+            await deleteChannel(channel, mutate).then(onClose)
           }
         >
           Yes
@@ -400,6 +404,7 @@ const PreviewChannelMembers: React.FC<{
               {member._links?.makeAdmin?.href && (
                 <IconButton
                   icon={AdminIcon}
+                  variant="outline-info"
                   tooltipId="MakeChannelAdmin"
                   tooltip={<span>Make channel admin</span>}
                   onClick={async () => await makeAdmin(member, mutate)}
@@ -408,6 +413,7 @@ const PreviewChannelMembers: React.FC<{
               {member._links?.removeMember?.href && (
                 <IconButton
                   icon={BinIcon}
+                  variant="outline-danger"
                   tooltipId="RemoveChannelMember"
                   tooltip={<span>Remove channel member</span>}
                   onClick={async () => await removeMember(member, mutate)}

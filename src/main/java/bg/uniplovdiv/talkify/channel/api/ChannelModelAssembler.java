@@ -42,23 +42,34 @@ public class ChannelModelAssembler extends PagedRepresentationAssembler<Channel,
   }
 
   public Collection<ChannelMemberModel> toChannelMembers(Channel channel) {
-    var owner = mapUserToMember(channel.getOwner(), OWNER);
-    var admins = mapToMembers(channel.getAdmins(), ADMIN);
+    var owner = mapUserToMember(channel.getOwner(), OWNER, channel);
+    var admins = mapToMembers(channel.getAdmins(), ADMIN, channel);
     admins.addFirst(owner);
-    var guests = mapToMembers(channel.getGuests(), GUEST);
+    var guests = mapToMembers(channel.getGuests(), GUEST, channel);
     admins.addAll(guests);
     return admins;
   }
 
-  private List<ChannelMemberModel> mapToMembers(Collection<User> members, ChannelMemberRole role) {
-    return members.stream().map(user -> mapUserToMember(user, role)).collect(toList());
+  private List<ChannelMemberModel> mapToMembers(
+      Collection<User> members, ChannelMemberRole role, Channel channel) {
+    return members.stream().map(user -> mapUserToMember(user, role, channel)).collect(toList());
   }
 
-  private ChannelMemberModel mapUserToMember(User user, ChannelMemberRole role) {
+  private ChannelMemberModel mapUserToMember(User user, ChannelMemberRole role, Channel channel) {
     return ChannelMemberModel.builder()
         .id(user.getId())
         .username(user.getUsername())
         .role(role)
-        .build();
+        .build()
+        .addIf(
+            channelService.canMakeChannelAdmin(user, channel),
+            () ->
+                linkTo(methodOn(ChannelApi.class).makeMemberAdmin(channel.getId(), user.getId()))
+                    .withRel("makeAdmin"))
+        .addIf(
+            channelService.canRemoveGuest(user, channel),
+            () ->
+                linkTo(methodOn(ChannelApi.class).removeMember(channel.getId(), user.getId()))
+                    .withRel("removeMember"));
   }
 }

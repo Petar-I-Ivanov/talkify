@@ -10,9 +10,11 @@ import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.DELETE_CH
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.MAKE_ADMIN;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.REMOVE_GUEST;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_CREATE;
+import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.role.service.RoleService;
+import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
@@ -81,13 +83,51 @@ public class ChannelServiceImpl implements ChannelService {
   }
 
   @Override
-  public boolean canRemoveMember(Channel channel) {
-    return isPermitted(channel.getId(), REMOVE_GUEST);
+  public void addMember(Long channelId, Long userId) {
+    var channel = getById(channelId);
+    throwIfNotAllowed(canAddMember(channel));
+    throwIfCondition(
+        channel.isUserAlreadyInChannel(userId), "User is already part of the channel!");
+    var user = userService.getById(userId);
+    channel.getGuests().add(user);
+    channelRepository.save(channel);
   }
 
   @Override
-  public boolean canMakeChannelAdmin(Channel channel) {
-    return isPermitted(channel.getId(), MAKE_ADMIN);
+  public boolean canRemoveGuest(User user, Channel channel) {
+    return isPermitted(channel.getId(), REMOVE_GUEST)
+        && channel.getGuests().stream().map(User::getId).noneMatch(user.getId()::equals);
+  }
+
+  @Override
+  public void removeGuest(Long channelId, Long guestId) {
+    var channel = getById(channelId);
+    var guest = userService.getById(guestId);
+    throwIfNotAllowed(canRemoveGuest(guest, channel));
+
+    var removedGuestList =
+        channel.getGuests().stream().filter(user -> !user.getId().equals(guestId)).collect(toSet());
+    channel.setGuests(removedGuestList);
+    channelRepository.save(channel);
+  }
+
+  @Override
+  public boolean canMakeChannelAdmin(User user, Channel channel) {
+    return isPermitted(channel.getId(), MAKE_ADMIN)
+        && channel.getGuests().stream().map(User::getId).anyMatch(user.getId()::equals);
+  }
+
+  @Override
+  public void makeChannelAdmin(Long channelId, Long guestId) {
+    var channel = getById(channelId);
+    var guest = userService.getById(guestId);
+    throwIfNotAllowed(canMakeChannelAdmin(guest, channel));
+
+    var removedGuestList =
+        channel.getGuests().stream().filter(user -> !user.getId().equals(guestId)).collect(toSet());
+    channel.setGuests(removedGuestList);
+    channel.getAdmins().add(guest);
+    channelRepository.save(channel);
   }
 
   @Override

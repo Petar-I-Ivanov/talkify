@@ -62,6 +62,21 @@ export const useChannelsByCriteria = (criteria: ChannelSearchCriteria) => {
   };
 };
 
+export const removeMember = async (
+  member: ChannelMember,
+  mutate: MatchMutate
+) =>
+  member?._links?.removeMember?.href &&
+  (await fetcher
+    .delete(member._links.removeMember.href)
+    .then(() => reloadChannels(mutate)));
+
+export const makeAdmin = async (member: ChannelMember, mutate: MatchMutate) =>
+  member?._links?.makeAdmin?.href &&
+  (await fetcher
+    .patch(member._links.makeAdmin.href)
+    .then(() => reloadChannels(mutate)));
+
 export const updateChannel = async (
   channel: Channel,
   request: ChannelCreateUpdateRequest,

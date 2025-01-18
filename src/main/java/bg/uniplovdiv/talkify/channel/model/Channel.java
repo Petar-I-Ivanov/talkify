@@ -51,4 +51,10 @@ public class Channel extends BaseEntity {
       joinColumns = @JoinColumn(name = "channel_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "guest_id", referencedColumnName = "id"))
   Set<User> guests = new LinkedHashSet<>();
+
+  public boolean isUserAlreadyInChannel(Long userId) {
+    return owner.getId().equals(userId)
+        || admins.stream().map(User::getId).anyMatch(userId::equals)
+        || guests.stream().map(User::getId).anyMatch(userId::equals);
+  }
 }

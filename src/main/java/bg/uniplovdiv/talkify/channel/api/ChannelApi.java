@@ -24,6 +24,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -74,6 +75,30 @@ public class ChannelApi {
   @ResponseStatus(OK)
   public PagedModel<ChannelModel> getAllByCriteria(ChannelSearchCriteria criteria, Pageable page) {
     return channelModelAssembler.toPagedModel(channelService.getAllByCriteria(criteria, page));
+  }
+
+  @ChannelUpdate
+  @PostMapping("/{id}/members/{userId}")
+  @ResponseStatus(OK)
+  public ResponseEntity<Void> addMember(@PathVariable Long id, @PathVariable Long userId) {
+    channelService.addMember(id, userId);
+    return ResponseEntity.ok().build();
+  }
+
+  @ChannelUpdate
+  @DeleteMapping("/{id}/members/{userId}")
+  @ResponseStatus(OK)
+  public ResponseEntity<Void> removeMember(@PathVariable Long id, @PathVariable Long userId) {
+    channelService.removeGuest(id, userId);
+    return ResponseEntity.ok().build();
+  }
+
+  @ChannelUpdate
+  @PatchMapping("/{id}/members/{userId}/admin")
+  @ResponseStatus(OK)
+  public ResponseEntity<Void> makeMemberAdmin(@PathVariable Long id, @PathVariable Long userId) {
+    channelService.makeChannelAdmin(id, userId);
+    return ResponseEntity.ok().build();
   }
 
   @ChannelUpdate

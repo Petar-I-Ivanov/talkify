@@ -1,5 +1,6 @@
 package bg.uniplovdiv.talkify.channel.service;
 
+import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
@@ -21,9 +22,15 @@ public interface ChannelService {
 
   boolean canAddMember(Channel channel);
 
-  boolean canRemoveMember(Channel channel);
+  void addMember(Long channelId, Long userId);
 
-  boolean canMakeChannelAdmin(Channel channel);
+  boolean canRemoveGuest(User user, Channel channel);
+
+  void removeGuest(Long channelId, Long guestId);
+
+  boolean canMakeChannelAdmin(User user, Channel channel);
+
+  void makeChannelAdmin(Long channelId, Long guestId);
 
   boolean canUpdate(Channel channel);
 

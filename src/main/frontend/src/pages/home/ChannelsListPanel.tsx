@@ -4,6 +4,8 @@ import {
   createChannel,
   deleteChannel,
   getChannelsExistsByName,
+  makeAdmin,
+  removeMember,
   updateChannel,
   useChannelMembers,
   useChannelsForInfiniteScrolling,
@@ -16,9 +18,9 @@ import UserIcon from "../../assets/icons/user-icon.svg?react";
 import EditIcon from "../../assets/icons/edit-icon.svg?react";
 import BinIcon from "../../assets/icons/bin-icon.svg?react";
 import PlusIcon from "../../assets/icons/plus-icon.svg?react";
+import AdminIcon from "../../assets/icons/admin-icon.svg?react";
 import React, { useState } from "react";
 import Channel from "../../models/channel/Channel";
-import { useUsersByCriteria } from "../../services/apis/userApi";
 import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
 import {
   maxLength,
@@ -287,6 +289,7 @@ const PreviewChannelMembers: React.FC<{
   channel: Channel;
   onClose: () => void;
 }> = ({ channel, onClose }) => {
+  const mutate = useMatchMutate();
   const { data: members } = useChannelMembers(channel.id);
 
   return (
@@ -296,7 +299,28 @@ const PreviewChannelMembers: React.FC<{
       </Modal.Header>
       <Modal.Body>
         {members?.map((member) => (
-          <p key={member.id}>{`${member.username} - ${member.role}`}</p>
+          <div key={member.id} className="d-flex justify-content-between">
+            <span>{`${member.username} - ${member.role}`}</span>
+
+            <div>
+              {member._links?.makeAdmin?.href && (
+                <IconButton
+                  icon={AdminIcon}
+                  tooltipId="MakeChannelAdmin"
+                  tooltip={<span>Make channel admin</span>}
+                  onClick={async () => await makeAdmin(member, mutate)}
+                />
+              )}
+              {member._links?.removeMember?.href && (
+                <IconButton
+                  icon={BinIcon}
+                  tooltipId="RemoveChannelMember"
+                  tooltip={<span>Remove channel member</span>}
+                  onClick={async () => await removeMember(member, mutate)}
+                />
+              )}
+            </div>
+          </div>
         ))}
       </Modal.Body>
       <Modal.Footer>

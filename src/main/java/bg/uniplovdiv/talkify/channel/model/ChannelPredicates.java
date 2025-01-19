@@ -3,7 +3,6 @@ package bg.uniplovdiv.talkify.channel.model;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.utils.QueryUtils;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.Optional;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ public class ChannelPredicates {
   private static QChannel channel = QChannel.channel;
 
   public static final Predicate buildPredicates(ChannelSearchCriteria criteria) {
-    var predicate = new BooleanBuilder();
+    var predicate = channel.isPrivate.isFalse();
 
     predicate =
         Optional.ofNullable(criteria)

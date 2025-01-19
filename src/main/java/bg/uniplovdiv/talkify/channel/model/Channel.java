@@ -36,6 +36,8 @@ public class Channel extends BaseEntity {
   @JoinColumn(name = "owner_id", nullable = false)
   User owner;
 
+  boolean isPrivate;
+
   @Builder.Default
   @ManyToMany(fetch = LAZY)
   @JoinTable(

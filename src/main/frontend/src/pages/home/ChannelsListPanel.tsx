@@ -199,6 +199,7 @@ const AddChannelMemberModal: React.FC<{
   const mutate = useMatchMutate();
   const { data: users } = useUsersByCriteria({
     active: true,
+    onlyFriends: true,
     notInChannelId: channel.id,
   });
 

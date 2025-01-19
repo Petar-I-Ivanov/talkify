@@ -17,4 +17,5 @@ public class UserModel extends RepresentationModel<UserModel> {
   Long id;
   String username;
   String email;
+  Long privateChannelId;
 }

@@ -9,6 +9,7 @@ import bg.uniplovdiv.talkify.auth.permission.model.Permission;
 import bg.uniplovdiv.talkify.auth.role.model.Role;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.common.models.BaseEntity;
+import bg.uniplovdiv.talkify.friendship.model.Friendship;
 import bg.uniplovdiv.talkify.utils.constants.ChannelPermissions;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,6 +53,10 @@ public class User extends BaseEntity {
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   Set<Role> roles = new LinkedHashSet<>();
+
+  @Builder.Default
+  @OneToMany(mappedBy = "user", fetch = LAZY)
+  Set<Friendship> friendships = new LinkedHashSet<>();
 
   @Builder.Default
   @OneToMany(mappedBy = "owner", orphanRemoval = true, fetch = LAZY)

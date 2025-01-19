@@ -1,6 +1,7 @@
 package bg.uniplovdiv.talkify.auth.user.model;
 
 import static bg.uniplovdiv.talkify.utils.QueryUtils.matchStart;
+import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.utils.QueryUtils;
@@ -8,6 +9,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.Optional;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.BooleanUtils;
 
 @NoArgsConstructor(access = PRIVATE)
 public class UserPredicates {
@@ -77,6 +79,16 @@ public class UserPredicates {
         Optional.ofNullable(criteria)
             .map(UserSearchCriteria::active)
             .map(user.active::eq)
+            .map(predicate::and)
+            .orElse(predicate);
+
+    predicate =
+        Optional.ofNullable(criteria)
+            .map(UserSearchCriteria::onlyFriends)
+            .filter(BooleanUtils::isTrue)
+            .map(o -> fetchUserId())
+            .map(user.friendships.any().user.id::eq)
+            .map(user.friendships.any().active::and)
             .map(predicate::and)
             .orElse(predicate);
 

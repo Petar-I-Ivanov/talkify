@@ -15,6 +15,8 @@ public interface ChannelService {
 
   Channel create(ChannelCreateUpdateRequest request);
 
+  Channel createPrivate(User user, User friend);
+
   boolean isNameExists(UniqueValueRequest request);
 
   Channel getById(Long id);

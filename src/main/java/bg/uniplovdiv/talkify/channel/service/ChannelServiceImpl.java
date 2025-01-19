@@ -56,7 +56,19 @@ public class ChannelServiceImpl implements ChannelService {
     var channel = new Channel();
     channel.setName(request.name());
     channel.setActive(true);
+    channel.setPrivate(false);
     channel.setOwner(owner);
+    return channelRepository.save(channel);
+  }
+
+  @Override
+  public Channel createPrivate(User user, User friend) {
+    var channel = new Channel();
+    channel.setName(String.format("%s - %s", user.getUsername(), friend.getUsername()));
+    channel.setActive(true);
+    channel.setPrivate(true);
+    channel.setOwner(user);
+    channel.getAdmins().add(friend);
     return channelRepository.save(channel);
   }
 
@@ -80,7 +92,7 @@ public class ChannelServiceImpl implements ChannelService {
 
   @Override
   public boolean canAddMember(Channel channel) {
-    return isPermitted(channel.getId(), ADD_GUEST);
+    return !channel.isPrivate() && isPermitted(channel.getId(), ADD_GUEST);
   }
 
   @Override
@@ -96,7 +108,8 @@ public class ChannelServiceImpl implements ChannelService {
 
   @Override
   public boolean canRemoveGuest(User user, Channel channel) {
-    return isPermitted(channel.getId(), REMOVE_GUEST)
+    return !channel.isPrivate()
+        && isPermitted(channel.getId(), REMOVE_GUEST)
         && !channel.getOwner().getId().equals(user.getId())
         && channel.isUserAlreadyInChannel(user.getId());
   }
@@ -119,7 +132,8 @@ public class ChannelServiceImpl implements ChannelService {
 
   @Override
   public boolean canMakeChannelAdmin(User user, Channel channel) {
-    return isPermitted(channel.getId(), MAKE_ADMIN)
+    return !channel.isPrivate()
+        && isPermitted(channel.getId(), MAKE_ADMIN)
         && channel.getGuests().stream().map(User::getId).anyMatch(user.getId()::equals);
   }
 
@@ -138,16 +152,14 @@ public class ChannelServiceImpl implements ChannelService {
 
   @Override
   public boolean canUpdate(Channel channel) {
-    return isPermitted(channel.getId(), CHANGE_NAME);
+    return !channel.isPrivate() && isPermitted(channel.getId(), CHANGE_NAME);
   }
 
   @Override
   public Channel update(Long id, ChannelCreateUpdateRequest request) {
     var channel = getById(id);
     throwIfNotAllowed(canUpdate(channel));
-
     throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), id)), "Name is taken.");
-
     channel.setName(request.name());
     return channelRepository.save(channel);
   }
@@ -161,7 +173,6 @@ public class ChannelServiceImpl implements ChannelService {
   public void delete(Long id) {
     var channel = getById(id);
     throwIfNotAllowed(canDelete(channel));
-
     channel.setActive(false);
     channelRepository.save(channel);
   }

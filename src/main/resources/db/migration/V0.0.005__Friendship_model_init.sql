@@ -8,3 +8,5 @@ CREATE TABLE `friendship` (
     FOREIGN KEY (`friend_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`channel_id`) REFERENCES `channel` (`id`)
 );
+
+ALTER TABLE `channel` ADD COLUMN `is_private` BOOLEAN NOT NULL DEFAULT FALSE;

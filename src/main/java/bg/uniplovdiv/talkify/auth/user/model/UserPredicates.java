@@ -87,7 +87,7 @@ public class UserPredicates {
             .map(UserSearchCriteria::onlyFriends)
             .filter(BooleanUtils::isTrue)
             .map(o -> fetchUserId())
-            .map(user.friendships.any().user.id::eq)
+            .map(user.friendships.any().friend.id::eq)
             .map(user.friendships.any().active::and)
             .map(predicate::and)
             .orElse(predicate);

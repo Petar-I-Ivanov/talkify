@@ -134,7 +134,7 @@ const ChannelsListPanel = () => {
                       {channel?._links?.update?.href && (
                         <IconButton
                           icon={EditIcon}
-                          variant="outline-danger"
+                          variant="outline-warning"
                           tooltipId="ChannelUpdate"
                           tooltip={<span>Update channel name</span>}
                           onClick={(e) => {
@@ -146,7 +146,7 @@ const ChannelsListPanel = () => {
                       {channel?._links?.delete?.href && (
                         <IconButton
                           icon={BinIcon}
-                          variant="outline-warning"
+                          variant="outline-danger"
                           tooltipId="ChannelDelete"
                           tooltip={<span>Delete channel</span>}
                           onClick={(e) => {

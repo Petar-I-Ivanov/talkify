@@ -5,7 +5,7 @@ import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
 import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.user.model.User;
-import bg.uniplovdiv.talkify.auth.user.service.UserService;
+import bg.uniplovdiv.talkify.auth.user.model.UserRepository;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
 import bg.uniplovdiv.talkify.friendship.model.Friendship;
@@ -16,22 +16,26 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Lazy)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class FriendshipServiceImpl implements FriendshipService {
 
   FriendshipRepository friendshipRepository;
+  UserRepository userRepository;
 
-  UserService userService;
   ChannelService channelService;
 
   @Override
   public boolean canAddFriend(Long friendId) {
-    return !friendshipRepository.existsByUserIdAndFriendIdAndActiveIsTrue(fetchUserId(), friendId);
+    var currentUserId = fetchUserId();
+    return currentUserId != null
+        && !currentUserId.equals(friendId)
+        && !friendshipRepository.existsByUserIdAndFriendIdAndActiveIsTrue(currentUserId, friendId);
   }
 
   @Override
@@ -51,8 +55,8 @@ public class FriendshipServiceImpl implements FriendshipService {
       return friendships;
     }
 
-    var user = userService.getById(fetchUserId());
-    var friend = userService.getById(friendId);
+    var user = userRepository.getReferenceById(fetchUserId());
+    var friend = userRepository.getReferenceById(friendId);
     var channel = channelService.createPrivate(user, friend);
 
     return Stream.of(create(user, friend, channel), create(friend, user, channel))
@@ -62,13 +66,18 @@ public class FriendshipServiceImpl implements FriendshipService {
 
   @Override
   public Optional<Long> getPrivateChannelId(Long friendId) {
-    return friendshipRepository.findChannelIdByUserIdAndFriendIdAndActiveIsTrue(
-        fetchUserId(), friendId);
+    return friendshipRepository
+        .findByUserIdAndFriendIdAndActiveIsTrue(fetchUserId(), friendId)
+        .map(Friendship::getChannel)
+        .map(Channel::getId);
   }
 
   @Override
   public boolean canRemoveFriend(Long friendId) {
-    return friendshipRepository.existsByUserIdAndFriendIdAndActiveIsTrue(fetchUserId(), friendId);
+    var currentUserId = fetchUserId();
+    return currentUserId != null
+        && !currentUserId.equals(friendId)
+        && friendshipRepository.existsByUserIdAndFriendIdAndActiveIsTrue(currentUserId, friendId);
   }
 
   @Override

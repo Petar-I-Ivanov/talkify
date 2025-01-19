@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,7 +27,7 @@ public class FriendshipApi {
   @Authenticated
   @PostMapping("/{friendId}")
   @ResponseStatus(CREATED)
-  public ResponseEntity<Void> addFriend(Long friendId) {
+  public ResponseEntity<Void> addFriend(@PathVariable Long friendId) {
     friendshipService.addFriend(friendId);
     return ResponseEntity.status(CREATED).build();
   }
@@ -34,7 +35,7 @@ public class FriendshipApi {
   @Authenticated
   @DeleteMapping("/{friendId}")
   @ResponseStatus(NO_CONTENT)
-  public ResponseEntity<Void> removeFriend(Long friendId) {
+  public ResponseEntity<Void> removeFriend(@PathVariable Long friendId) {
     friendshipService.removeFriend(friendId);
     return ResponseEntity.status(NO_CONTENT).build();
   }

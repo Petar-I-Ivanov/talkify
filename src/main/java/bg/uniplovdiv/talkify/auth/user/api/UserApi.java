@@ -12,6 +12,7 @@ import bg.uniplovdiv.talkify.auth.user.service.UserService;
 import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
 import bg.uniplovdiv.talkify.security.annotations.PublicAccess;
+import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserCreate;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserDelete;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserSearch;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserSelect;
@@ -41,11 +42,18 @@ public class UserApi {
   UserService userService;
   UserModelAssembler userModelAssembler;
 
-  @PublicAccess
+  @UserCreate
   @PostMapping
   @ResponseStatus(CREATED)
   public UserModel create(@Valid @RequestBody UserCreateRequest request) {
     return userModelAssembler.toModel(userService.create(request));
+  }
+
+  @PublicAccess
+  @PostMapping("/register")
+  @ResponseStatus(CREATED)
+  public UserModel register(@Valid @RequestBody UserCreateRequest request) {
+    return userModelAssembler.toModel(userService.register(request));
   }
 
   @PublicAccess

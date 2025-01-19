@@ -107,7 +107,7 @@ public class SecurityConfiguration {
 
   private static RequestMatcher[] permittedApiRequests() {
     return new RequestMatcher[] {
-      new AntPathRequestMatcher("/api/v1/users", POST.name()),
+      new AntPathRequestMatcher("/api/v1/users/register", POST.name()),
       new AntPathRequestMatcher("/api/v1/users/exists/username", GET.name()),
       new AntPathRequestMatcher("/api/v1/users/exists/email", GET.name())
     };

@@ -13,7 +13,7 @@ import UserLogin from "../../models/user/UserLogin";
 
 const baseUrl = "/api/v1/users";
 
-const reloadUsers = async (mutate: MatchMutate) =>
+export const reloadUsers = async (mutate: MatchMutate) =>
   await mutate(new RegExp(baseUrl));
 
 export const login = async (request: UserLogin) =>
@@ -35,6 +35,16 @@ export const createUser = async (
 ) =>
   await fetcher
     .post(baseUrl, {
+      body: JSON.stringify(request),
+    })
+    .then(() => reloadUsers(mutate));
+
+export const registerUser = async (
+  request: UserCreateRequest,
+  mutate: MatchMutate
+) =>
+  await fetcher
+    .post(`${baseUrl}/register`, {
       body: JSON.stringify(request),
     })
     .then(() => reloadUsers(mutate));

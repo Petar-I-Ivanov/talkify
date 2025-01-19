@@ -5,6 +5,7 @@ import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwI
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchPrincipal;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
+import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_CREATE;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_DELETE;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_UPDATE;
 import static lombok.AccessLevel.PRIVATE;
@@ -16,6 +17,7 @@ import bg.uniplovdiv.talkify.auth.user.model.UserRepository;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
 import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
+import bg.uniplovdiv.talkify.friendship.service.FriendshipService;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
@@ -35,17 +37,24 @@ public class UserServiceImpl implements UserService {
   UserRepository userRepository;
 
   RoleService roleService;
+  FriendshipService friendshipService;
   PasswordEncoder passwordEncoder;
 
   @Override
   public boolean canCreate() {
-    return true;
+    return isPermitted(USER_CREATE);
   }
 
   @Override
   public User create(UserCreateRequest request) {
     throwIfNotAllowed(canCreate());
+    var friend = register(request);
+    friendshipService.addFriend(friend.getId());
+    return friend;
+  }
 
+  @Override
+  public User register(UserCreateRequest request) {
     throwIfCondition(
         isUsernameExists(new UniqueValueRequest(request.username(), null)), "Username is taken.");
     throwIfCondition(

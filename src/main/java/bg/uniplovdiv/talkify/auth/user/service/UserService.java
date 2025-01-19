@@ -15,6 +15,8 @@ public interface UserService {
 
   User create(UserCreateRequest request);
 
+  User register(UserCreateRequest request);
+
   boolean isUsernameExists(UniqueValueRequest request);
 
   boolean isEmailExists(UniqueValueRequest request);

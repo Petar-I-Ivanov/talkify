@@ -11,7 +11,7 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 
   boolean existsByUserIdAndFriendIdAndActiveIsTrue(Long userId, Long friendId);
 
-  Optional<Long> findChannelIdByUserIdAndFriendIdAndActiveIsTrue(Long userId, Long friendId);
+  Optional<Friendship> findByUserIdAndFriendIdAndActiveIsTrue(Long userId, Long friendId);
 
   @Query(
       "SELECT f FROM Friendship f "

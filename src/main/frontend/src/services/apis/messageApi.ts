@@ -36,7 +36,7 @@ export const useMessagesForInfiniteScrolling = (
 ) =>
   useSWRInfinite<PagedModel<Message>>(
     (page, previousPageData) =>
-      previousPageData && !previousPageData._embedded
+      (previousPageData && !previousPageData._embedded) || !criteria?.channelId
         ? null
         : stringifyUrl(baseUrl, { ...criteria, page }),
     fetcher.get,

@@ -3,6 +3,7 @@ package bg.uniplovdiv.talkify.channel.service;
 import static bg.uniplovdiv.talkify.channel.model.ChannelPredicates.buildPredicates;
 import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwIfCondition;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
+import static bg.uniplovdiv.talkify.utils.SecurityUtils.revalidateUser;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.ADD_GUEST;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.CHANGE_NAME;
@@ -58,7 +59,11 @@ public class ChannelServiceImpl implements ChannelService {
     channel.setActive(true);
     channel.setPrivate(false);
     channel.setOwner(owner);
-    return channelRepository.save(channel);
+    channel = channelRepository.save(channel);
+
+    owner.getOwnedChannels().add(channel);
+    revalidateUser(owner);
+    return channel;
   }
 
   @Override
@@ -69,7 +74,9 @@ public class ChannelServiceImpl implements ChannelService {
     channel.setPrivate(true);
     channel.setOwner(user);
     channel.getAdmins().add(friend);
-    return channelRepository.save(channel);
+    channel = channelRepository.save(channel);
+    revalidateUser(user);
+    return channel;
   }
 
   @Override
@@ -104,6 +111,7 @@ public class ChannelServiceImpl implements ChannelService {
     var user = userService.getById(request.userId());
     channel.getGuests().add(user);
     channelRepository.save(channel);
+    userService.addGuestRole(user);
   }
 
   @Override
@@ -148,6 +156,7 @@ public class ChannelServiceImpl implements ChannelService {
     channel.setGuests(removedGuestList);
     channel.getAdmins().add(guest);
     channelRepository.save(channel);
+    userService.addAdminRole(guest);
   }
 
   @Override

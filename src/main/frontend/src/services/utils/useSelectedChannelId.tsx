@@ -18,13 +18,16 @@ const SelectedChannelIdProvider: React.FC<{ children: React.ReactNode }> = ({
       channelId,
       setChannelId,
     }),
-    [channelId, setChannelId]
+    [channelId]
   );
 
-  return (
-    <SelectedChannelIdContext.Provider value={context}>
-      {children}
-    </SelectedChannelIdContext.Provider>
+  return useMemo(
+    () => (
+      <SelectedChannelIdContext.Provider value={context}>
+        {children}
+      </SelectedChannelIdContext.Provider>
+    ),
+    [context]
   );
 };
 

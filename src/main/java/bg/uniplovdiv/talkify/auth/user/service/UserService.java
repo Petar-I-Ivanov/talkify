@@ -29,6 +29,10 @@ public interface UserService {
 
   Page<User> getAllByCriteria(UserSearchCriteria criteria, Pageable page);
 
+  void addAdminRole(User user);
+
+  void addGuestRole(User user);
+
   boolean canUpdate(User user);
 
   User update(Long id, UserUpdateRequest request);

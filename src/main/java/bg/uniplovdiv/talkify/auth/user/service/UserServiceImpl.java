@@ -112,6 +112,18 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public void addAdminRole(User user) {
+    user.getRoles().add(roleService.getChannelAdminRole());
+    userRepository.save(user);
+  }
+
+  @Override
+  public void addGuestRole(User user) {
+    user.getRoles().add(roleService.getChannelGuestRole());
+    userRepository.save(user);
+  }
+
+  @Override
   public boolean canUpdate(User user) {
     return isPermitted(USER_UPDATE) && user.getUsername().equals(fetchPrincipal());
   }

@@ -3,6 +3,7 @@ package bg.uniplovdiv.talkify.utils;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
+import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.security.CustomUserDetails;
 import java.util.Collection;
 import java.util.Optional;
@@ -15,6 +16,8 @@ import org.springframework.security.core.context.SecurityContext;
 
 @NoArgsConstructor(access = PRIVATE)
 public class SecurityUtils {
+
+  public static final String SPEL_REFERENCE = "T(bg.uniplovdiv.talkify.utils.SecurityUtils)";
 
   public static final Long fetchUserId() {
     return getCustomerUserDetails().map(CustomUserDetails::getId).orElse(null);
@@ -31,6 +34,14 @@ public class SecurityUtils {
   public static final boolean isPermitted(Long channelId, String channelPermission) {
     var permission = channelId + ":" + channelPermission;
     return isPermitted(permission);
+  }
+
+  public static final boolean hasAnyPermissions(String... permissions) {
+    return Stream.of(permissions).anyMatch(SecurityUtils::isPermitted);
+  }
+
+  public static final boolean hasAllPermissions(String... permissions) {
+    return Stream.of(permissions).allMatch(SecurityUtils::isPermitted);
   }
 
   public static final boolean isPermitted(String permission) {
@@ -55,6 +66,16 @@ public class SecurityUtils {
     return getCustomerUserDetails().map(CustomUserDetails::getRoles).stream()
         .flatMap(Collection::stream)
         .anyMatch(role::equals);
+  }
+
+  public static final void revalidateUser(User user) {
+    if (!isAuthenticated()) {
+      return;
+    }
+    Optional.ofNullable(user)
+        .map(CustomUserDetails::new)
+        .map(CustomUserDetails::toAuthentication)
+        .ifPresent(getContext()::setAuthentication);
   }
 
   public static final void throwIfNotAllowed(boolean isAllowed) {

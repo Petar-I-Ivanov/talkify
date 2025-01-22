@@ -62,7 +62,7 @@ export const getUserExistsByEmail = async (
 export const getUserById = async (id: number): Promise<User> =>
   await fetcher.get(`${baseUrl}/${id}`);
 
-export const useCurrentUser = async () => useSWR<User>(`${baseUrl}/current`);
+export const useCurrentUser = () => useSWR<User>(`${baseUrl}/current`);
 
 export const getUsersByCriteria = async (
   criteria: UserSearchCriteria

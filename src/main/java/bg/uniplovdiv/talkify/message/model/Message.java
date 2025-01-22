@@ -1,6 +1,5 @@
 package bg.uniplovdiv.talkify.message.model;
 
-import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -43,8 +42,4 @@ public class Message extends BaseEntity {
   @ManyToOne(fetch = LAZY, optional = false)
   @JoinColumn(name = "channel_id", nullable = false)
   Channel channel;
-
-  public boolean isCurrentUserSender() {
-    return sender.getId().equals(fetchUserId());
-  }
 }

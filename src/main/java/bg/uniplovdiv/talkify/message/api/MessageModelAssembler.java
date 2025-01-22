@@ -29,7 +29,6 @@ public class MessageModelAssembler extends PagedRepresentationAssembler<Message,
         .sender(message.getSender().getUsername())
         .sentAt(message.getSentAt())
         .editedAt(message.getEditedAt())
-        .isCurrentUserSender(message.isCurrentUserSender())
         .build()
         .addIf(
             messageService.canUpdate(message),

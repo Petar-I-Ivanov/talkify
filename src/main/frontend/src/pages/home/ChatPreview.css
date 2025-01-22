@@ -14,3 +14,7 @@
 .rce-container-mbox {
   overflow: unset !important;
 }
+
+.rce-mbox {
+  max-width: 50% !important;
+}

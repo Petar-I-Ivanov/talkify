@@ -1,5 +1,6 @@
 package bg.uniplovdiv.talkify.message.service;
 
+import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.SEND_MESSAGE;
@@ -59,7 +60,7 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public boolean canUpdate(Message message) {
-    return message.isCurrentUserSender();
+    return fetchUserId().equals(message.getSender().getId());
   }
 
   @Override
@@ -73,7 +74,7 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public boolean canDelete(Message message) {
-    return message.isCurrentUserSender();
+    return fetchUserId().equals(message.getSender().getId());
   }
 
   @Override

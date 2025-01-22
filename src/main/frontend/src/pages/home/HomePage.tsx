@@ -1,7 +1,9 @@
 import { Col, Row } from "react-bootstrap";
 import FriendsListPanel from "./FriendsListPanel";
 import ChannelsListPanel from "./ChannelsListPanel";
-import SelectedChannelIdProvider from "../../services/utils/useSelectedChannelId";
+import SelectedChannelIdProvider, {
+  useSelectedChannelId,
+} from "../../services/utils/useSelectedChannelId";
 import ChatPreview from "./ChatPreview";
 
 const HomePage = () => (
@@ -16,10 +18,16 @@ const HomePage = () => (
         </div>
       </Col>
       <Col md={9} className="p-3">
-        <ChatPreview />
+        <ShowChat />
       </Col>
     </Row>
   </SelectedChannelIdProvider>
 );
+
+const ShowChat = () => {
+  const { channelId } = useSelectedChannelId();
+  fetch("/csrf-token");
+  return channelId ? <ChatPreview channelId={channelId} /> : <></>;
+};
 
 export default HomePage;

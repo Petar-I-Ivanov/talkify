@@ -20,5 +20,4 @@ public class MessageModel extends RepresentationModel<MessageModel> {
   String sender;
   LocalDateTime sentAt;
   LocalDateTime editedAt;
-  boolean isCurrentUserSender;
 }

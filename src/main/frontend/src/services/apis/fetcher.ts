@@ -6,7 +6,8 @@ import ApiException from "../../models/exceptions/ApiException";
 
 const fetcherInternal = async (url: string, options: RequestInit = {}) => {
   let { headers, ...rest } = options;
-  headers = { ...headers };
+  headers = { ...buildHeaderFromCookie("X-CSRF-TOKEN"), ...headers };
+
   const init = {
     ...rest,
     headers,
@@ -84,6 +85,17 @@ const fetcher = {
       ...options,
     }),
 };
+
+export const buildHeaderFromCookie = (name: string): Record<string, string> => {
+  const cookieValue = findCookieValue(name);
+  return cookieValue ? { [name]: cookieValue } : {};
+};
+
+export const findCookieValue = (name: string) =>
+  document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${name}=`))
+    ?.split("=")?.[1];
 
 export function replacer(this: any, key: string, value: any) {
   return this[key] instanceof Date

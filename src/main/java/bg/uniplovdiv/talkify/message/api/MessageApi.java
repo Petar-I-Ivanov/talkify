@@ -15,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +35,16 @@ public class MessageApi {
   MessageService messageService;
   MessageModelAssembler messageModelAssembler;
 
+  SimpMessagingTemplate webSocketMessenger;
+
   @Authenticated
   @PostMapping
   @ResponseStatus(CREATED)
   public MessageModel create(@Valid @RequestBody MessageCreateUpdateRequest request) {
-    return messageModelAssembler.toModel(messageService.create(request));
+    var message = messageModelAssembler.toModel(messageService.create(request));
+    webSocketMessenger.convertAndSend(
+        String.format("/topic/chat/%d", request.channelId()), message);
+    return message;
   }
 
   @Authenticated

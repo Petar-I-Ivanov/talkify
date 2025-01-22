@@ -13,7 +13,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,7 +34,7 @@ public class SecurityConfiguration {
   public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
     return http.securityMatcher(APIS)
         .requestCache(Customizer.withDefaults())
-        .csrf(CsrfConfigurer::disable)
+        .cors(CorsConfigurer::disable)
         .authorizeHttpRequests(
             requests ->
                 requests
@@ -50,9 +49,10 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain htmlFilterChain(
       HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
-    return http.csrf(csfr -> csfr.ignoringRequestMatchers("/login", "/logout", "/h2-console/**"))
-        .cors(CorsConfigurer::disable)
+    return http.csrf(
+            csrf -> csrf.ignoringRequestMatchers("/login", "/logout", "/h2-console/**", "/**"))
         .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
+        .cors(CorsConfigurer::disable)
         .requestCache(Customizer.withDefaults())
         .authorizeHttpRequests(
             requests ->
@@ -60,6 +60,7 @@ public class SecurityConfiguration {
                     .dispatcherTypeMatchers(FORWARD)
                     .permitAll()
                     .requestMatchers(
+                        "/ws/**",
                         "/error",
                         "/sign-in",
                         "/sign-up",
@@ -78,7 +79,7 @@ public class SecurityConfiguration {
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .logoutSuccessUrl("/")
-                    .deleteCookies("JSESSIONID")
+                    .deleteCookies("JSESSIONID", "X-CSRF-TOKEN")
                     .permitAll())
         .formLogin(
             formLogin ->

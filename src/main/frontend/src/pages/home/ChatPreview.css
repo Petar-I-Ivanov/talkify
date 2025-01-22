@@ -1,6 +1,4 @@
 .rce-mlist {
-  display: flex !important;
-  flex-direction: column-reverse;
   margin-bottom: 1rem;
   max-height: 83vh;
 }
@@ -9,10 +7,6 @@
   background-color: whitesmoke;
   border: 1px solid black !important;
   color: black !important;
-}
-
-.rce-container-mbox {
-  overflow: unset !important;
 }
 
 .rce-mbox {

@@ -1,12 +1,11 @@
 import useSWR from "swr";
-import { EntityModel, PagedModel } from "hateoas-hal-types";
-import fetcher, { stringifyUrl } from "./fetcher";
-import MatchMutate from "../../models/common/MatchMutate";
-import MessageCreateUpdateRequest from "../../models/messages/MessageCreateUpdateRequest";
-import Message from "../../models/messages/Message";
-import MessageSearchCriteria from "../../models/messages/MessageSearchCriteria";
 import useSWRInfinite from "swr/infinite";
-import laggy from "../utils/laggy";
+import { EntityModel, PagedModel } from "hateoas-hal-types";
+import MatchMutate from "../../models/common/MatchMutate";
+import fetcher, { stringifyUrl } from "./fetcher";
+import Message from "../../models/messages/Message";
+import MessageCreateUpdateRequest from "../../models/messages/MessageCreateUpdateRequest";
+import MessageSearchCriteria from "../../models/messages/MessageSearchCriteria";
 
 const baseUrl = "/api/v1/messages";
 
@@ -40,7 +39,7 @@ export const useMessagesForInfiniteScrolling = (
         ? null
         : stringifyUrl(baseUrl, { ...criteria, page }),
     fetcher.get,
-    { use: [laggy] }
+    { keepPreviousData: true }
   );
 
 export const useMessagesByCriteria = (criteria?: MessageSearchCriteria) => {

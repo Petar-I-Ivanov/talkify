@@ -16,7 +16,7 @@ import "./ChatPreview.css";
 
 const ChatPreview: React.FC<{ channelId: number }> = ({ channelId }) => {
   const { data: currentUser } = useCurrentUser();
-  const { data, error } = useMessagesForInfiniteScrolling(
+  const { data, error, setSize } = useMessagesForInfiniteScrolling(
     channelId
       ? { channelId, page: 0, size: 30, sort: "sentAt,desc" }
       : undefined
@@ -69,7 +69,7 @@ const ChatPreview: React.FC<{ channelId: number }> = ({ channelId }) => {
       concatMessages(
         latestTexts,
         data?.flatMap((d) => d._embedded.messages)
-      ),
+      ).reverse(),
     [data, latestTexts]
   );
 
@@ -105,7 +105,10 @@ const ChatPreview: React.FC<{ channelId: number }> = ({ channelId }) => {
           {error && error?.error?.status === 403 ? (
             <ErrorMessage message="You are not permitted to access the following channel!" />
           ) : (
-            <MessagesComponent messages={dataSource} />
+            <MessagesComponent
+              messages={dataSource}
+              fetchMore={() => setSize((size) => size + 1)}
+            />
           )}
         </>
       ) : (
@@ -121,9 +124,10 @@ const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
   </div>
 );
 
-const MessagesComponent: React.FC<{ messages: MessageType[] }> = ({
-  messages,
-}) => {
+const MessagesComponent: React.FC<{
+  messages: MessageType[];
+  fetchMore: () => void;
+}> = ({ messages, fetchMore }) => {
   const { channelId } = useSelectedChannelId();
   const mutate = useMatchMutate();
   const listRef = useRef();
@@ -146,6 +150,11 @@ const MessagesComponent: React.FC<{ messages: MessageType[] }> = ({
       lockable
       isShowChild
       dataSource={messages}
+      onScroll={(e: any) => {
+        if (e.target?.scrollTop === 0 && messages.length > 25) {
+          fetchMore();
+        }
+      }}
     >
       <Input
         placeholder="Type here..."

@@ -1,7 +1,6 @@
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 import { EntityModel, PagedModel } from "hateoas-hal-types";
-import laggy from "../utils/laggy";
 import fetcher, { stringifyUrl } from "./fetcher";
 import MatchMutate from "../../models/common/MatchMutate";
 import UniqueValueRequest from "../../models/common/UniqueValueRequest";
@@ -76,7 +75,7 @@ export const useUsersForInfiniteScrolling = (criteria: UserSearchCriteria) =>
         ? null
         : stringifyUrl(baseUrl, { ...criteria, page }),
     fetcher.get,
-    { use: [laggy] }
+    { keepPreviousData: true }
   );
 
 export const useUsersByCriteria = (criteria: UserSearchCriteria) => {

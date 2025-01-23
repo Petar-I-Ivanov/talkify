@@ -2,6 +2,7 @@ package bg.uniplovdiv.talkify.websocket;
 
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.SEND_MESSAGE;
+import static bg.uniplovdiv.talkify.utils.constants.Regex.DIGIT_AFTER_SLASH_PTRN;
 import static org.springframework.messaging.simp.stomp.StompCommand.SUBSCRIBE;
 
 import java.util.Optional;
@@ -12,8 +13,6 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.security.access.AccessDeniedException;
 
 public class CustomChannelInterceptor implements ChannelInterceptor {
-
-  private static final String DIGIT_AFTER_SLASH_PTRN = ".*/(\\d+)$";
 
   @Override
   public Message<?> preSend(Message<?> message, MessageChannel channel) {

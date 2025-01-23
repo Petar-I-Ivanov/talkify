@@ -49,8 +49,7 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain htmlFilterChain(
       HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
-    return http.csrf(
-            csrf -> csrf.ignoringRequestMatchers("/login", "/logout", "/h2-console/**", "/**"))
+    return http.csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
         .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
         .cors(CorsConfigurer::disable)
         .requestCache(Customizer.withDefaults())
@@ -59,19 +58,7 @@ public class SecurityConfiguration {
                 requests
                     .dispatcherTypeMatchers(FORWARD)
                     .permitAll()
-                    .requestMatchers(
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/ws/**",
-                        "/error",
-                        "/sign-in",
-                        "/sign-up",
-                        "/login",
-                        "/static/**",
-                        "/assets/**",
-                        "/h2-console/**",
-                        "/favicon.ico")
+                    .requestMatchers(permittedHtmlRequests())
                     .permitAll()
                     .anyRequest()
                     .fullyAuthenticated())
@@ -114,6 +101,23 @@ public class SecurityConfiguration {
       new AntPathRequestMatcher("/api/v1/users/register", POST.name()),
       new AntPathRequestMatcher("/api/v1/users/exists/username", GET.name()),
       new AntPathRequestMatcher("/api/v1/users/exists/email", GET.name())
+    };
+  }
+
+  private static String[] permittedHtmlRequests() {
+    return new String[] {
+      "/v3/api-docs/**",
+      "/swagger-ui/**",
+      "/swagger-ui.html",
+      "/ws/**",
+      "/error",
+      "/sign-in",
+      "/sign-up",
+      "/login",
+      "/static/**",
+      "/assets/**",
+      "/h2-console/**",
+      "/favicon.ico"
     };
   }
 

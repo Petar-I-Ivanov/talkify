@@ -18,7 +18,7 @@ const ChatPreview: React.FC<{ channelId: number }> = ({ channelId }) => {
   const { data: currentUser } = useCurrentUser();
   const { data, error, setSize } = useMessagesForInfiniteScrolling(
     channelId
-      ? { channelId, page: 0, size: 30, sort: "sentAt,desc" }
+      ? { channelId, page: 0, size: 20, sort: "sentAt,desc" }
       : undefined
   );
 
@@ -151,7 +151,7 @@ const MessagesComponent: React.FC<{
       isShowChild
       dataSource={messages}
       onScroll={(e: any) => {
-        if (e.target?.scrollTop === 0 && messages.length > 25) {
+        if (e.target?.scrollTop === 0 && messages.length >= 20) {
           fetchMore();
         }
       }}

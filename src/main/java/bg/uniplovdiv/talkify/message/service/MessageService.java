@@ -1,14 +1,15 @@
 package bg.uniplovdiv.talkify.message.service;
 
 import bg.uniplovdiv.talkify.message.model.Message;
-import bg.uniplovdiv.talkify.message.model.MessageCreateUpdateRequest;
+import bg.uniplovdiv.talkify.message.model.MessageCreateRequest;
 import bg.uniplovdiv.talkify.message.model.MessageSearchCriteria;
+import bg.uniplovdiv.talkify.message.model.MessageUpdateRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface MessageService {
 
-  Message create(MessageCreateUpdateRequest request);
+  Message create(MessageCreateRequest request);
 
   Message getById(Long id);
 
@@ -16,7 +17,7 @@ public interface MessageService {
 
   boolean canUpdate(Message message);
 
-  Message update(Long id, MessageCreateUpdateRequest request);
+  Message update(Long id, MessageUpdateRequest request);
 
   boolean canDelete(Message message);
 

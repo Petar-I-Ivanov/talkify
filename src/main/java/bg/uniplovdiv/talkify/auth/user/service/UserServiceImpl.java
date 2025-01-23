@@ -3,7 +3,9 @@ package bg.uniplovdiv.talkify.auth.user.service;
 import static bg.uniplovdiv.talkify.auth.user.model.UserPredicates.buildPredicates;
 import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwIfCondition;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchPrincipal;
+import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
+import static bg.uniplovdiv.talkify.utils.SecurityUtils.revalidateUser;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_CREATE;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_DELETE;
@@ -125,7 +127,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean canUpdate(User user) {
-    return isPermitted(USER_UPDATE) && user.getUsername().equals(fetchPrincipal());
+    return isPermitted(USER_UPDATE) && user.getId().equals(fetchUserId());
   }
 
   @Override
@@ -137,13 +139,15 @@ public class UserServiceImpl implements UserService {
         isUsernameExists(new UniqueValueRequest(request.username(), id)), "Username is taken.");
     throwIfCondition(isEmailExists(new UniqueValueRequest(request.email(), id)), "Email is taken.");
 
-    user = user.toBuilder().username(request.username()).email(request.email()).build();
-    return userRepository.save(user);
+    user.setUsername(request.username());
+    user.setEmail(request.email());
+    revalidateUser(user);
+    return user;
   }
 
   @Override
   public boolean canDelete(User user) {
-    return isPermitted(USER_DELETE) && user.getUsername().equals(fetchPrincipal());
+    return isPermitted(USER_DELETE) && user.getId().equals(fetchUserId());
   }
 
   @Override

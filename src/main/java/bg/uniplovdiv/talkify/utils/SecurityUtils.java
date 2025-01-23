@@ -20,7 +20,7 @@ public class SecurityUtils {
   public static final String SPEL_REFERENCE = "T(bg.uniplovdiv.talkify.utils.SecurityUtils)";
 
   public static final Long fetchUserId() {
-    return getCustomerUserDetails().map(CustomUserDetails::getId).orElse(null);
+    return getCustomerUserDetails().map(CustomUserDetails::getId).orElse(-1L);
   }
 
   public static final String fetchPrincipal() {

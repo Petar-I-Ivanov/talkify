@@ -5,8 +5,9 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
-import bg.uniplovdiv.talkify.message.model.MessageCreateUpdateRequest;
+import bg.uniplovdiv.talkify.message.model.MessageCreateRequest;
 import bg.uniplovdiv.talkify.message.model.MessageSearchCriteria;
+import bg.uniplovdiv.talkify.message.model.MessageUpdateRequest;
 import bg.uniplovdiv.talkify.message.service.MessageService;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
 import jakarta.validation.Valid;
@@ -40,7 +41,7 @@ public class MessageApi {
   @Authenticated
   @PostMapping
   @ResponseStatus(CREATED)
-  public MessageModel create(@Valid @RequestBody MessageCreateUpdateRequest request) {
+  public MessageModel create(@Valid @RequestBody MessageCreateRequest request) {
     var message = messageModelAssembler.toModel(messageService.create(request));
     webSocketMessenger.convertAndSend(
         String.format("/topic/chat/%d", request.channelId()), message);
@@ -59,7 +60,7 @@ public class MessageApi {
   @PutMapping("/{id}")
   @ResponseStatus(OK)
   public MessageModel update(
-      @PathVariable Long id, @Valid @RequestBody MessageCreateUpdateRequest request) {
+      @PathVariable Long id, @Valid @RequestBody MessageUpdateRequest request) {
     return messageModelAssembler.toModel(messageService.update(id, request));
   }
 

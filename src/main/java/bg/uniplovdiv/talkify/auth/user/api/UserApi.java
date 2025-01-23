@@ -94,7 +94,7 @@ public class UserApi {
   @UserUpdate
   @PutMapping("/{id}")
   @ResponseStatus(OK)
-  public UserModel update(@PathVariable Long id, UserUpdateRequest request) {
+  public UserModel update(@PathVariable Long id, @Valid @RequestBody UserUpdateRequest request) {
     return userModelAssembler.toModel(userService.update(id, request));
   }
 

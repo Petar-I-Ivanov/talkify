@@ -60,6 +60,9 @@ public class SecurityConfiguration {
                     .dispatcherTypeMatchers(FORWARD)
                     .permitAll()
                     .requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
                         "/ws/**",
                         "/error",
                         "/sign-in",

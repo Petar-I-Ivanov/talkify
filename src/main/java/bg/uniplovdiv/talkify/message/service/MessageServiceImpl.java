@@ -9,9 +9,10 @@ import static lombok.AccessLevel.PRIVATE;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
 import bg.uniplovdiv.talkify.message.model.Message;
-import bg.uniplovdiv.talkify.message.model.MessageCreateUpdateRequest;
+import bg.uniplovdiv.talkify.message.model.MessageCreateRequest;
 import bg.uniplovdiv.talkify.message.model.MessageRepository;
 import bg.uniplovdiv.talkify.message.model.MessageSearchCriteria;
+import bg.uniplovdiv.talkify.message.model.MessageUpdateRequest;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class MessageServiceImpl implements MessageService {
   ChannelService channelService;
 
   @Override
-  public Message create(MessageCreateUpdateRequest request) {
+  public Message create(MessageCreateRequest request) {
     throwIfNotAllowed(isPermitted(request.channelId(), SEND_MESSAGE));
     var message =
         Message.builder()
@@ -64,7 +65,7 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public Message update(Long id, MessageCreateUpdateRequest request) {
+  public Message update(Long id, MessageUpdateRequest request) {
     var message = getById(id);
     throwIfNotAllowed(canUpdate(message));
     message.setText(request.text());

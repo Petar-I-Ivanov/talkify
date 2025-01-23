@@ -33,8 +33,7 @@ public class FriendshipServiceImpl implements FriendshipService {
   @Override
   public boolean canAddFriend(Long friendId) {
     var currentUserId = fetchUserId();
-    return currentUserId != null
-        && !currentUserId.equals(friendId)
+    return !currentUserId.equals(friendId)
         && !friendshipRepository.existsByUserIdAndFriendIdAndActiveIsTrue(currentUserId, friendId);
   }
 
@@ -75,8 +74,7 @@ public class FriendshipServiceImpl implements FriendshipService {
   @Override
   public boolean canRemoveFriend(Long friendId) {
     var currentUserId = fetchUserId();
-    return currentUserId != null
-        && !currentUserId.equals(friendId)
+    return !currentUserId.equals(friendId)
         && friendshipRepository.existsByUserIdAndFriendIdAndActiveIsTrue(currentUserId, friendId);
   }
 

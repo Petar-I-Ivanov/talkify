@@ -4,7 +4,8 @@ import { EntityModel, PagedModel } from "hateoas-hal-types";
 import MatchMutate from "../../models/common/MatchMutate";
 import fetcher, { stringifyUrl } from "./fetcher";
 import Message from "../../models/messages/Message";
-import MessageCreateUpdateRequest from "../../models/messages/MessageCreateUpdateRequest";
+import MessageCreateRequest from "../../models/messages/MessageCreateRequest";
+import MessageUpdateRequest from "../../models/messages/MessageUpdateRequest";
 import MessageSearchCriteria from "../../models/messages/MessageSearchCriteria";
 
 const baseUrl = "/api/v1/messages";
@@ -13,7 +14,7 @@ const reloadMessages = async (mutate: MatchMutate) =>
   await mutate(new RegExp(baseUrl));
 
 export const createMessage = async (
-  request: MessageCreateUpdateRequest,
+  request: MessageCreateRequest,
   mutate: MatchMutate
 ) =>
   await fetcher
@@ -55,7 +56,7 @@ export const useMessagesByCriteria = (criteria?: MessageSearchCriteria) => {
 
 export const updatMessage = async (
   message: Message,
-  request: MessageCreateUpdateRequest,
+  request: MessageUpdateRequest,
   mutate: MatchMutate
 ) =>
   message?._links?.update?.href &&

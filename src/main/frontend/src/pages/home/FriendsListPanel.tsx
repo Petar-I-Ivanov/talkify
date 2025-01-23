@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { Button, Form, ListGroup, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import IconButton from "../../components/IconButton";
-import InfiniteScroll from "../../components/InfiniteScroll";
+import IconButton from "~/components/IconButton";
+import InfiniteScroll from "~/components/InfiniteScroll";
 import RegisterUserForm from "../register/RegisterUserForm";
-import { useSelectedChannelId } from "../../services/utils/useSelectedChannelId";
-import useMatchMutate from "../../services/utils/useMatchMutate";
-import { addFriend, removeFriend } from "../../services/apis/friendshipApi";
+import { useSelectedChannelId } from "~/services/utils/useSelectedChannelId";
+import useMatchMutate from "~/services/utils/useMatchMutate";
+import { addFriend, removeFriend } from "~/services/apis/friendshipApi";
 import {
   createUser,
   useUsersForInfiniteScrolling,
-} from "../../services/apis/userApi";
-import UserSearchCriteria from "../../models/user/UserSearchCriteria";
+} from "~/services/apis/userApi";
+import UserSearchCriteria from "~/models/user/UserSearchCriteria";
 
-import SearchIcon from "../../assets/icons/search-icon.svg?react";
-import BinIcon from "../../assets/icons/bin-icon.svg?react";
-import PlusIcon from "../../assets/icons/plus-icon.svg?react";
+import SearchIcon from "~/assets/icons/search-icon.svg?react";
+import BinIcon from "~/assets/icons/bin-icon.svg?react";
+import PlusIcon from "~/assets/icons/plus-icon.svg?react";
 
 const FriendsListPanel = () => {
   const matchMutate = useMatchMutate();

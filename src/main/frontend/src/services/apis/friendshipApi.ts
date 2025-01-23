@@ -1,7 +1,7 @@
 import fetcher from "./fetcher";
 import { reloadUsers } from "./userApi";
-import MatchMutate from "../../models/common/MatchMutate";
-import User from "../../models/user/User";
+import MatchMutate from "~/models/common/MatchMutate";
+import User from "~/models/user/User";
 
 export const addFriend = async (friend: User, mutate: MatchMutate) =>
   friend._links?.addFriend?.href &&

@@ -2,40 +2,40 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Form, ListGroup, Modal } from "react-bootstrap";
-import InfiniteScroll from "../../components/InfiniteScroll";
-import IconButton from "../../components/IconButton";
-import { useSelectedChannelId } from "../../services/utils/useSelectedChannelId";
-import useMatchMutate from "../../services/utils/useMatchMutate";
+import InfiniteScroll from "~/components/InfiniteScroll";
+import IconButton from "~/components/IconButton";
+import { useSelectedChannelId } from "~/services/utils/useSelectedChannelId";
+import useMatchMutate from "~/services/utils/useMatchMutate";
 import {
   maxLength,
   minLength,
   REQUIRED_MSG,
-} from "../../services/utils/reactHookFormValidations";
-import { useUsersByCriteria } from "../../services/apis/userApi";
+} from "~/services/utils/reactHookFormValidations";
+import { useUsersByCriteria } from "~/services/apis/userApi";
 import {
   createChannel,
   deleteChannel,
   getChannelsExistsByName,
   updateChannel,
   useChannelsForInfiniteScrolling,
-} from "../../services/apis/channelApi";
+} from "~/services/apis/channelApi";
 import {
   addChannelMember,
   makeAdmin,
   removeMember,
   useChannelMembers,
-} from "../../services/apis/channelMemberApi";
-import Channel from "../../models/channel/Channel";
-import ChannelSearchCriteria from "../../models/channel/ChannelSearchCriteria";
-import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
-import AddChannelGuestRequest from "../../models/channel/member/AddChannelGuestRequest";
+} from "~/services/apis/channelMemberApi";
+import Channel from "~/models/channel/Channel";
+import ChannelSearchCriteria from "~/models/channel/ChannelSearchCriteria";
+import ChannelCreateUpdateRequest from "~/models/channel/ChannelCreateUpdateRequest";
+import AddChannelGuestRequest from "~/models/channel/member/AddChannelGuestRequest";
 
-import UserIcon from "../../assets/icons/user-icon.svg?react";
-import EditIcon from "../../assets/icons/edit-icon.svg?react";
-import BinIcon from "../../assets/icons/bin-icon.svg?react";
-import PlusIcon from "../../assets/icons/plus-icon.svg?react";
-import AdminIcon from "../../assets/icons/admin-icon.svg?react";
-import UserAddIcon from "../../assets/icons/user-add-icon.svg?react";
+import UserIcon from "~/assets/icons/user-icon.svg?react";
+import EditIcon from "~/assets/icons/edit-icon.svg?react";
+import BinIcon from "~/assets/icons/bin-icon.svg?react";
+import PlusIcon from "~/assets/icons/plus-icon.svg?react";
+import AdminIcon from "~/assets/icons/admin-icon.svg?react";
+import UserAddIcon from "~/assets/icons/user-add-icon.svg?react";
 
 const ChannelsListPanel = () => {
   const { channelId, setChannelId } = useSelectedChannelId();

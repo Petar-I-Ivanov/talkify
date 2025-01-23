@@ -1,12 +1,12 @@
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 import { EntityModel, PagedModel } from "hateoas-hal-types";
-import MatchMutate from "../../models/common/MatchMutate";
 import fetcher, { stringifyUrl } from "./fetcher";
-import Message from "../../models/messages/Message";
-import MessageCreateRequest from "../../models/messages/MessageCreateRequest";
-import MessageUpdateRequest from "../../models/messages/MessageUpdateRequest";
-import MessageSearchCriteria from "../../models/messages/MessageSearchCriteria";
+import MatchMutate from "~/models/common/MatchMutate";
+import Message from "~/models/messages/Message";
+import MessageCreateRequest from "~/models/messages/MessageCreateRequest";
+import MessageUpdateRequest from "~/models/messages/MessageUpdateRequest";
+import MessageSearchCriteria from "~/models/messages/MessageSearchCriteria";
 
 const baseUrl = "/api/v1/messages";
 

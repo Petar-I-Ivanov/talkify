@@ -2,11 +2,11 @@ import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 import { EntityModel, PagedModel } from "hateoas-hal-types";
 import fetcher, { stringifyUrl } from "./fetcher";
-import MatchMutate from "../../models/common/MatchMutate";
-import UniqueValueRequest from "../../models/common/UniqueValueRequest";
-import Channel from "../../models/channel/Channel";
-import ChannelCreateUpdateRequest from "../../models/channel/ChannelCreateUpdateRequest";
-import ChannelSearchCriteria from "../../models/channel/ChannelSearchCriteria";
+import MatchMutate from "~/models/common/MatchMutate";
+import Channel from "~/models/channel/Channel";
+import UniqueValueRequest from "~/models/common/UniqueValueRequest";
+import ChannelCreateUpdateRequest from "~/models/channel/ChannelCreateUpdateRequest";
+import ChannelSearchCriteria from "~/models/channel/ChannelSearchCriteria";
 
 export const channelBaseUrl = "/api/v1/channels";
 

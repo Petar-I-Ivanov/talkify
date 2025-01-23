@@ -2,13 +2,13 @@ import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 import { EntityModel, PagedModel } from "hateoas-hal-types";
 import fetcher, { stringifyUrl } from "./fetcher";
-import MatchMutate from "../../models/common/MatchMutate";
-import UniqueValueRequest from "../../models/common/UniqueValueRequest";
-import User from "../../models/user/User";
-import UserCreateRequest from "../../models/user/UserCreateRequest";
-import UserSearchCriteria from "../../models/user/UserSearchCriteria";
-import UserUpdateRequest from "../../models/user/UserUpdateRequest";
-import UserLogin from "../../models/user/UserLogin";
+import MatchMutate from "~/models/common/MatchMutate";
+import UniqueValueRequest from "~/models/common/UniqueValueRequest";
+import User from "~/models/user/User";
+import UserLogin from "~/models/user/UserLogin";
+import UserCreateRequest from "~/models/user/UserCreateRequest";
+import UserSearchCriteria from "~/models/user/UserSearchCriteria";
+import UserUpdateRequest from "~/models/user/UserUpdateRequest";
 
 const baseUrl = "/api/v1/users";
 

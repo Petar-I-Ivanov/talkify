@@ -3,7 +3,7 @@ import FriendsListPanel from "./FriendsListPanel";
 import ChannelsListPanel from "./ChannelsListPanel";
 import SelectedChannelIdProvider, {
   useSelectedChannelId,
-} from "../../services/utils/useSelectedChannelId";
+} from "~/services/utils/useSelectedChannelId";
 import ChatPreview from "./ChatPreview";
 
 const HomePage = () => (

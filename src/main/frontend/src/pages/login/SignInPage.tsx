@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import UserLogin from "../../models/user/UserLogin";
-import { login } from "../../services/apis/userApi";
+import UserLogin from "~/models/user/UserLogin";
+import { login } from "~/services/apis/userApi";
 
-import background from "../../assets/images/login-background.png";
-import UserIcon from "../../assets/icons/user-icon.svg?react";
-import LockIcon from "../../assets/icons/lock-icon.svg?react";
-import EyeShowIcon from "../../assets/icons/eye-show-icon.svg?react";
-import EyeOffIcon from "../../assets/icons/eye-off-icon.svg?react";
+import background from "~/assets/images/login-background.png";
+import UserIcon from "~/assets/icons/user-icon.svg?react";
+import LockIcon from "~/assets/icons/lock-icon.svg?react";
+import EyeShowIcon from "~/assets/icons/eye-show-icon.svg?react";
+import EyeOffIcon from "~/assets/icons/eye-off-icon.svg?react";
 import "./SignInPage.css";
 
 const SignInPage = () => {

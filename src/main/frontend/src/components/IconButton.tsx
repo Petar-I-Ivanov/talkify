@@ -1,6 +1,6 @@
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import "./IconButton.css";
 import { Placement } from "react-bootstrap/esm/types";
+import "./IconButton.css";
 
 const IconButton: React.FC<{
   placement?: Placement;

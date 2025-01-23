@@ -1,8 +1,8 @@
 import moment from "moment";
 import queryString from "query-string";
 import { DATE_ALIKE_PATTERN, DATE_TIME_FORMAT } from "../utils/constants";
-import ApiError from "../../models/exceptions/ApiError";
-import ApiException from "../../models/exceptions/ApiException";
+import ApiError from "~/models/exceptions/ApiError";
+import ApiException from "~/models/exceptions/ApiException";
 
 const fetcherInternal = async (url: string, options: RequestInit = {}) => {
   let { headers, ...rest } = options;

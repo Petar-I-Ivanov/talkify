@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
 import { Button } from "react-bootstrap";
-import useMatchMutate from "../../services/utils/useMatchMutate";
-import { registerUser } from "../../services/apis/userApi";
+import useMatchMutate from "~/services/utils/useMatchMutate";
+import { registerUser } from "~/services/apis/userApi";
 import RegisterUserForm from "./RegisterUserForm";
 
-import background from "../../assets/images/login-background.png";
+import background from "~/assets/images/login-background.png";
 import "./SignUpPage.css";
 
 const SignUpPage = () => {

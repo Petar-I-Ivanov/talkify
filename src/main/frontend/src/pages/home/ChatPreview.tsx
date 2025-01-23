@@ -2,15 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Button, Input, MessageList, MessageType } from "react-chat-elements";
 import { Client } from "@stomp/stompjs";
-import useMatchMutate from "../../services/utils/useMatchMutate";
-import { useSelectedChannelId } from "../../services/utils/useSelectedChannelId";
-import { buildHeaderFromCookie } from "../../services/apis/fetcher";
+import useMatchMutate from "~/services/utils/useMatchMutate";
+import { useSelectedChannelId } from "~/services/utils/useSelectedChannelId";
+import { buildHeaderFromCookie } from "~/services/apis/fetcher";
 import {
   createMessage,
   useMessagesForInfiniteScrolling,
-} from "../../services/apis/messageApi";
-import { useCurrentUser } from "../../services/apis/userApi";
-import Message from "../../models/messages/Message";
+} from "~/services/apis/messageApi";
+import { useCurrentUser } from "~/services/apis/userApi";
+import Message from "~/models/messages/Message";
 
 import "./ChatPreview.css";
 

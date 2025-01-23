@@ -4,15 +4,15 @@ import { useForm } from "react-hook-form";
 import {
   getUserExistsByEmail,
   getUserExistsByUsername,
-} from "../../services/apis/userApi";
+} from "~/services/apis/userApi";
 import {
   isValidEmail,
   isValidPassword,
   maxLength,
   minLength,
   REQUIRED_MSG,
-} from "../../services/utils/reactHookFormValidations";
-import UserCreateRequest from "../../models/user/UserCreateRequest";
+} from "~/services/utils/reactHookFormValidations";
+import UserCreateRequest from "~/models/user/UserCreateRequest";
 import "./SignUpPage.css";
 
 const RegisterUserForm: React.FC<{

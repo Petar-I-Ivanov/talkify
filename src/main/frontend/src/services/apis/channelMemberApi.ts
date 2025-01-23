@@ -1,10 +1,10 @@
 import useSWR from "swr";
-import MatchMutate from "../../models/common/MatchMutate";
 import fetcher from "./fetcher";
 import { channelBaseUrl, reloadChannels } from "./channelApi";
-import Channel from "../../models/channel/Channel";
-import AddChannelGuestRequest from "../../models/channel/member/AddChannelGuestRequest";
-import ChannelMember from "../../models/channel/member/ChannelMember";
+import MatchMutate from "~/models/common/MatchMutate";
+import Channel from "~/models/channel/Channel";
+import ChannelMember from "~/models/channel/member/ChannelMember";
+import AddChannelGuestRequest from "~/models/channel/member/AddChannelGuestRequest";
 
 export const addChannelMember = async (
   channel: Channel,

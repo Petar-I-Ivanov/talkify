@@ -1,5 +1,5 @@
 import { useSWRConfig } from "swr";
-import MatchMutate from "../../models/common/MatchMutate";
+import MatchMutate from "~/models/common/MatchMutate";
 
 const useMatchMutate = (): MatchMutate => {
   const { cache, mutate } = useSWRConfig();

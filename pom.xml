@@ -5,7 +5,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.0</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 	<groupId>bg.uni-plovdiv</groupId>
 	<artifactId>talkify</artifactId>
@@ -31,8 +31,11 @@
 		<google-java-format.version>1.17.0</google-java-format.version>
 		<querydsl.version>5.1.0</querydsl.version>
 		<commons-collections.version>4.4</commons-collections.version>
-		<springdoc.version>1.8.0</springdoc.version>
+		<springdoc.version>2.8.3</springdoc.version>
 		<apt-maven-plugin.version>1.1.3</apt-maven-plugin.version>
+		<frontend-maven-plugin.version>1.11.0</frontend-maven-plugin.version>
+		<node.version>v22.4.1</node.version>
+		<yarn.version>v1.22.22</yarn.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -132,7 +135,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.8.3</version>
+			<version>${springdoc.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -199,10 +202,10 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.11.0</version>
+				<version>${frontend-maven-plugin.version}</version>
 				<configuration>
-					<nodeVersion>v22.4.1</nodeVersion>
-					<yarnVersion>v1.22.22</yarnVersion>
+					<nodeVersion>${node.version}</nodeVersion>
+					<yarnVersion>${yarn.version}</yarnVersion>
 					<installDirectory>target</installDirectory>
 					<workingDirectory>src/main/frontend</workingDirectory>
 				</configuration>

@@ -26,7 +26,6 @@ const HomePage = () => (
 
 const ShowChat = () => {
   const { channelId } = useSelectedChannelId();
-  fetch("/csrf-token");
   return channelId ? <ChatPreview channelId={channelId} /> : <></>;
 };
 

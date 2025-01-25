@@ -8,8 +8,9 @@ const App = () => (
   </AppConfig>
 );
 
-const AppConfig: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <SWRConfig value={{ fetcher: fetcher.get }}>{children}</SWRConfig>
-);
+const AppConfig: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  fetch("/csrf-token");
+  return <SWRConfig value={{ fetcher: fetcher.get }}>{children}</SWRConfig>;
+};
 
 export default App;

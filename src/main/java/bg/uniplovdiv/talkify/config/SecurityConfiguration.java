@@ -108,6 +108,7 @@ public class SecurityConfiguration {
       "/swagger-ui.html",
       "/ws/**",
       "/error",
+      "/csrf-token",
       "/sign-in",
       "/sign-up",
       "/login",

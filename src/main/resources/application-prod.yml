@@ -1,0 +1,18 @@
+server:
+  servlet:
+    session:
+      cookie:
+        same-site: Strict
+
+spring:
+
+  h2.console:
+    enabled: false
+
+springdoc:
+  api-docs.enabled: false
+  swagger-ui.enabled: false
+
+application:
+  headers:
+    content-security-policy: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self';"

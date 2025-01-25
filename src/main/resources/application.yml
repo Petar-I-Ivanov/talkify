@@ -58,6 +58,11 @@ spring:
   flyway:
     enabled: true
 
+springdoc:
+  api-docs.enabled: true
+  swagger-ui.enabled: true
+  pathsToMatch: /api/**
+
 #logging:
 #  level:
 #    org.springframework.security: INFO

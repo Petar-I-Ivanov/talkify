@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 import { EntityModel, PagedModel } from "hateoas-hal-types";
-import fetcher, { stringifyUrl } from "./fetcher";
+import fetcher, { buildHeaderFromCookie, stringifyUrl } from "./fetcher";
 import MatchMutate from "~/models/common/MatchMutate";
 import UniqueValueRequest from "~/models/common/UniqueValueRequest";
 import User from "~/models/user/User";
@@ -24,6 +24,7 @@ export const login = async (
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      ...buildHeaderFromCookie("X-CSRF-TOKEN"),
     },
     body: new URLSearchParams({ ...request }),
   }).then((response) =>

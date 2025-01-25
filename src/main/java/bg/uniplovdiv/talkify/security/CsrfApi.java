@@ -12,7 +12,10 @@ public class CsrfApi {
 
   @GetMapping("/csrf-token")
   public CsrfToken csrfToken(CsrfToken token, HttpServletResponse response) {
-    response.addHeader(SET_COOKIE, token.getHeaderName() + "=" + token.getToken());
+    response.addHeader(
+        SET_COOKIE,
+        String.format(
+            "%s=%s; HttpOnly; Secure; SameSite=None", token.getHeaderName(), token.getToken()));
     return token;
   }
 }

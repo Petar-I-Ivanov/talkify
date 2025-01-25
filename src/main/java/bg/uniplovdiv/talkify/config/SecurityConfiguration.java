@@ -47,7 +47,11 @@ public class SecurityConfiguration {
   public SecurityFilterChain htmlFilterChain(
       HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
     return http.csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
-        .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
+        .headers(
+            headers ->
+                headers
+                    .frameOptions(FrameOptionsConfig::deny)
+                    .contentSecurityPolicy(csp -> csp.policyDirectives("'self'")))
         .cors(CorsConfigurer::disable)
         .requestCache(Customizer.withDefaults())
         .authorizeHttpRequests(

@@ -15,18 +15,27 @@ const baseUrl = "/api/v1/users";
 export const reloadUsers = async (mutate: MatchMutate) =>
   await mutate(new RegExp(baseUrl));
 
-export const login = async (request: UserLogin) =>
-  await fetcher.post("/login", {
+export const login = async (
+  request: UserLogin,
+  onSuccess: (res: Response) => void,
+  onError: (res: Response) => void
+) =>
+  await fetch("/login", {
+    method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({ ...request }),
-  });
+  }).then((response) =>
+    response?.url?.includes("/sign-in?error=true")
+      ? onError(response)
+      : onSuccess(response)
+  );
 
 export const logout = async () =>
-  await fetcher
-    .get("/logout")
-    .then((response) => window.location.replace(response.url));
+  await fetch("/logout", { method: "GET" }).then((response) =>
+    window.location.replace(response.url)
+  );
 
 export const createUser = async (
   request: UserCreateRequest,

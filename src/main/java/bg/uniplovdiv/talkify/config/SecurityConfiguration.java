@@ -2,7 +2,6 @@ package bg.uniplovdiv.talkify.config;
 
 import static jakarta.servlet.DispatcherType.FORWARD;
 import static org.springframework.http.HttpMethod.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +17,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -68,7 +65,7 @@ public class SecurityConfiguration {
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", GET.name()))
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
-                    .logoutSuccessUrl("/")
+                    .logoutSuccessUrl("/sign-in")
                     .deleteCookies("JSESSIONID", "X-CSRF-TOKEN")
                     .permitAll())
         .formLogin(
@@ -76,8 +73,8 @@ public class SecurityConfiguration {
                 formLogin
                     .loginPage("/sign-in")
                     .loginProcessingUrl("/login")
-                    .successHandler(onSuccess("/"))
-                    .failureHandler(onFailure("/sign-in?error=true")))
+                    .defaultSuccessUrl("/", true)
+                    .failureUrl("/sign-in?error=true"))
         .authenticationProvider(authenticationProvider)
         .build();
   }
@@ -118,22 +115,6 @@ public class SecurityConfiguration {
       "/assets/**",
       "/h2-console/**",
       "/favicon.ico"
-    };
-  }
-
-  private static AuthenticationSuccessHandler onSuccess(String redirectUrl) {
-    return (request, response, authentication) -> {
-      response.setContentType(APPLICATION_JSON_VALUE);
-      response.getWriter().write("\"" + redirectUrl + "\"");
-      response.getWriter().flush();
-    };
-  }
-
-  private static AuthenticationFailureHandler onFailure(String redirectUrl) {
-    return (request, response, exception) -> {
-      response.setContentType(APPLICATION_JSON_VALUE);
-      response.getWriter().write("\"" + redirectUrl + "\"");
-      response.getWriter().flush();
     };
   }
 }

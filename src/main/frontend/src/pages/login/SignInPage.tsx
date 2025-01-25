@@ -14,7 +14,7 @@ import "./SignInPage.css";
 
 const SignInPage = () => {
   const nav = useNavigate();
-  const { register, handleSubmit } = useForm<UserLogin>();
+  const { register, resetField, handleSubmit } = useForm<UserLogin>();
   const [error, setError] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
@@ -28,14 +28,14 @@ const SignInPage = () => {
           className="LoginForm"
           onSubmit={handleSubmit(
             async (data) =>
-              await login(data).then((response) => {
-                if (!response?.includes("/sign-in?error=true")) {
-                  window.location.replace(response);
-                  return;
+              await login(
+                data,
+                (resp) => window.location.replace(resp.url),
+                (_) => {
+                  setError(true);
+                  resetField("password");
                 }
-
-                setError(true);
-              })
+              )
           )}
         >
           <div className="LoginForm-Header">

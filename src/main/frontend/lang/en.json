@@ -1,4 +1,34 @@
 {
+  "page.home.friendsList.title": {
+    "defaultMessage": "Friends list"
+  },
+  "page.home.friendsList.searchUsers": {
+    "defaultMessage": "Search all users"
+  },
+  "page.home.friendsList.searchUsers.inSystem": {
+    "defaultMessage": "Search from all the users in the system"
+  },
+  "page.home.friendsList.addFriend": {
+    "defaultMessage": "Add friend"
+  },
+  "page.home.friendsList.registerFriend.title": {
+    "defaultMessage": "Register new friend in the system"
+  },
+  "page.home.friendList.registerFriend.btn": {
+    "defaultMessage": "Register"
+  },
+  "page.home.friendsList.searchUsers.emptyMsg": {
+    "defaultMessage": "No friends to show"
+  },
+  "page.home.friendsList.search.placeholder": {
+    "defaultMessage": "Search"
+  },
+  "page.home.friendsList.registerUser": {
+    "defaultMessage": "Register friend"
+  },
+  "page.home.friendsList.removeFriend": {
+    "defaultMessage": "Remove friend"
+  },
   "page.home.chatPreview.notPermitted.msg": {
     "defaultMessage": "You are not permitted to access the following channel!"
   },

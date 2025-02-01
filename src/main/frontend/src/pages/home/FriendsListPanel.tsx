@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Form, ListGroup, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import IconButton from "~/components/IconButton";
@@ -18,6 +19,7 @@ import BinIcon from "~/assets/icons/bin-icon.svg?react";
 import PlusIcon from "~/assets/icons/plus-icon.svg?react";
 
 const FriendsListPanel = () => {
+  const intl = useIntl();
   const matchMutate = useMatchMutate();
   const { channelId, setChannelId } = useSelectedChannelId();
   const { watch, register } = useForm<UserSearchCriteria>({
@@ -35,14 +37,24 @@ const FriendsListPanel = () => {
   return (
     <>
       <div className="d-flex align-items-center justify-content-between">
-        <h4>Friends list</h4>
+        <h4>
+          <FormattedMessage
+            id="page.home.friendsList.title"
+            defaultMessage="Friends list"
+          />
+        </h4>
 
         <div>
           <IconButton
             icon={SearchIcon}
             tooltipId="UsersSearch"
             placement="bottom"
-            tooltip={<span>Search all users</span>}
+            tooltip={
+              <FormattedMessage
+                id="page.home.friendsList.searchUsers"
+                defaultMessage="Search all users"
+              />
+            }
             onClick={() => setSearchUsers(true)}
           />
           <IconButton
@@ -50,7 +62,12 @@ const FriendsListPanel = () => {
             variant="outline-success"
             tooltipId="UserRegister"
             placement="bottom"
-            tooltip={<span>Register friend</span>}
+            tooltip={
+              <FormattedMessage
+                id="page.home.friendsList.registerUser"
+                defaultMessage="Register friend"
+              />
+            }
             onClick={() => setRegisterFriend(true)}
           />
         </div>
@@ -58,13 +75,21 @@ const FriendsListPanel = () => {
       <Form.Control
         className="mb-2"
         {...register("search")}
-        placeholder="search"
+        placeholder={intl.formatMessage({
+          id: "page.home.friendsList.search.placeholder",
+          defaultMessage: "Search",
+        })}
       />
 
       <div style={{ overflow: "auto", scrollbarWidth: "thin" }}>
         <InfiniteScroll
           swr={users}
-          emptyIndicator={<p>No friends to show</p>}
+          emptyIndicator={
+            <FormattedMessage
+              id="page.home.friendsList.searchUsers.emptyMsg"
+              defaultMessage="No friends to show"
+            />
+          }
           isAll={(swr, page) =>
             (swr?.data?.[swr?.data?.length - 1]?.page.totalPages ?? 0) <= page
           }
@@ -98,7 +123,12 @@ const FriendsListPanel = () => {
                           icon={BinIcon}
                           variant="outline-danger"
                           tooltipId="AddFriend"
-                          tooltip={<span>Remove friend</span>}
+                          tooltip={
+                            <FormattedMessage
+                              id="page.home.friendsList.removeFriend"
+                              defaultMessage="Remove friend"
+                            />
+                          }
                           onClick={async () =>
                             await removeFriend(user, matchMutate).then(() =>
                               users.mutate()
@@ -127,6 +157,7 @@ const FriendsListPanel = () => {
 };
 
 const SearchUsersModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const intl = useIntl();
   const matchMutate = useMatchMutate();
   const { watch, register } = useForm<UserSearchCriteria>({
     defaultValues: {
@@ -140,20 +171,33 @@ const SearchUsersModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <Modal show>
       <Modal.Header>
-        <Modal.Title>Search from all the users in the system</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage
+            id="page.home.friendsList.searchUsers.inSystem"
+            defaultMessage="Search from all the users in the system"
+          />
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ height: "20rem" }}>
         <Form.Control
           {...register("search")}
-          placeholder="Search"
           className="mb-2"
+          placeholder={intl.formatMessage({
+            id: "page.home.friendsList.search.placeholder",
+            defaultMessage: "Search",
+          })}
         />
         <div
           style={{ height: "70%", overflow: "auto", scrollbarWidth: "thin" }}
         >
           <InfiniteScroll
             swr={users}
-            emptyIndicator={<p>No friends to show</p>}
+            emptyIndicator={
+              <FormattedMessage
+                id="page.home.friendsList.searchUsers.emptyMsg"
+                defaultMessage="No friends to show"
+              />
+            }
             isAll={(swr, page) =>
               (swr?.data?.[swr?.data?.length - 1]?.page.totalPages ?? 0) <= page
             }
@@ -174,7 +218,12 @@ const SearchUsersModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                             icon={PlusIcon}
                             variant="outline-success"
                             tooltipId="AddFriend"
-                            tooltip={<span>Add friend</span>}
+                            tooltip={
+                              <FormattedMessage
+                                id="page.home.friendsList.addFriend"
+                                defaultMessage="Add friend"
+                              />
+                            }
                             onClick={async () =>
                               await addFriend(user, matchMutate).then(() =>
                                 users.mutate()
@@ -186,8 +235,13 @@ const SearchUsersModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                           <IconButton
                             icon={BinIcon}
                             variant="outline-danger"
-                            tooltipId="AddFriend"
-                            tooltip={<span>Remove friend</span>}
+                            tooltipId="RemoveFriend"
+                            tooltip={
+                              <FormattedMessage
+                                id="page.home.friendsList.removeFriend"
+                                defaultMessage="Remove friend"
+                              />
+                            }
                             onClick={async () =>
                               await removeFriend(user, matchMutate).then(() =>
                                 users.mutate()
@@ -206,7 +260,7 @@ const SearchUsersModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
-          Close
+          <FormattedMessage id="general.closeBtn" defaultMessage="Close" />
         </Button>
       </Modal.Footer>
     </Modal>
@@ -218,16 +272,29 @@ const RegisterUserModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <Modal show>
       <Modal.Header>
-        <Modal.Title>Register new friend in the system</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage
+            id="page.home.friendsList.registerFriend.title"
+            defaultMessage="Register new friend in the system"
+          />
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <RegisterUserForm
           onSubmit={(data) => createUser(data, mutate).then(onClose)}
           footer={
             <Modal.Footer className="m-0 p-0">
-              <Button type="submit">Register</Button>
+              <Button type="submit">
+                <FormattedMessage
+                  id="page.home.friendList.registerFriend.btn"
+                  defaultMessage="Register"
+                />
+              </Button>
               <Button variant="secondary" onClick={onClose}>
-                Close
+                <FormattedMessage
+                  id="general.closeBtn"
+                  defaultMessage="Close"
+                />
               </Button>
             </Modal.Footer>
           }

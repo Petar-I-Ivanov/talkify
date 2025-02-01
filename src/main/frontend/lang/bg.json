@@ -1,4 +1,34 @@
 {
+  "page.home.friendsList.title": {
+    "defaultMessage": "Приятели"
+  },
+  "page.home.friendsList.searchUsers": {
+    "defaultMessage": "Търсете всички потребители"
+  },
+  "page.home.friendsList.searchUsers.inSystem": {
+    "defaultMessage": "Търсене на всички потребители в системата"
+  },
+  "page.home.friendsList.addFriend": {
+    "defaultMessage": "Добави приятел"
+  },
+  "page.home.friendsList.registerFriend.title": {
+    "defaultMessage": "Регистрирай приятел в системата"
+  },
+  "page.home.friendList.registerFriend.btn": {
+    "defaultMessage": "Регистрирай"
+  },
+  "page.home.friendsList.searchUsers.emptyMsg": {
+    "defaultMessage": "Няма приятели за показване"
+  },
+  "page.home.friendsList.search.placeholder": {
+    "defaultMessage": "търсене"
+  },
+  "page.home.friendsList.registerUser": {
+    "defaultMessage": "Регистрирай приятел"
+  },
+  "page.home.friendsList.removeFriend": {
+    "defaultMessage": "Махни приятел"
+  },
   "page.home.chatPreview.notPermitted.msg": {
     "defaultMessage": "Не е позволено да достъпваш този чат!"
   },
@@ -39,7 +69,7 @@
     "defaultMessage": "Премахни от чата"
   },
   "page.home.channelList.addMemberModal.title": {
-    "defaultMessage": "Избери потребител, който за влезе в чат <b>{channelName}</b>"
+    "defaultMessage": "Избери потребител, който да влезе в чат <b>{channelName}</b>"
   },
   "page.home.channelList.addMemberModal.selectUser.placeholder": {
     "defaultMessage": "Избери потребител"

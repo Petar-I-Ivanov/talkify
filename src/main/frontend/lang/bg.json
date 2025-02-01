@@ -1,4 +1,61 @@
 {
+  "page.home.chatPreview.notPermitted.msg": {
+    "defaultMessage": "Не е позволено да достъпваш този чат!"
+  },
+  "page.home.chatPreview.selectChannel.msg": {
+    "defaultMessage": "Избери чат!"
+  },
+  "page.home.chatPreview.input.placeholder": {
+    "defaultMessage": "Пиши тук..."
+  },
+  "page.home.chatPreview.sendBtn": {
+    "defaultMessage": "Изпрати"
+  },
+  "page.home.channelList.title": {
+    "defaultMessage": "Чатове"
+  },
+  "page.home.channelList.empty": {
+    "defaultMessage": "Няма чатове за показване"
+  },
+  "page.home.channelList.create": {
+    "defaultMessage": "Създай нов чат"
+  },
+  "page.home.channelList.createModal.title": {
+    "defaultMessage": "Изберете име за новият ви чат!"
+  },
+  "page.home.channelList.addMember": {
+    "defaultMessage": "Добави участник в чата"
+  },
+  "page.home.channelList.showMembers": {
+    "defaultMessage": "Покажи участниците в чата"
+  },
+  "page.home.channelList.showMembers.modal.title": {
+    "defaultMessage": "Участници на чат <b>{channelName}</b>"
+  },
+  "page.home.channelList.showMembers.modal.makeAdminBtn": {
+    "defaultMessage": "Наптрави администратор на чата"
+  },
+  "page.home.channelList.showMembers.modal.removeMemberBtn": {
+    "defaultMessage": "Премахни от чата"
+  },
+  "page.home.channelList.addMemberModal.title": {
+    "defaultMessage": "Избери потребител, който за влезе в чат <b>{channelName}</b>"
+  },
+  "page.home.channelList.addMemberModal.selectUser.placeholder": {
+    "defaultMessage": "Избери потребител"
+  },
+  "page.home.channelList.addMemberModal.addMemberBtn": {
+    "defaultMessage": "Добави в чата"
+  },
+  "page.home.channelList.update": {
+    "defaultMessage": "Редактирай името на чата"
+  },
+  "page.home.channelList.delete": {
+    "defaultMessage": "Изтрий чата"
+  },
+  "page.home.channelList.deleteModal.title": {
+    "defaultMessage": "Сигурен ли сте, че искате да изтриете чат <b>{channelName}</b>?"
+  },
   "page.login.welcomeBack": {
     "defaultMessage": "Добре дошли отново"
   },
@@ -65,7 +122,22 @@
   "general.validation.emailTaken": {
     "defaultMessage": "Имейлът е зает!"
   },
+  "general.validation.nameTaken": {
+    "defaultMessage": "Името е заето!"
+  },
   "general.validation.confirmPass": {
     "defaultMessage": "Паролите не са еднакви!"
+  },
+  "general.createBtn": {
+    "defaultMessage": "Създай"
+  },
+  "general.closeBtn": {
+    "defaultMessage": "Затвори"
+  },
+  "general.yes": {
+    "defaultMessage": "Да"
+  },
+  "general.no": {
+    "defaultMessage": "Не"
   }
 }

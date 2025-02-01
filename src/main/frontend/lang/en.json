@@ -1,4 +1,61 @@
 {
+  "page.home.chatPreview.notPermitted.msg": {
+    "defaultMessage": "You are not permitted to access the following channel!"
+  },
+  "page.home.chatPreview.selectChannel.msg": {
+    "defaultMessage": "Select channel!"
+  },
+  "page.home.chatPreview.input.placeholder": {
+    "defaultMessage": "Type here..."
+  },
+  "page.home.chatPreview.sendBtn": {
+    "defaultMessage": "Send"
+  },
+  "page.home.channelList.title": {
+    "defaultMessage": "Channels list"
+  },
+  "page.home.channelList.empty": {
+    "defaultMessage": "No channels to show"
+  },
+  "page.home.channelList.create": {
+    "defaultMessage": "Create new channel"
+  },
+  "page.home.channelList.createModal.title": {
+    "defaultMessage": "Pick a name for your new channel!"
+  },
+  "page.home.channelList.addMember": {
+    "defaultMessage": "Add channel member"
+  },
+  "page.home.channelList.showMembers": {
+    "defaultMessage": "Show channel members"
+  },
+  "page.home.channelList.showMembers.modal.title": {
+    "defaultMessage": "Channel members of <b>{channelName}</b>"
+  },
+  "page.home.channelList.showMembers.modal.makeAdminBtn": {
+    "defaultMessage": "Make channel admin"
+  },
+  "page.home.channelList.showMembers.modal.removeMemberBtn": {
+    "defaultMessage": "Remove channel member"
+  },
+  "page.home.channelList.addMemberModal.title": {
+    "defaultMessage": "Select user to join <b>{channelName}</b> channel"
+  },
+  "page.home.channelList.addMemberModal.selectUser.placeholder": {
+    "defaultMessage": "Select a user"
+  },
+  "page.home.channelList.addMemberModal.addMemberBtn": {
+    "defaultMessage": "Add in channel"
+  },
+  "page.home.channelList.update": {
+    "defaultMessage": "Update channel name"
+  },
+  "page.home.channelList.delete": {
+    "defaultMessage": "Delete channel"
+  },
+  "page.home.channelList.deleteModal.title": {
+    "defaultMessage": "Are you sure you want to delete channel with name <b>{channelName}</b>?"
+  },
   "page.login.welcomeBack": {
     "defaultMessage": "Welcome back"
   },
@@ -65,7 +122,22 @@
   "general.validation.emailTaken": {
     "defaultMessage": "Email is taken!"
   },
+  "general.validation.nameTaken": {
+    "defaultMessage": "Name is taken!"
+  },
   "general.validation.confirmPass": {
     "defaultMessage": "Passwords do not match!"
+  },
+  "general.createBtn": {
+    "defaultMessage": "Create"
+  },
+  "general.closeBtn": {
+    "defaultMessage": "Close"
+  },
+  "general.yes": {
+    "defaultMessage": "Yes"
+  },
+  "general.no": {
+    "defaultMessage": "No"
   }
 }

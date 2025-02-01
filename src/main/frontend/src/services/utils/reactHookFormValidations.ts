@@ -2,6 +2,7 @@ import { IntlShape } from "react-intl";
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from "./constants";
 import { getUserExistsByEmail, getUserExistsByUsername } from "../apis/userApi";
 import UniqueValueRequest from "~/models/common/UniqueValueRequest";
+import { getChannelsExistsByName } from "../apis/channelApi";
 
 export const requiredMsg = (intl: IntlShape) =>
   intl.formatMessage({
@@ -79,4 +80,15 @@ export const isConfirmPassMatchPass = (
   intl.formatMessage({
     id: "general.validation.confirmPass",
     defaultMessage: "Passwords do not match!",
+  });
+
+export const isNameTaken = async (
+  intl: IntlShape,
+  request?: UniqueValueRequest
+) =>
+  (request?.value &&
+    !(await getChannelsExistsByName({ value: request?.value }))) ||
+  intl.formatMessage({
+    id: "general.validation.nameTaken",
+    defaultMessage: "Name is taken!",
   });

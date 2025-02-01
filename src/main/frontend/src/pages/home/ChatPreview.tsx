@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import { Container } from "react-bootstrap";
 import { Button, Input, MessageList, MessageType } from "react-chat-elements";
 import { Client } from "@stomp/stompjs";
@@ -15,6 +16,7 @@ import Message from "~/models/messages/Message";
 import "./ChatPreview.css";
 
 const ChatPreview: React.FC<{ channelId: string }> = ({ channelId }) => {
+  const intl = useIntl();
   const { data: currentUser } = useCurrentUser();
   const { data, error, setSize } = useMessagesForInfiniteScrolling(
     channelId
@@ -103,7 +105,13 @@ const ChatPreview: React.FC<{ channelId: string }> = ({ channelId }) => {
       {channelId ? (
         <>
           {error && error?.error?.status === 403 ? (
-            <ErrorMessage message="You are not permitted to access the following channel!" />
+            <ErrorMessage
+              message={intl.formatMessage({
+                id: "page.home.chatPreview.notPermitted.msg",
+                defaultMessage:
+                  "You are not permitted to access the following channel!",
+              })}
+            />
           ) : (
             <MessagesComponent
               messages={dataSource}
@@ -112,7 +120,12 @@ const ChatPreview: React.FC<{ channelId: string }> = ({ channelId }) => {
           )}
         </>
       ) : (
-        <ErrorMessage message="Select channel!" />
+        <ErrorMessage
+          message={intl.formatMessage({
+            id: "page.home.chatPreview.selectChannel.msg",
+            defaultMessage: "Select channel!",
+          })}
+        />
       )}
     </Container>
   );
@@ -129,6 +142,7 @@ const MessagesComponent: React.FC<{
   fetchMore: () => void;
 }> = ({ messages, fetchMore }) => {
   const { channelId } = useSelectedChannelId();
+  const intl = useIntl();
   const mutate = useMatchMutate();
   const listRef = useRef();
   const inputRef = useRef<HTMLInputElement>();
@@ -157,7 +171,10 @@ const MessagesComponent: React.FC<{
       }}
     >
       <Input
-        placeholder="Type here..."
+        placeholder={intl.formatMessage({
+          id: "page.home.chatPreview.input.placeholder",
+          defaultMessage: "Type here...",
+        })}
         referance={inputRef}
         multiline
         value={text}
@@ -169,7 +186,15 @@ const MessagesComponent: React.FC<{
             submit();
           }
         }}
-        rightButtons={<Button text="Send" onClick={submit} />}
+        rightButtons={
+          <Button
+            text={intl.formatMessage({
+              id: "page.home.chatPreview.sendBtn",
+              defaultMessage: "Send",
+            })}
+            onClick={submit}
+          />
+        }
       />
     </MessageList>
   );

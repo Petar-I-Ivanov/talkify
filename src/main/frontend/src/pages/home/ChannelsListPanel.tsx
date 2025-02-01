@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Form, ListGroup, Modal } from "react-bootstrap";
@@ -7,6 +8,7 @@ import IconButton from "~/components/IconButton";
 import { useSelectedChannelId } from "~/services/utils/useSelectedChannelId";
 import useMatchMutate from "~/services/utils/useMatchMutate";
 import {
+  isNameTaken,
   maxLength,
   minLength,
   requiredMsg,
@@ -15,7 +17,6 @@ import { useUsersByCriteria } from "~/services/apis/userApi";
 import {
   createChannel,
   deleteChannel,
-  getChannelsExistsByName,
   updateChannel,
   useChannelsForInfiniteScrolling,
 } from "~/services/apis/channelApi";
@@ -36,7 +37,6 @@ import BinIcon from "~/assets/icons/bin-icon.svg?react";
 import PlusIcon from "~/assets/icons/plus-icon.svg?react";
 import AdminIcon from "~/assets/icons/admin-icon.svg?react";
 import UserAddIcon from "~/assets/icons/user-add-icon.svg?react";
-import { useIntl } from "react-intl";
 
 const ChannelsListPanel = () => {
   const { channelId, setChannelId } = useSelectedChannelId();
@@ -58,12 +58,22 @@ const ChannelsListPanel = () => {
   return (
     <>
       <div className="d-flex align-items-center justify-content-between">
-        <h4>Channels list</h4>
+        <h4>
+          <FormattedMessage
+            id="page.home.channelList.title"
+            defaultMessage="Channels list"
+          />
+        </h4>
         <IconButton
           icon={PlusIcon}
           variant="outline-success"
           tooltipId="ChannelAdd"
-          tooltip={<span>Create channel</span>}
+          tooltip={
+            <FormattedMessage
+              id="page.home.channelList.create"
+              defaultMessage="Create new channel"
+            />
+          }
           onClick={() => setCreateChannel(true)}
         />
       </div>
@@ -76,7 +86,12 @@ const ChannelsListPanel = () => {
       <div style={{ height: "70%", overflow: "auto", scrollbarWidth: "thin" }}>
         <InfiniteScroll
           swr={channels}
-          emptyIndicator={<p>No channels to show</p>}
+          emptyIndicator={
+            <FormattedMessage
+              id="page.home.channelList.empty"
+              defaultMessage="No channels to show"
+            />
+          }
           isAll={(swr, page) =>
             (swr?.data?.[swr?.data?.length - 1]?.page.totalPages ?? 0) <= page
           }
@@ -116,7 +131,12 @@ const ChannelsListPanel = () => {
                           icon={UserAddIcon}
                           variant="outline-success"
                           tooltipId="AddChannelMember"
-                          tooltip={<span>Add channel member</span>}
+                          tooltip={
+                            <FormattedMessage
+                              id="page.home.channelList.addMember"
+                              defaultMessage="Add channel member"
+                            />
+                          }
                           onClick={(e) => {
                             e.stopPropagation();
                             setAddMember(channel);
@@ -126,7 +146,12 @@ const ChannelsListPanel = () => {
                       <IconButton
                         icon={UserIcon}
                         tooltipId="MembersShow"
-                        tooltip={<span>Show channel members</span>}
+                        tooltip={
+                          <FormattedMessage
+                            id="page.home.channelList.showMembers"
+                            defaultMessage="Show channel members"
+                          />
+                        }
                         onClick={(e) => {
                           e.stopPropagation();
                           setShowMembers(channel);
@@ -137,7 +162,12 @@ const ChannelsListPanel = () => {
                           icon={EditIcon}
                           variant="outline-warning"
                           tooltipId="ChannelUpdate"
-                          tooltip={<span>Update channel name</span>}
+                          tooltip={
+                            <FormattedMessage
+                              id="page.home.channelList.update"
+                              defaultMessage="Update channel name"
+                            />
+                          }
                           onClick={(e) => {
                             e.stopPropagation();
                             setEditChannel(channel);
@@ -149,7 +179,12 @@ const ChannelsListPanel = () => {
                           icon={BinIcon}
                           variant="outline-danger"
                           tooltipId="ChannelDelete"
-                          tooltip={<span>Delete channel</span>}
+                          tooltip={
+                            <FormattedMessage
+                              id="page.home.channelList.delete"
+                              defaultMessage="Delete channel"
+                            />
+                          }
                           onClick={(e) => {
                             e.stopPropagation();
                             setDeleteChannel(channel);
@@ -214,7 +249,16 @@ const AddChannelMemberModal: React.FC<{
   return (
     <Modal show>
       <Modal.Header>
-        <Modal.Title>{`Select user to join ${channel.name} channel`}</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage
+            id="page.home.channelList.addMemberModal.title"
+            defaultMessage="Select user to join <b>{channelName}</b> channel"
+            values={{
+              channelName: channel.name,
+              b: (chunks) => <b>{chunks}</b>,
+            }}
+          />
+        </Modal.Title>
       </Modal.Header>
       <Form
         onSubmit={handleSubmit(async (data) =>
@@ -236,7 +280,10 @@ const AddChannelMemberModal: React.FC<{
                 }}
                 menuPortalTarget={document.body}
                 menuPlacement="auto"
-                placeholder="Select a user"
+                placeholder={intl.formatMessage({
+                  id: "page.home.channelList.addMemberModal.selectUser.placeholder",
+                  defaultMessage: "Select a user",
+                })}
                 options={users}
                 value={users?.find((user) => user.id === value) ?? null}
                 getOptionLabel={(option) => option.username}
@@ -252,9 +299,14 @@ const AddChannelMemberModal: React.FC<{
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit">Add in channel</Button>
+          <Button type="submit">
+            <FormattedMessage
+              id="page.home.channelList.addMemberModal.addMemberBtn"
+              defaultMessage="Add in channel"
+            />
+          </Button>
           <Button variant="secondary" onClick={onClose}>
-            Close
+            <FormattedMessage id="general.closeBtn" defaultMessage="Close" />
           </Button>
         </Modal.Footer>
       </Form>
@@ -274,7 +326,12 @@ const ChannelCreateModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <Modal show>
       <Modal.Header>
-        <Modal.Title>Pick a name for your new channel!</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage
+            id="page.home.channelList.createModal.title"
+            defaultMessage="Pick a name for your new channel!"
+          />
+        </Modal.Title>
       </Modal.Header>
       <Form
         onClick={(e) => e.stopPropagation()}
@@ -289,8 +346,7 @@ const ChannelCreateModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               minLength: minLength(3, intl),
               maxLength: maxLength(64, intl),
               validate: async (value) =>
-                (value && !(await getChannelsExistsByName({ value }))) ||
-                "Name is already taken!",
+                value && (await isNameTaken(intl, { value })),
             })}
           />
 
@@ -299,9 +355,11 @@ const ChannelCreateModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">
+            <FormattedMessage id="general.createBtn" defaultMessage="Create" />
+          </Button>
           <Button variant="secondary" onClick={onClose}>
-            Close
+            <FormattedMessage id="general.closeBtn" defaultMessage="Close" />
           </Button>
         </Modal.Footer>
       </Form>
@@ -316,17 +374,23 @@ const ChannelDeleteConfirm: React.FC<{
   const mutate = useMatchMutate();
   return (
     <Modal show>
-      <Modal.Body>{`Are you sure you want to delete channel with name ${channel.name}?`}</Modal.Body>
+      <Modal.Body>
+        <FormattedMessage
+          id="page.home.channelList.deleteModal.title"
+          defaultMessage="Are you sure you want to delete channel with name <b>{channelName}</b>?"
+          values={{ channelName: channel.name, b: (chunks) => <b>{chunks}</b> }}
+        />
+      </Modal.Body>
       <Modal.Footer>
         <Button
           onClick={async () =>
             await deleteChannel(channel, mutate).then(onClose)
           }
         >
-          Yes
+          <FormattedMessage id="general.yes" defaultMessage="Yes" />
         </Button>
         <Button variant="secondary" onClick={onClose}>
-          No
+          <FormattedMessage id="general.no" defaultMessage="No" />
         </Button>
       </Modal.Footer>
     </Modal>
@@ -372,12 +436,7 @@ const ChannelNameEdit: React.FC<{ channel: Channel; onClose: () => void }> = ({
           minLength: minLength(3, intl),
           maxLength: maxLength(64, intl),
           validate: async (value) =>
-            (value &&
-              !(await getChannelsExistsByName({
-                value,
-                exceptId: channel.id,
-              }))) ||
-            "Name is already taken!",
+            value && (await isNameTaken(intl, { value })),
         })}
       />
 
@@ -398,7 +457,13 @@ const PreviewChannelMembers: React.FC<{
   return (
     <Modal show>
       <Modal.Header>
-        <Modal.Title>Channel members of {channel.name}</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage
+            id="page.home.channelList.showMembers.modal.title"
+            defaultMessage="Channel members of <b>{channelName}</b>"
+            values={{ channelName: channel.name, b: (chunk) => <b>{chunk}</b> }}
+          />
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {members?.map((member) => (
@@ -411,7 +476,12 @@ const PreviewChannelMembers: React.FC<{
                   icon={AdminIcon}
                   variant="outline-info"
                   tooltipId="MakeChannelAdmin"
-                  tooltip={<span>Make channel admin</span>}
+                  tooltip={
+                    <FormattedMessage
+                      id="page.home.channelList.showMembers.modal.makeAdminBtn"
+                      defaultMessage="Make channel admin"
+                    />
+                  }
                   onClick={async () => await makeAdmin(member, mutate)}
                 />
               )}
@@ -420,7 +490,12 @@ const PreviewChannelMembers: React.FC<{
                   icon={BinIcon}
                   variant="outline-danger"
                   tooltipId="RemoveChannelMember"
-                  tooltip={<span>Remove channel member</span>}
+                  tooltip={
+                    <FormattedMessage
+                      id="page.home.channelList.showMembers.modal.removeMemberBtn"
+                      defaultMessage="Remove channel member"
+                    />
+                  }
                   onClick={async () => await removeMember(member, mutate)}
                 />
               )}
@@ -430,7 +505,7 @@ const PreviewChannelMembers: React.FC<{
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => onClose()}>
-          Close
+          <FormattedMessage id="general.closeBtn" defaultMessage="Close" />
         </Button>
       </Modal.Footer>
     </Modal>

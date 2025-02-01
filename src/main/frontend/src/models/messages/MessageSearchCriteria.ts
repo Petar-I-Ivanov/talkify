@@ -1,7 +1,7 @@
 import Paginated from "../common/Paginated";
 
 interface MessageSearchCriteria extends Paginated {
-  channelId?: number;
+  channelId?: string;
 }
 
 export default MessageSearchCriteria;

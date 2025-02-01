@@ -4,8 +4,8 @@ interface UserSearchCriteria extends Paginated {
   search?: string;
   username?: string;
   email?: string;
-  inChannelId?: number;
-  notInChannelId?: number;
+  inChannelId?: string;
+  notInChannelId?: string;
   onlyFriends?: boolean;
   active?: boolean;
 }

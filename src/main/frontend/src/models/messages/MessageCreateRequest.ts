@@ -1,6 +1,6 @@
 interface MessageCreateRequest {
   text?: string;
-  channelId?: number;
+  channelId?: string;
 }
 
 export default MessageCreateRequest;

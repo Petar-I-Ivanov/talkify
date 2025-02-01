@@ -9,6 +9,7 @@ import bg.uniplovdiv.talkify.auth.user.model.UserCreateRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
+import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
 import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
 import bg.uniplovdiv.talkify.security.annotations.PublicAccess;
@@ -73,7 +74,7 @@ public class UserApi {
   @UserSelect
   @GetMapping("/{id}")
   @ResponseStatus(OK)
-  public UserModel getById(@PathVariable Long id) {
+  public UserModel getById(@PathVariable @EncodedId Long id) {
     return userModelAssembler.toModel(userService.getById(id));
   }
 
@@ -94,14 +95,15 @@ public class UserApi {
   @UserUpdate
   @PutMapping("/{id}")
   @ResponseStatus(OK)
-  public UserModel update(@PathVariable Long id, @Valid @RequestBody UserUpdateRequest request) {
+  public UserModel update(
+      @PathVariable @EncodedId Long id, @Valid @RequestBody UserUpdateRequest request) {
     return userModelAssembler.toModel(userService.update(id, request));
   }
 
   @UserDelete
   @DeleteMapping("/{id}")
   @ResponseStatus(NO_CONTENT)
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
+  public ResponseEntity<Void> delete(@PathVariable @EncodedId Long id) {
     userService.delete(id);
     return ResponseEntity.status(NO_CONTENT.value()).build();
   }

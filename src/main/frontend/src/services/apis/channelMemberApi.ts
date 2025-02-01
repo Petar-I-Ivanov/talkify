@@ -17,7 +17,7 @@ export const addChannelMember = async (
     .post(channel._links.addMember.href, { body: JSON.stringify(request) })
     .then(() => reloadChannels(mutate)));
 
-export const useChannelMembers = (id: number) => {
+export const useChannelMembers = (id: string) => {
   const { data, error, isLoading } = useSWR(`${channelBaseUrl}/${id}/members`);
   return {
     data: (data?._embedded?.channelMembers ?? []) as ChannelMember[],

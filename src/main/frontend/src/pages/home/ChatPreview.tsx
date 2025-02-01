@@ -14,7 +14,7 @@ import Message from "~/models/messages/Message";
 
 import "./ChatPreview.css";
 
-const ChatPreview: React.FC<{ channelId: number }> = ({ channelId }) => {
+const ChatPreview: React.FC<{ channelId: string }> = ({ channelId }) => {
   const { data: currentUser } = useCurrentUser();
   const { data, error, setSize } = useMessagesForInfiniteScrolling(
     channelId

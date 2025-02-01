@@ -4,6 +4,7 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
 import bg.uniplovdiv.talkify.friendship.service.FriendshipService;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class FriendshipApi {
   @Authenticated
   @PostMapping("/{friendId}")
   @ResponseStatus(CREATED)
-  public ResponseEntity<Void> addFriend(@PathVariable Long friendId) {
+  public ResponseEntity<Void> addFriend(@PathVariable @EncodedId Long friendId) {
     friendshipService.addFriend(friendId);
     return ResponseEntity.status(CREATED).build();
   }
@@ -35,7 +36,7 @@ public class FriendshipApi {
   @Authenticated
   @DeleteMapping("/{friendId}")
   @ResponseStatus(NO_CONTENT)
-  public ResponseEntity<Void> removeFriend(@PathVariable Long friendId) {
+  public ResponseEntity<Void> removeFriend(@PathVariable @EncodedId Long friendId) {
     friendshipService.removeFriend(friendId);
     return ResponseEntity.status(NO_CONTENT).build();
   }

@@ -23,7 +23,7 @@ export const createMessage = async (
     })
     .then(() => reloadMessages(mutate));
 
-export const getMessageById = async (id: number): Promise<Message> =>
+export const getMessageById = async (id: string): Promise<Message> =>
   await fetcher.get(`${baseUrl}/${id}`);
 
 export const getMessagesByCriteria = async (

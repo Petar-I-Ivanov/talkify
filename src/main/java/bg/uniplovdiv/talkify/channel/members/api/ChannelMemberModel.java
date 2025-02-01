@@ -2,6 +2,7 @@ package bg.uniplovdiv.talkify.channel.members.api;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -14,7 +15,7 @@ import org.springframework.hateoas.server.core.Relation;
 @FieldDefaults(level = PRIVATE)
 public class ChannelMemberModel extends RepresentationModel<ChannelMemberModel> {
 
-  Long id;
+  @EncodedId Long id;
   String username;
   ChannelMemberRole role;
 }

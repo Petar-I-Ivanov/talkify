@@ -2,8 +2,8 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 
 const SelectedChannelIdContext = createContext<
   | {
-      channelId?: number;
-      setChannelId: React.Dispatch<React.SetStateAction<number | undefined>>;
+      channelId?: string;
+      setChannelId: React.Dispatch<React.SetStateAction<string | undefined>>;
     }
   | undefined
 >(undefined);
@@ -11,7 +11,7 @@ const SelectedChannelIdContext = createContext<
 const SelectedChannelIdProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [channelId, setChannelId] = useState<number>();
+  const [channelId, setChannelId] = useState<string>();
 
   const context = useMemo(
     () => ({

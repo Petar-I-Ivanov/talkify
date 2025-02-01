@@ -68,7 +68,7 @@ export const getUserExistsByEmail = async (
 ): Promise<boolean> =>
   await fetcher.get(stringifyUrl(`${baseUrl}/exists/email`, request));
 
-export const getUserById = async (id: number): Promise<User> =>
+export const getUserById = async (id: string): Promise<User> =>
   await fetcher.get(`${baseUrl}/${id}`);
 
 export const useCurrentUser = () => useSWR<User>(`${baseUrl}/current`);

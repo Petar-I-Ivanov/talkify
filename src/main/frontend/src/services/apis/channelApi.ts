@@ -28,7 +28,7 @@ export const getChannelsExistsByName = async (
 ): Promise<boolean> =>
   await fetcher.get(stringifyUrl(`${channelBaseUrl}/exists/name`, request));
 
-export const getChannelById = async (id: number): Promise<Channel> =>
+export const getChannelById = async (id: string): Promise<Channel> =>
   await fetcher.get(`${channelBaseUrl}/${id}`);
 
 export const getChannelsByCriteria = async (

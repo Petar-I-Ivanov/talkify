@@ -2,6 +2,7 @@ package bg.uniplovdiv.talkify.message.api;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import org.springframework.hateoas.server.core.Relation;
 @FieldDefaults(level = PRIVATE)
 public class MessageModel extends RepresentationModel<MessageModel> {
 
-  Long id;
+  @EncodedId Long id;
   String text;
   String sender;
   LocalDateTime sentAt;

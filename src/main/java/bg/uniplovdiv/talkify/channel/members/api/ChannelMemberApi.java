@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 import bg.uniplovdiv.talkify.channel.members.model.AddChannelGuestRequest;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
+import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class ChannelMemberApi {
   @PostMapping
   @ResponseStatus(OK)
   public ResponseEntity<Void> addMember(
-      @PathVariable Long id, @Valid @RequestBody AddChannelGuestRequest request) {
+      @PathVariable @EncodedId Long id, @Valid @RequestBody AddChannelGuestRequest request) {
     channelService.addMember(id, request);
     return ResponseEntity.ok().build();
   }
@@ -42,7 +43,7 @@ public class ChannelMemberApi {
   @Authenticated
   @GetMapping
   @ResponseStatus(OK)
-  public CollectionModel<ChannelMemberModel> getChannelMembers(@PathVariable Long id) {
+  public CollectionModel<ChannelMemberModel> getChannelMembers(@PathVariable @EncodedId Long id) {
     return CollectionModel.of(
         channelMemberModelAssembler.toChannelMembers(channelService.getById(id)));
   }
@@ -50,7 +51,8 @@ public class ChannelMemberApi {
   @Authenticated
   @PatchMapping("/{userId}/admin")
   @ResponseStatus(OK)
-  public ResponseEntity<Void> makeMemberAdmin(@PathVariable Long id, @PathVariable Long userId) {
+  public ResponseEntity<Void> makeMemberAdmin(
+      @PathVariable @EncodedId Long id, @PathVariable @EncodedId Long userId) {
     channelService.makeChannelAdmin(id, userId);
     return ResponseEntity.ok().build();
   }
@@ -58,7 +60,8 @@ public class ChannelMemberApi {
   @Authenticated
   @DeleteMapping("/{userId}")
   @ResponseStatus(OK)
-  public ResponseEntity<Void> removeMember(@PathVariable Long id, @PathVariable Long userId) {
+  public ResponseEntity<Void> removeMember(
+      @PathVariable @EncodedId Long id, @PathVariable @EncodedId Long userId) {
     channelService.removeGuest(id, userId);
     return ResponseEntity.ok().build();
   }

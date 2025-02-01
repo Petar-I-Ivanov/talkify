@@ -2,7 +2,7 @@ import { HalLink } from "hateoas-hal-types";
 import HateoasModel from "../common/HateoasModel";
 
 interface Channel extends HateoasModel {
-  id: number;
+  id: string;
   name: string;
   _links: {
     update?: HalLink;

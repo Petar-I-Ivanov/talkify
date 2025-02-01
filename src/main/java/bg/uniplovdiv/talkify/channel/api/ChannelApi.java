@@ -8,6 +8,7 @@ import static org.springframework.http.HttpStatus.OK;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
+import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
 import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelCreate;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelCreateOrUpdate;
@@ -57,7 +58,7 @@ public class ChannelApi {
   @ChannelSelect
   @GetMapping("/{id}")
   @ResponseStatus(OK)
-  public ChannelModel getById(@PathVariable Long id) {
+  public ChannelModel getById(@PathVariable @EncodedId Long id) {
     return channelModelAssembler.toModel(channelService.getById(id));
   }
 
@@ -72,14 +73,14 @@ public class ChannelApi {
   @PutMapping("/{id}")
   @ResponseStatus(OK)
   public ChannelModel update(
-      @PathVariable Long id, @Valid @RequestBody ChannelCreateUpdateRequest request) {
+      @PathVariable @EncodedId Long id, @Valid @RequestBody ChannelCreateUpdateRequest request) {
     return channelModelAssembler.toModel(channelService.update(id, request));
   }
 
   @ChannelDelete
   @DeleteMapping("/{id}")
   @ResponseStatus(NO_CONTENT)
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
+  public ResponseEntity<Void> delete(@PathVariable @EncodedId Long id) {
     channelService.delete(id);
     return ResponseEntity.status(NO_CONTENT.value()).build();
   }

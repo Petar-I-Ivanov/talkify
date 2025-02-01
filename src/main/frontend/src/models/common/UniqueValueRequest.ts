@@ -1,6 +1,6 @@
 interface UniqueValueRequest {
   value: string;
-  exceptId?: number;
+  exceptId?: string;
 }
 
 export default UniqueValueRequest;

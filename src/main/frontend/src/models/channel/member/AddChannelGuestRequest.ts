@@ -1,5 +1,5 @@
 interface AddChannelGuestRequest {
-  userId?: number;
+  userId?: string;
 }
 
 export default AddChannelGuestRequest;

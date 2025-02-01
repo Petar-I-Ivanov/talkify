@@ -2,7 +2,7 @@ import { HalLink } from "hateoas-hal-types";
 import ChannelMemberRole from "./ChannelMemberRole";
 
 interface ChannelMember {
-  id: number;
+  id: string;
   username: string;
   role: ChannelMemberRole;
   _links?: {

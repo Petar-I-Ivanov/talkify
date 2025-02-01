@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
+import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
 import bg.uniplovdiv.talkify.message.model.MessageCreateRequest;
 import bg.uniplovdiv.talkify.message.model.MessageSearchCriteria;
 import bg.uniplovdiv.talkify.message.model.MessageUpdateRequest;
@@ -60,14 +61,14 @@ public class MessageApi {
   @PutMapping("/{id}")
   @ResponseStatus(OK)
   public MessageModel update(
-      @PathVariable Long id, @Valid @RequestBody MessageUpdateRequest request) {
+      @PathVariable @EncodedId Long id, @Valid @RequestBody MessageUpdateRequest request) {
     return messageModelAssembler.toModel(messageService.update(id, request));
   }
 
   @Authenticated
   @DeleteMapping("/{id}")
   @ResponseStatus(NO_CONTENT)
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
+  public ResponseEntity<Void> delete(@PathVariable @EncodedId Long id) {
     messageService.delete(id);
     return ResponseEntity.status(NO_CONTENT.value()).build();
   }

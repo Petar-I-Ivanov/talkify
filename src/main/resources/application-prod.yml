@@ -16,3 +16,4 @@ springdoc:
 application:
   headers:
     content-security-policy: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self';"
+  encoded-id-key: 0F1E2D3C4B5A69781234ABCD5678EF90

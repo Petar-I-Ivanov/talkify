@@ -6,7 +6,6 @@ import at.favre.lib.idmask.IdMask;
 import bg.uniplovdiv.talkify.common.encodedid.EncodedIdService;
 import java.util.Optional;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,12 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @FieldDefaults(level = PRIVATE)
 public class EncodedIdConfiguration {
 
-  @Value("${encoded-id-key}")
-  String encodedIdKey;
-
   @Bean
-  public EncodedIdService encodedIdService() {
-    return Optional.ofNullable(encodedIdKey)
+  public EncodedIdService encodedIdService(ApplicationProperties properties) {
+    return Optional.ofNullable(properties.getEncodedIdKey())
         .map(EncodedIdService::buildMask)
         .map(EncodedIdConfiguration::buildMaskingEncodedIdService)
         .orElseGet(EncodedIdConfiguration::buildNoopEncodedIdService);

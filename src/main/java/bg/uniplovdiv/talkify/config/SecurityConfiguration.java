@@ -5,9 +5,9 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import bg.uniplovdiv.talkify.config.ApplicationProperties.Headers;
 import java.util.Optional;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -31,9 +31,6 @@ public class SecurityConfiguration {
 
   static final String APIS = "/api/**";
 
-  @Value("${application.headers.content-security-policy:#{null}}")
-  String contentSecurityPolicy;
-
   @Order(1)
   @Bean
   public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
@@ -53,7 +50,10 @@ public class SecurityConfiguration {
   @Order(2)
   @Bean
   public SecurityFilterChain htmlFilterChain(
-      HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
+      HttpSecurity http,
+      ApplicationProperties properties,
+      AuthenticationProvider authenticationProvider)
+      throws Exception {
     return http.csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
         .headers(
             headers ->
@@ -61,7 +61,8 @@ public class SecurityConfiguration {
                     .frameOptions(FrameOptionsConfig::deny)
                     .contentSecurityPolicy(
                         csp ->
-                            Optional.ofNullable(contentSecurityPolicy)
+                            Optional.ofNullable(properties.getHeaders())
+                                .map(Headers::getContentSecurityPolicy)
                                 .map(csp::policyDirectives)
                                 .orElse(csp)))
         .requestCache(withDefaults())

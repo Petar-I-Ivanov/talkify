@@ -63,6 +63,9 @@ springdoc:
   swagger-ui.enabled: true
   pathsToMatch: /api/**
 
+application:
+  encoded-id-key: FA1234BC5678DE90A1B2C3D4E5F60789
+
 #logging:
 #  level:
 #    org.springframework.security: INFO

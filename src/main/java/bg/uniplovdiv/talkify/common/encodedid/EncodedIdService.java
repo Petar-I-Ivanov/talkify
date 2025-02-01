@@ -28,13 +28,9 @@ public interface EncodedIdService {
         .map(Bytes::array)
         .map(Factory::with)
         .map(Config::builder)
-        .map(EncodedIdService::configCache)
+        .map(builder -> builder.enableCache(true).cacheImpl(new SimpleLruMemCache(4096)))
         .map(Builder::build)
         .map(IdMasks::forLongIds)
         .orElse(null);
-  }
-
-  private static Builder configCache(Builder builder) {
-    return builder.enableCache(true).cacheImpl(new SimpleLruMemCache(4096));
   }
 }

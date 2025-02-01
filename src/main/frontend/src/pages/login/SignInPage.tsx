@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -13,6 +14,7 @@ import EyeOffIcon from "~/assets/icons/eye-off-icon.svg?react";
 import "./SignInPage.css";
 
 const SignInPage = () => {
+  const intl = useIntl();
   const nav = useNavigate();
   const { register, resetField, handleSubmit } = useForm<UserLogin>();
   const [error, setError] = useState(false);
@@ -39,11 +41,24 @@ const SignInPage = () => {
           )}
         >
           <div className="LoginForm-Header">
-            <h3 className="text-center">Welcome Back</h3>
+            <h3 className="text-center">
+              <FormattedMessage
+                id="page.login.welcomeBack"
+                defaultMessage="Welcome back"
+              />
+            </h3>
             <div className="d-flex align-items-center justify-content-center">
-              <p className="text-center m-0">Don't have an account yet?</p>
+              <p className="text-center m-0">
+                <FormattedMessage
+                  id="page.login.dontHaveAccount"
+                  defaultMessage="Don't have an account yet?"
+                />
+              </p>
               <Button variant="link" onClick={() => nav("/sign-up")}>
-                Sign up
+                <FormattedMessage
+                  id="page.login.signUp"
+                  defaultMessage="Sign up"
+                />
               </Button>
             </div>
           </div>
@@ -55,7 +70,10 @@ const SignInPage = () => {
               </InputGroup.Text>
               <Form.Control
                 {...register("username")}
-                placeholder="username or email"
+                placeholder={intl.formatMessage({
+                  id: "page.login.usernameOrEmail",
+                  defaultMessage: "Username or email",
+                })}
               />
             </InputGroup>
           </Form.Group>
@@ -70,7 +88,10 @@ const SignInPage = () => {
               <Form.Control
                 {...register("password")}
                 type={showPass ? "text" : "password"}
-                placeholder="password"
+                placeholder={intl.formatMessage({
+                  id: "page.login.password",
+                  defaultMessage: "Password",
+                })}
               />
               <InputGroup.Text
                 style={{ cursor: "pointer" }}
@@ -87,12 +108,15 @@ const SignInPage = () => {
 
           {error && (
             <Form.Text className="error">
-              No user found with provided credentials
+              <FormattedMessage
+                id="page.login.errorMsg"
+                defaultMessage="No user found with provided credentials"
+              />
             </Form.Text>
           )}
 
           <Button className="w-100" type="submit">
-            Login
+            <FormattedMessage id="page.login.btn" defaultMessage="Login" />
           </Button>
         </Form>
       </div>

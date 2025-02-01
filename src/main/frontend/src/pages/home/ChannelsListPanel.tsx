@@ -9,7 +9,7 @@ import useMatchMutate from "~/services/utils/useMatchMutate";
 import {
   maxLength,
   minLength,
-  REQUIRED_MSG,
+  requiredMsg,
 } from "~/services/utils/reactHookFormValidations";
 import { useUsersByCriteria } from "~/services/apis/userApi";
 import {
@@ -36,6 +36,7 @@ import BinIcon from "~/assets/icons/bin-icon.svg?react";
 import PlusIcon from "~/assets/icons/plus-icon.svg?react";
 import AdminIcon from "~/assets/icons/admin-icon.svg?react";
 import UserAddIcon from "~/assets/icons/user-add-icon.svg?react";
+import { useIntl } from "react-intl";
 
 const ChannelsListPanel = () => {
   const { channelId, setChannelId } = useSelectedChannelId();
@@ -196,6 +197,7 @@ const AddChannelMemberModal: React.FC<{
   channel: Channel;
   onClose: () => void;
 }> = ({ channel, onClose }) => {
+  const intl = useIntl();
   const mutate = useMatchMutate();
   const { data: users } = useUsersByCriteria({
     active: true,
@@ -223,7 +225,7 @@ const AddChannelMemberModal: React.FC<{
           <Controller
             control={control}
             name="userId"
-            rules={{ required: REQUIRED_MSG }}
+            rules={{ required: requiredMsg(intl) }}
             render={({ field: { value, onChange } }) => (
               <Select
                 styles={{
@@ -261,6 +263,7 @@ const AddChannelMemberModal: React.FC<{
 };
 
 const ChannelCreateModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const intl = useIntl();
   const mutate = useMatchMutate();
   const {
     register,
@@ -282,9 +285,9 @@ const ChannelCreateModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <Modal.Body>
           <Form.Control
             {...register("name", {
-              required: REQUIRED_MSG,
-              minLength: minLength(3),
-              maxLength: maxLength(64),
+              required: requiredMsg(intl),
+              minLength: minLength(3, intl),
+              maxLength: maxLength(64, intl),
               validate: async (value) =>
                 (value && !(await getChannelsExistsByName({ value }))) ||
                 "Name is already taken!",
@@ -334,6 +337,7 @@ const ChannelNameEdit: React.FC<{ channel: Channel; onClose: () => void }> = ({
   channel,
   onClose,
 }) => {
+  const intl = useIntl();
   const mutate = useMatchMutate();
   const {
     register,
@@ -364,9 +368,9 @@ const ChannelNameEdit: React.FC<{ channel: Channel; onClose: () => void }> = ({
       <Form.Control
         style={{ width: "70%" }}
         {...register("name", {
-          required: REQUIRED_MSG,
-          minLength: minLength(3),
-          maxLength: maxLength(64),
+          required: requiredMsg(intl),
+          minLength: minLength(3, intl),
+          maxLength: maxLength(64, intl),
           validate: async (value) =>
             (value &&
               !(await getChannelsExistsByName({

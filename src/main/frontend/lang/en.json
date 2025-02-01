@@ -1,1 +1,71 @@
-{}
+{
+  "page.login.welcomeBack": {
+    "defaultMessage": "Welcome back"
+  },
+  "page.login.dontHaveAccount": {
+    "defaultMessage": "Don't have an account yet?"
+  },
+  "page.login.signUp": {
+    "defaultMessage": "Sign up"
+  },
+  "page.login.usernameOrEmail": {
+    "defaultMessage": "Username or email"
+  },
+  "page.login.password": {
+    "defaultMessage": "Password"
+  },
+  "page.login.errorMsg": {
+    "defaultMessage": "No user found with provided credentials"
+  },
+  "page.login.btn": {
+    "defaultMessage": "Login"
+  },
+  "page.register.welcome": {
+    "defaultMessage": "Welcome"
+  },
+  "page.register.haveAnAccount": {
+    "defaultMessage": "Already have an account?"
+  },
+  "page.register.signIn": {
+    "defaultMessage": "Sign in"
+  },
+  "form.register.username": {
+    "defaultMessage": "Username"
+  },
+  "form.register.email": {
+    "defaultMessage": "Email"
+  },
+  "form.register.password": {
+    "defaultMessage": "Password"
+  },
+  "form.register.confirmPassword": {
+    "defaultMessage": "Confirm password"
+  },
+  "form.register.btn": {
+    "defaultMessage": "Register"
+  },
+  "general.validation.required": {
+    "defaultMessage": "This field is required!"
+  },
+  "general.validation.minLength": {
+    "defaultMessage": "Minimum length of this field is {min}!"
+  },
+  "general.validation.maxLength": {
+    "defaultMessage": "Maximum length of this field is {max}!"
+  },
+  "general.validation.email": {
+    "defaultMessage": "This field should be email!"
+  },
+  "general.validation.password": {
+    "defaultMessage": "Password must contain atleast 1 upper, lower case and number or symbol!"
+  },
+  "general.validation.usernameTaken": {
+    "defaultMessage": "Username is taken!"
+  },
+  "general.validation.emailTaken": {
+    "defaultMessage": "Email is taken!"
+  },
+  "general.validation.confirmPass": {
+    "defaultMessage": "Passwords do not match!"
+  }
+}

@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import { useNavigate } from "react-router";
 import { Button } from "react-bootstrap";
 import useMatchMutate from "~/services/utils/useMatchMutate";
@@ -20,11 +21,24 @@ const SignUpPage = () => {
         <RegisterUserForm
           header={
             <div className="RegisterForm-Header">
-              <h3 className="text-center">Welcome</h3>
+              <h3 className="text-center">
+                <FormattedMessage
+                  id="page.register.welcome"
+                  defaultMessage="Welcome"
+                />
+              </h3>
               <div className="d-flex align-items-center justify-content-center">
-                <p className="text-center m-0">Already have an account?</p>
+                <p className="text-center m-0">
+                  <FormattedMessage
+                    id="page.register.haveAnAccount"
+                    defaultMessage="Already have an account?"
+                  />
+                </p>
                 <Button variant="link" onClick={() => nav("/sign-in")}>
-                  Sign in
+                  <FormattedMessage
+                    id="page.register.signIn"
+                    defaultMessage="Sign in"
+                  />
                 </Button>
               </div>
             </div>

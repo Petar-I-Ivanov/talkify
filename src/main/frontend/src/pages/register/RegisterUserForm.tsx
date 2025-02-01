@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import {
-  getUserExistsByEmail,
-  getUserExistsByUsername,
-} from "~/services/apis/userApi";
-import {
+  isConfirmPassMatchPass,
+  isEmailTaken,
+  isUsernameTaken,
   isValidEmail,
   isValidPassword,
   maxLength,
   minLength,
-  REQUIRED_MSG,
+  requiredMsg,
 } from "~/services/utils/reactHookFormValidations";
 import UserCreateRequest from "~/models/user/UserCreateRequest";
 import "./SignUpPage.css";
@@ -20,6 +20,7 @@ const RegisterUserForm: React.FC<{
   footer?: ReactNode;
   onSubmit: (request: UserCreateRequest) => void;
 }> = ({ header, onSubmit, footer }) => {
+  const intl = useIntl();
   const {
     watch,
     register,
@@ -32,60 +33,87 @@ const RegisterUserForm: React.FC<{
       {header}
 
       <Form.Group>
-        <Form.Label className="required">Username</Form.Label>
+        <Form.Label className="required">
+          <FormattedMessage
+            id="form.register.username"
+            defaultMessage="Username"
+          />
+        </Form.Label>
         <Form.Control
           {...register("username", {
-            required: REQUIRED_MSG,
-            minLength: minLength(3),
-            maxLength: maxLength(64),
+            required: requiredMsg(intl),
+            minLength: minLength(3, intl),
+            maxLength: maxLength(64, intl),
             validate: async (value) =>
-              (value && !(await getUserExistsByUsername({ value }))) ||
-              "Username is taken!",
+              value && (await isUsernameTaken(intl, { value })),
           })}
-          placeholder="Username"
+          placeholder={intl.formatMessage({
+            id: "form.register.username",
+            defaultMessage: "Username",
+          })}
         />
         <Form.Text className="error">{errors?.username?.message}</Form.Text>
       </Form.Group>
 
       <Form.Group>
-        <Form.Label className="required">Email</Form.Label>
+        <Form.Label className="required">
+          <FormattedMessage id="form.register.email" defaultMessage="Email" />
+        </Form.Label>
         <Form.Control
           {...register("email", {
-            required: REQUIRED_MSG,
-            pattern: isValidEmail(),
+            required: requiredMsg(intl),
+            pattern: isValidEmail(intl),
             validate: async (value) =>
-              (value && !(await getUserExistsByEmail({ value }))) ||
-              "Email is taken!",
+              value && (await isEmailTaken(intl, { value })),
           })}
-          placeholder="Email"
+          placeholder={intl.formatMessage({
+            id: "form.register.email",
+            defaultMessage: "Email",
+          })}
         />
         <Form.Text className="error">{errors?.email?.message}</Form.Text>
       </Form.Group>
 
       <Form.Group>
-        <Form.Label className="required">Password</Form.Label>
+        <Form.Label className="required">
+          <FormattedMessage
+            id="form.register.password"
+            defaultMessage="Password"
+          />
+        </Form.Label>
         <Form.Control
           {...register("password", {
-            required: REQUIRED_MSG,
-            minLength: minLength(8),
-            pattern: isValidPassword(),
+            required: requiredMsg(intl),
+            minLength: minLength(8, intl),
+            pattern: isValidPassword(intl),
           })}
           type="password"
-          placeholder="Password"
+          placeholder={intl.formatMessage({
+            id: "form.register.password",
+            defaultMessage: "Password",
+          })}
         />
         <Form.Text className="error">{errors?.password?.message}</Form.Text>
       </Form.Group>
 
       <Form.Group>
-        <Form.Label className="required">Confirm password</Form.Label>
+        <Form.Label className="required">
+          <FormattedMessage
+            id="form.register.confirmPassword"
+            defaultMessage="Confirm password"
+          />
+        </Form.Label>
         <Form.Control
           {...register("confirmPassword", {
-            required: REQUIRED_MSG,
+            required: requiredMsg(intl),
             validate: (value) =>
-              value === watch("password") || "Passwords do not match!",
+              isConfirmPassMatchPass(intl, value, watch("password")),
           })}
           type="password"
-          placeholder="Confirm password"
+          placeholder={intl.formatMessage({
+            id: "form.register.confirmPassword",
+            defaultMessage: "Confirm password",
+          })}
         />
         <Form.Text className="error">
           {errors?.confirmPassword?.message}
@@ -96,7 +124,7 @@ const RegisterUserForm: React.FC<{
         <>{footer}</>
       ) : (
         <Button className="w-100" type="submit">
-          Register
+          <FormattedMessage id="form.register.btn" defaultMessage="Register" />
         </Button>
       )}
     </Form>

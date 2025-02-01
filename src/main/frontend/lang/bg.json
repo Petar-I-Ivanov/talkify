@@ -1,1 +1,71 @@
-{}
+{
+  "page.login.welcomeBack": {
+    "defaultMessage": "Добре дошли отново"
+  },
+  "page.login.dontHaveAccount": {
+    "defaultMessage": "Все още нямате акаунт?"
+  },
+  "page.login.signUp": {
+    "defaultMessage": "Регистрирайте се"
+  },
+  "page.login.usernameOrEmail": {
+    "defaultMessage": "Потребителско име или имейл"
+  },
+  "page.login.password": {
+    "defaultMessage": "Парола"
+  },
+  "page.login.errorMsg": {
+    "defaultMessage": "Не е намерен потребител с това име/имейл и парола"
+  },
+  "page.login.btn": {
+    "defaultMessage": "Вход"
+  },
+  "page.register.welcome": {
+    "defaultMessage": "Добре дошли"
+  },
+  "page.register.haveAnAccount": {
+    "defaultMessage": "Вече имате акаунт?"
+  },
+  "page.register.signIn": {
+    "defaultMessage": "Влезте"
+  },
+  "form.register.username": {
+    "defaultMessage": "Потребителско име"
+  },
+  "form.register.email": {
+    "defaultMessage": "Имейл"
+  },
+  "form.register.password": {
+    "defaultMessage": "Парола"
+  },
+  "form.register.confirmPassword": {
+    "defaultMessage": "Повтори парола"
+  },
+  "form.register.btn": {
+    "defaultMessage": "Регистрирай се"
+  },
+  "general.validation.required": {
+    "defaultMessage": "Това поле е задължително!"
+  },
+  "general.validation.minLength": {
+    "defaultMessage": "Минималната дължнина на това поле е {min}!"
+  },
+  "general.validation.maxLength": {
+    "defaultMessage": "Максималната дължнина на това поле е {max}!"
+  },
+  "general.validation.email": {
+    "defaultMessage": "Това поле трябва да е имейл!"
+  },
+  "general.validation.password": {
+    "defaultMessage": "Паролата трябва да съдържа поне 1 главна, малка буква и цифра или символ!"
+  },
+  "general.validation.usernameTaken": {
+    "defaultMessage": "Потребителското име е заето!"
+  },
+  "general.validation.emailTaken": {
+    "defaultMessage": "Имейлът е зает!"
+  },
+  "general.validation.confirmPass": {
+    "defaultMessage": "Паролите не са еднакви!"
+  }
+}

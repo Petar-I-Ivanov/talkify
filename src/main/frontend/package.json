@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "yarn compile-messages && tsc -b && vite build",
+    "extract-messages": "formatjs extract src/**/*.{js,jsx,ts,tsx} --out-file lang/en.json --ignore src/react-app-env.d.ts",
+    "compile-messages": "formatjs compile-folder --ast lang src/i18n/compiled-lang",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -21,12 +23,14 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "react-intersection-observer": "^9.14.1",
+    "react-intl": "^7.1.5",
     "react-router": "^7.1.1",
     "react-select": "^5.9.0",
     "swr": "^2.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@formatjs/cli": "^6.5.1",
     "@types/node": "^22.10.10",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

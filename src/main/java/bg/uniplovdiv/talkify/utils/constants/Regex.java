@@ -10,5 +10,6 @@ public class Regex {
   // at least 1 upper case, 1 lower case and (1 digit or 1 symbol)
   public static final String PASSWORD_PTRN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d\\W]).+$";
 
+  // everything after the last slash (/test/test/w@1 -> w@1)
   public static final String VAL_AFTER_LAST_SLASH_PTRN = ".*/([^/]+)$";
 }

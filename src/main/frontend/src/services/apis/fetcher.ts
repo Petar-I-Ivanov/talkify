@@ -3,10 +3,15 @@ import queryString from "query-string";
 import { DATE_ALIKE_PATTERN, DATE_TIME_FORMAT } from "../utils/constants";
 import ApiError from "~/models/exceptions/ApiError";
 import ApiException from "~/models/exceptions/ApiException";
+import { getCurrentLocale } from "~/i18n/LocaleProvider";
 
 const fetcherInternal = async (url: string, options: RequestInit = {}) => {
   let { headers, ...rest } = options;
-  headers = { ...buildHeaderFromCookie("X-CSRF-TOKEN"), ...headers };
+  headers = {
+    ...{ "Accept-Language": getCurrentLocale() },
+    ...buildHeaderFromCookie("X-CSRF-TOKEN"),
+    ...headers,
+  };
 
   const init = {
     ...rest,

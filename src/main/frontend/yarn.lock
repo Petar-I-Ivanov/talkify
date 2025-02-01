@@ -463,6 +463,63 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.9.tgz#50dea3616bc8191fb8e112283b49eaff03e78429"
   integrity sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==
 
+"@formatjs/cli@^6.5.1":
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/cli/-/cli-6.5.1.tgz#abfa8ec311683441c527cd5a3f28b4f911ff8310"
+  integrity sha512-JptxQysoKiVZkGfd1u9GTlt88IQ1NUCUpxWI7Obkr7cZAupIBT5QbyL1NPq3UAyTgXODQ+09IUwZhJwVExW41g==
+
+"@formatjs/ecma402-abstract@2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-2.3.2.tgz#0ee291effe7ee2c340742a6c95d92eacb5e6c00a"
+  integrity sha512-6sE5nyvDloULiyOMbOTJEEgWL32w+VHkZQs8S02Lnn8Y/O5aQhjOEXwWzvR7SsBE/exxlSpY2EsWZgqHbtLatg==
+  dependencies:
+    "@formatjs/fast-memoize" "2.2.6"
+    "@formatjs/intl-localematcher" "0.5.10"
+    decimal.js "10"
+    tslib "2"
+
+"@formatjs/fast-memoize@2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@formatjs/fast-memoize/-/fast-memoize-2.2.6.tgz#fac0a84207a1396be1f1aa4ee2805b179e9343d1"
+  integrity sha512-luIXeE2LJbQnnzotY1f2U2m7xuQNj2DA8Vq4ce1BY9ebRZaoPB1+8eZ6nXpLzsxuW5spQxr7LdCg+CApZwkqkw==
+  dependencies:
+    tslib "2"
+
+"@formatjs/icu-messageformat-parser@2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@formatjs/icu-messageformat-parser/-/icu-messageformat-parser-2.11.0.tgz#28d22a735114b7309c0d3e43d39f2660917867c8"
+  integrity sha512-Hp81uTjjdTk3FLh/dggU5NK7EIsVWc5/ZDWrIldmf2rBuPejuZ13CZ/wpVE2SToyi4EiroPTQ1XJcJuZFIxTtw==
+  dependencies:
+    "@formatjs/ecma402-abstract" "2.3.2"
+    "@formatjs/icu-skeleton-parser" "1.8.12"
+    tslib "2"
+
+"@formatjs/icu-skeleton-parser@1.8.12":
+  version "1.8.12"
+  resolved "https://registry.yarnpkg.com/@formatjs/icu-skeleton-parser/-/icu-skeleton-parser-1.8.12.tgz#43076747cdbe0f23bfac2b2a956bd8219716680d"
+  integrity sha512-QRAY2jC1BomFQHYDMcZtClqHR55EEnB96V7Xbk/UiBodsuFc5kujybzt87+qj1KqmJozFhk6n4KiT1HKwAkcfg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "2.3.2"
+    tslib "2"
+
+"@formatjs/intl-localematcher@0.5.10":
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.5.10.tgz#1e0bd3fc1332c1fe4540cfa28f07e9227b659a58"
+  integrity sha512-af3qATX+m4Rnd9+wHcjJ4w2ijq+rAVP3CCinJQvFv1kgSu1W6jypUmvleJxcewdxmutM8dmIRZFxO/IQBZmP2Q==
+  dependencies:
+    tslib "2"
+
+"@formatjs/intl@3.1.3":
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-3.1.3.tgz#457dba081679a5e899c900624331608742df138e"
+  integrity sha512-yWtB1L4vOr17MLII3bcNRmjx6qBkSupJuA6nJz1zVxpWbJXKQL5vgvjRCehTO3z7HolxFjtLdfV0/RN+bC34Fg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "2.3.2"
+    "@formatjs/fast-memoize" "2.2.6"
+    "@formatjs/icu-messageformat-parser" "2.11.0"
+    intl-messageformat "10.7.14"
+    tslib "2"
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/@humanfs/core/-/core-0.19.1.tgz#17c55ca7d426733fe3c561906b8173c336b40a77"
@@ -827,6 +884,14 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.6.tgz#628effeeae2064a1b4e79f78e81d87b7e5fc7b50"
   integrity sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==
 
+"@types/hoist-non-react-statics@3":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.6.tgz#6bba74383cdab98e8db4e20ce5b4a6b98caed010"
+  integrity sha512-lPByRJUer/iN/xa4qpyL0qmL11DqNW81iU/IG1S3uvRUq4oKagz8VCxZjiWkumgt66YT3vOdDgZ0o32sGKtCEw==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+
 "@types/json-schema@^7.0.15":
   version "7.0.15"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
@@ -858,6 +923,13 @@
   version "4.4.12"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.12.tgz#b5d76568485b02a307238270bfe96cb51ee2a044"
   integrity sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==
+
+"@types/react@*", "@types/react@16 || 17 || 18 || 19":
+  version "19.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.8.tgz#7098e6159f2a61e4f4cef2c1223c044a9bec590e"
+  integrity sha512-9P/o1IGdfmQxrujGbIMDyYaaCykhLKc0NGCtYcECNUr9UAaDe4gwvV9bR6tvd5Br1SG0j+PBpbKr2UYY8CwqSw==
+  dependencies:
+    csstype "^3.0.2"
 
 "@types/react@>=16.9.11":
   version "19.0.2"
@@ -1155,6 +1227,11 @@ debug@^4.1.0, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4:
   integrity sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==
   dependencies:
     ms "^2.1.3"
+
+decimal.js@10:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.5.0.tgz#0f371c7cf6c4898ce0afb09836db73cd82010f22"
+  integrity sha512-8vDa8Qxvr/+d94hSh5P3IJwI5t8/c0KsMp+g8bNw9cY2icONa5aPfvKeieW1WlG0WQYwwhJ7mjui2xtiePQSXw==
 
 decode-uri-component@^0.4.1:
   version "0.4.1"
@@ -1495,7 +1572,7 @@ hateoas-hal-types@^1.0.1:
   resolved "https://registry.yarnpkg.com/hateoas-hal-types/-/hateoas-hal-types-1.0.1.tgz#d2ca2bb6df2b52d06c5b93c5ca616c0ab3cb1809"
   integrity sha512-2Km4KJbaKkktLOPIwztHjuBozijxABJF8F5Bc5o9qIJkldaSk2Vb/iNrTZ0njx08+zThOZOauH6g0CCdi8OXzA==
 
-hoist-non-react-statics@^3.3.1:
+hoist-non-react-statics@3, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -1519,6 +1596,16 @@ imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
   integrity sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==
+
+intl-messageformat@10.7.14:
+  version "10.7.14"
+  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-10.7.14.tgz#ddcbbfdb1682afe56da094f21a4ac74fc3c91552"
+  integrity sha512-mMGnE4E1otdEutV5vLUdCxRJygHB5ozUBxsPB5qhitewssrS/qGruq9bmvIRkkGsNeK5ZWLfYRld18UHGTIifQ==
+  dependencies:
+    "@formatjs/ecma402-abstract" "2.3.2"
+    "@formatjs/fast-memoize" "2.2.6"
+    "@formatjs/icu-messageformat-parser" "2.11.0"
+    tslib "2"
 
 invariant@^2.2.4:
   version "2.2.4"
@@ -1920,6 +2007,20 @@ react-intersection-observer@^9.14.1:
   resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.14.1.tgz#c9d42576d64dfde18336acdcdf097761fb79ad19"
   integrity sha512-k1xIUn3sCQi3ugNeF64FJb3zwve5mcetvAUR9JazXeOmtap4IP2evN8rs+yf6SQ7F1QydsOGiqTmt+lySKZ9uA==
 
+react-intl@^7.1.5:
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-7.1.5.tgz#086c1b7cfb00ab7c9f62241162aca86520a5dc4c"
+  integrity sha512-cVvsVdaOnZ85XBXU0Lc2PVGNhGlzl4UBV+aWAGe/zrV5Xr+CEW7izUsAp/fIuwvCsJl9R+aokppm+P7cdhnpUA==
+  dependencies:
+    "@formatjs/ecma402-abstract" "2.3.2"
+    "@formatjs/icu-messageformat-parser" "2.11.0"
+    "@formatjs/intl" "3.1.3"
+    "@types/hoist-non-react-statics" "3"
+    "@types/react" "16 || 17 || 18 || 19"
+    hoist-non-react-statics "3"
+    intl-messageformat "10.7.14"
+    tslib "2"
+
 react-is@^16.13.1, react-is@^16.3.2, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -2162,7 +2263,7 @@ ts-api-utils@^1.3.0:
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-1.4.3.tgz#bfc2215fe6528fecab2b0fba570a2e8a4263b064"
   integrity sha512-i3eMG77UTMD0hZhgRS562pv83RC6ukSAC2GMNWc+9dieh/+jDM5u5YG+NHX6VNDRHQcHwmsTHctP9LhbC3WxVw==
 
-tslib@^2.0.3, tslib@^2.8.0:
+tslib@2, tslib@^2.0.3, tslib@^2.8.0:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==

@@ -9,19 +9,19 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@FieldDefaults(level = PRIVATE)
 public class EncodedIdDeserializer extends StdDeserializer<Long> {
 
   static final long serialVersionUID = 3688917752055750600L;
 
-  transient EncodedIdService encryptedIdService;
+  @Autowired transient EncodedIdService encryptedIdService;
 
-  public EncodedIdDeserializer(EncodedIdService encryptedIdService) {
+  public EncodedIdDeserializer() {
     super(Long.class);
-    this.encryptedIdService = encryptedIdService;
   }
 
   @Override

@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
+import bg.uniplovdiv.talkify.common.encodedid.EncodedIdService;
 import bg.uniplovdiv.talkify.message.model.MessageCreateRequest;
 import bg.uniplovdiv.talkify.message.model.MessageSearchCriteria;
 import bg.uniplovdiv.talkify.message.model.MessageUpdateRequest;
@@ -38,6 +39,7 @@ public class MessageApi {
   MessageModelAssembler messageModelAssembler;
 
   SimpMessagingTemplate webSocketMessenger;
+  EncodedIdService encodedIdService;
 
   @Authenticated
   @PostMapping
@@ -45,7 +47,7 @@ public class MessageApi {
   public MessageModel create(@Valid @RequestBody MessageCreateRequest request) {
     var message = messageModelAssembler.toModel(messageService.create(request));
     webSocketMessenger.convertAndSend(
-        String.format("/topic/chat/%d", request.channelId()), message);
+        String.format("/topic/chat/%s", encodedIdService.encode(request.channelId())), message);
     return message;
   }
 

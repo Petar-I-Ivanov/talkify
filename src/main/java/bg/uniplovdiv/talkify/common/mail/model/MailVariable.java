@@ -10,7 +10,12 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
 public enum MailVariable {
-  INIT("");
+  RECIEVER("reciever"),
+  FRIEND_USERNAME("friend_username"),
+  APP_NAME("app_name"),
+  USERNAME("username"),
+  PASSWORD("password"),
+  LOGIN_URL("login_url");
 
   String variable;
 }

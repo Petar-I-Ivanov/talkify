@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
 public enum MailSubject {
-  INIT("");
+  FRIEND_REGISTER_NOTIFY("mail.subject.friendRegisterNotify");
 
   String subject;
 }

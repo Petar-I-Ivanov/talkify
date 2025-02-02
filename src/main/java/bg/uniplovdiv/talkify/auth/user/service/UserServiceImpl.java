@@ -7,6 +7,7 @@ import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.revalidateUser;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
+import static bg.uniplovdiv.talkify.utils.TransactionUtils.afterCommit;
 import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.EMAIL_TAKEN_EXC;
 import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.PASS_MISMATCH_EXC;
 import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.USERNAME_TAKEN_EXC;
@@ -21,6 +22,7 @@ import bg.uniplovdiv.talkify.auth.user.model.UserCreateRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserRepository;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
+import bg.uniplovdiv.talkify.common.mail.MailService;
 import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
 import bg.uniplovdiv.talkify.friendship.service.FriendshipService;
 import jakarta.transaction.Transactional;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
   RoleService roleService;
   FriendshipService friendshipService;
   PasswordEncoder passwordEncoder;
+  MailService mailService;
 
   @Override
   public boolean canCreate() {
@@ -55,6 +58,10 @@ public class UserServiceImpl implements UserService {
     throwIfNotAllowed(canCreate());
     var friend = register(request);
     friendshipService.addFriend(friend.getId());
+
+    afterCommit(
+        () ->
+            mailService.sendMailForRegisteredFriend(fetchPrincipal(), friend, request.password()));
     return friend;
   }
 

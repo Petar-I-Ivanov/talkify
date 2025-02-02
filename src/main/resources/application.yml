@@ -25,6 +25,8 @@ spring:
 
   datasource.hikari.maximum-pool-size: 20
 
+  freemarker.template-loader-path: classpath:/mail-templates/
+
   resources.cache.cachecontrol:
     max-age: 365D
     must-revalidate: true
@@ -82,6 +84,7 @@ springdoc:
   pathsToMatch: /api/**
 
 application:
+  base-url: http://localhost:5173
   encoded-id-key: FA1234BC5678DE90A1B2C3D4E5F60789
   mail:
     enabled: false

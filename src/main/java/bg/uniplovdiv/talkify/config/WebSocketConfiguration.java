@@ -25,6 +25,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
   EncodedIdService encodedIdService;
+  ApplicationProperties properties;
 
   @Override
   public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -34,7 +35,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
+    registry.addEndpoint("/ws").setAllowedOriginPatterns(properties.getBaseUrl()).withSockJS();
   }
 
   @Override

@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.common.mail.sender;
+package bg.uniplovdiv.talkify.common.mail;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.nonNull;
@@ -58,7 +58,8 @@ public class MailSender {
   private MimeMessagePreparator buildMessagePreparator(MailProps props, String sendTo) {
     var appProps = applicationProperties.getMail();
     var localizedSubject =
-        messageSource.getMessage(props.getSubject().getSubject(), null, props.getLocale());
+        messageSource.getMessage(
+            props.getSubject().getSubject(), props.getSubjectParams(), props.getLocale());
 
     return mimeMessage -> {
       var helper = new MimeMessageHelper(mimeMessage, true, UTF_8.name());

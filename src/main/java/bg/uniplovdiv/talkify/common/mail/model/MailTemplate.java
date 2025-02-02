@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
 public enum MailTemplate {
-  INIT("");
+  FRIEND_REGISTER_NOTIFY("friend-register-notify-%s.ftl");
 
   String template;
 }

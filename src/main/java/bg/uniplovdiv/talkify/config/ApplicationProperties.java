@@ -13,6 +13,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @FieldDefaults(level = PRIVATE)
 public class ApplicationProperties {
 
+  String baseUrl;
   String encodedIdKey;
 
   @NestedConfigurationProperty Headers headers;

@@ -9,10 +9,12 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -40,6 +42,11 @@ public class MailPropsBuilder {
   public MailPropsBuilder subject(MailSubject subject) {
     requireNonNull(subject, "Mail 'subject' shouldn't be null!");
     props.subject = subject;
+    return this;
+  }
+
+  public MailPropsBuilder addSubjectParam(String subjectParam) {
+    Optional.ofNullable(subjectParam).ifPresent(props.subjectParams::add);
     return this;
   }
 
@@ -106,11 +113,16 @@ public class MailPropsBuilder {
     MailSubject subject;
     MailTemplate template;
     String emailBody;
+    List<String> subjectParams = new LinkedList<>();
     Set<String> sendTo = new HashSet<>();
     Map<MailVariable, Object> variables = new HashMap<>();
 
     public String getTemplate() {
       return String.format(template.getTemplate(), locale.getLanguage());
+    }
+
+    public String[] getSubjectParams() {
+      return subjectParams.toArray(String[]::new);
     }
 
     public Map<String, Object> getVariables() {

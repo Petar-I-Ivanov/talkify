@@ -51,7 +51,7 @@ public class ChannelApi {
   @ChannelCreateOrUpdate
   @GetMapping("/exists/name")
   @ResponseStatus(OK)
-  public boolean existsByName(UniqueValueRequest request) {
+  public boolean existsByName(@Valid UniqueValueRequest request) {
     return channelService.isNameExists(request);
   }
 

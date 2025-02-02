@@ -60,14 +60,14 @@ public class UserApi {
   @PublicAccess
   @GetMapping("/exists/username")
   @ResponseStatus(OK)
-  public boolean existsByName(UniqueValueRequest request) {
+  public boolean existsByName(@Valid UniqueValueRequest request) {
     return userService.isUsernameExists(request);
   }
 
   @PublicAccess
   @GetMapping("/exists/email")
   @ResponseStatus(OK)
-  public boolean existsByEmail(UniqueValueRequest request) {
+  public boolean existsByEmail(@Valid UniqueValueRequest request) {
     return userService.isEmailExists(request);
   }
 

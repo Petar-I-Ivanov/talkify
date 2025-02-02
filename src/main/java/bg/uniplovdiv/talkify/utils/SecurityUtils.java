@@ -1,15 +1,16 @@
 package bg.uniplovdiv.talkify.utils;
 
+import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.NOT_PERMITTED_EXC;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 import bg.uniplovdiv.talkify.auth.user.model.User;
+import bg.uniplovdiv.talkify.common.models.CustomAccessDenyException;
 import bg.uniplovdiv.talkify.security.CustomUserDetails;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 import lombok.NoArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -80,7 +81,7 @@ public class SecurityUtils {
 
   public static final void throwIfNotAllowed(boolean isAllowed) {
     if (!isAllowed) {
-      throw new AccessDeniedException("User is not allowed to execute the operation!");
+      throw new CustomAccessDenyException(NOT_PERMITTED_EXC);
     }
   }
 

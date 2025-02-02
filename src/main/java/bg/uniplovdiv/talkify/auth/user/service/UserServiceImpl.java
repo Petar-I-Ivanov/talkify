@@ -7,6 +7,9 @@ import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.revalidateUser;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
+import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.EMAIL_TAKEN_EXC;
+import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.PASS_MISMATCH_EXC;
+import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.USERNAME_TAKEN_EXC;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_CREATE;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_DELETE;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.USER_UPDATE;
@@ -58,11 +61,9 @@ public class UserServiceImpl implements UserService {
   @Override
   public User register(UserCreateRequest request) {
     throwIfCondition(
-        isUsernameExists(new UniqueValueRequest(request.username(), null)), "Username is taken.");
-    throwIfCondition(
-        isEmailExists(new UniqueValueRequest(request.email(), null)), "Email is taken.");
-    throwIfCondition(
-        !request.password().matches(request.confirmPassword()), "Passwords doesn't match.");
+        isUsernameExists(new UniqueValueRequest(request.username(), null)), USERNAME_TAKEN_EXC);
+    throwIfCondition(isEmailExists(new UniqueValueRequest(request.email(), null)), EMAIL_TAKEN_EXC);
+    throwIfCondition(!request.password().matches(request.confirmPassword()), PASS_MISMATCH_EXC);
 
     var userRole = roleService.getUserRole();
     var encodedPass = passwordEncoder.encode(request.password());
@@ -136,8 +137,8 @@ public class UserServiceImpl implements UserService {
     throwIfNotAllowed(canUpdate(user));
 
     throwIfCondition(
-        isUsernameExists(new UniqueValueRequest(request.username(), id)), "Username is taken.");
-    throwIfCondition(isEmailExists(new UniqueValueRequest(request.email(), id)), "Email is taken.");
+        isUsernameExists(new UniqueValueRequest(request.username(), id)), USERNAME_TAKEN_EXC);
+    throwIfCondition(isEmailExists(new UniqueValueRequest(request.email(), id)), EMAIL_TAKEN_EXC);
 
     user.setUsername(request.username());
     user.setEmail(request.email());

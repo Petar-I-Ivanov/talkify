@@ -10,6 +10,8 @@ import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.CHANGE_NA
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.DELETE_CHANNEL;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.MAKE_ADMIN;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.REMOVE_GUEST;
+import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.NAME_TAKEN_EXC;
+import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.USER_ALREADY_IN_CHANNEL_EXC;
 import static bg.uniplovdiv.talkify.utils.constants.Permissions.CHANNEL_CREATE;
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
@@ -49,7 +51,7 @@ public class ChannelServiceImpl implements ChannelService {
   @Override
   public Channel create(ChannelCreateUpdateRequest request) {
     throwIfNotAllowed(canCreate());
-    throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), null)), "Name is taken.");
+    throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), null)), NAME_TAKEN_EXC);
 
     var owner = userService.getCurrentUser();
     owner.getRoles().add(roleService.getChannelOwenrRole());
@@ -106,8 +108,7 @@ public class ChannelServiceImpl implements ChannelService {
   public void addMember(Long channelId, AddChannelGuestRequest request) {
     var channel = getById(channelId);
     throwIfNotAllowed(canAddMember(channel));
-    throwIfCondition(
-        channel.isUserAlreadyInChannel(request.userId()), "User is already part of the channel!");
+    throwIfCondition(channel.isUserAlreadyInChannel(request.userId()), USER_ALREADY_IN_CHANNEL_EXC);
     var user = userService.getById(request.userId());
     channel.getGuests().add(user);
     channelRepository.save(channel);
@@ -168,7 +169,7 @@ public class ChannelServiceImpl implements ChannelService {
   public Channel update(Long id, ChannelCreateUpdateRequest request) {
     var channel = getById(id);
     throwIfNotAllowed(canUpdate(channel));
-    throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), id)), "Name is taken.");
+    throwIfCondition(isNameExists(new UniqueValueRequest(request.name(), id)), NAME_TAKEN_EXC);
     channel.setName(request.name());
     return channelRepository.save(channel);
   }

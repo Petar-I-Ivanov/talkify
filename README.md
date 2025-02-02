@@ -4,7 +4,7 @@
 
 ## ✨ Features
 
-### 📌 Backend (Spring Boot 3.4)
+### 📌 Backend (Spring Boot 3.4, Java 23)
 - **Spring Security** – Authentication and authorization for secure communication.  
 - **QueryDSL** – Type-safe query generation for better database interactions.  
 - **HATEOAS** – Hypermedia-driven REST API design.  
@@ -27,8 +27,7 @@
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Java 23  
-- Node.js & npm  
+- Node.js & yarn  
 - Maven  
 
 ### Build Full Application

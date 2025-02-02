@@ -51,6 +51,24 @@ spring:
       hibernate.jdbc.batch_size: 1000
       hibernate.id.db_structure_naming_strategy: single
 
+  messages:
+    basename: i18n/messages
+
+  mail:
+    username: noreply-talkify@gmail.com
+    password: changeme
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail.debug: false
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.connectiontimeout: 10000
+      mail.smtp.timeout: 10000
+      mail.smtp.writetimeout: 10000
+      mail.transport.protocol: smtps
+  
+
   h2.console:
     enabled: true
     path: /h2-console
@@ -65,6 +83,12 @@ springdoc:
 
 application:
   encoded-id-key: FA1234BC5678DE90A1B2C3D4E5F60789
+  mail:
+    enabled: false
+    rewrite-send-to:
+    bcc:
+    sender-name: Talkify <noreply-talkify@gmail.com>
+  
 
 #logging:
 #  level:

@@ -27,6 +27,7 @@
 ## 🚀 Getting Started
 
 ### Prerequisites
+- Java 23  
 - Node.js & yarn  
 - Maven  
 

@@ -25,7 +25,7 @@ public class MailServiceImpl implements MailService {
   static final String TALKIFY = "Talkify";
 
   ApplicationProperties properties;
-  MailSender mailSender;
+  CustomMailSender mailSender;
 
   @Async
   @Override

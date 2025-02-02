@@ -68,7 +68,7 @@ spring:
       mail.smtp.connectiontimeout: 10000
       mail.smtp.timeout: 10000
       mail.smtp.writetimeout: 10000
-      mail.transport.protocol: smtps
+      mail.transport.protocol: smtp
   
 
   h2.console:

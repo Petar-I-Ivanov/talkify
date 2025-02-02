@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @Slf4j
-public class MailSender {
+public class CustomMailSender {
 
   ApplicationProperties applicationProperties;
   MessageSource messageSource;

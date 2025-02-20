@@ -7,7 +7,7 @@ import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.INVALID_CH
 import static bg.uniplovdiv.talkify.utils.constants.Regex.VAL_AFTER_LAST_SLASH_PTRN;
 import static org.springframework.messaging.simp.stomp.StompCommand.SUBSCRIBE;
 
-import bg.uniplovdiv.talkify.common.models.CustomAccessDenyException;
+import bg.uniplovdiv.talkify.common.exception.model.CustomAccessDenyException;
 import bg.uniplovdiv.talkify.utils.EncodedIdUtil;
 import java.util.Optional;
 import org.springframework.messaging.Message;

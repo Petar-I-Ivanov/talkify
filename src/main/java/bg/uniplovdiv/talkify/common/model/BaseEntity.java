@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.common.models;
+package bg.uniplovdiv.talkify.common.model;
 
 import static lombok.AccessLevel.PROTECTED;
 

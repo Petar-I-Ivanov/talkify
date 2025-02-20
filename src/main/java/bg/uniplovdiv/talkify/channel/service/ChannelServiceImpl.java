@@ -1,7 +1,7 @@
 package bg.uniplovdiv.talkify.channel.service;
 
 import static bg.uniplovdiv.talkify.channel.model.ChannelPredicates.buildPredicates;
-import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwIfCondition;
+import static bg.uniplovdiv.talkify.common.exception.model.DataValidationException.throwIfCondition;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.revalidateUser;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.throwIfNotAllowed;
@@ -24,7 +24,7 @@ import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelRepository;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
-import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
+import bg.uniplovdiv.talkify.common.model.UniqueValueRequest;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

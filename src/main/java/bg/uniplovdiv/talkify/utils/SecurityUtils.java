@@ -5,7 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 import bg.uniplovdiv.talkify.auth.user.model.User;
-import bg.uniplovdiv.talkify.common.models.CustomAccessDenyException;
+import bg.uniplovdiv.talkify.common.exception.model.CustomAccessDenyException;
 import bg.uniplovdiv.talkify.security.CustomUserDetails;
 import java.util.Collection;
 import java.util.Optional;

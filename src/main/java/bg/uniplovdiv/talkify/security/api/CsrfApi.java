@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.security;
+package bg.uniplovdiv.talkify.security.api;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;

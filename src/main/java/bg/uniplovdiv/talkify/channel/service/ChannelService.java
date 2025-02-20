@@ -5,7 +5,7 @@ import bg.uniplovdiv.talkify.channel.members.model.AddChannelGuestRequest;
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
-import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
+import bg.uniplovdiv.talkify.common.model.UniqueValueRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.common.advicer;
+package bg.uniplovdiv.talkify.common.exception;
 
 import static bg.uniplovdiv.talkify.utils.constants.LocalizedMessages.NOT_FOUND_EXC;
 import static lombok.AccessLevel.PRIVATE;
@@ -6,9 +6,9 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import bg.uniplovdiv.talkify.common.models.CustomAccessDenyException;
-import bg.uniplovdiv.talkify.common.models.DataValidationException;
-import bg.uniplovdiv.talkify.common.models.ErrorResponse;
+import bg.uniplovdiv.talkify.common.exception.model.CustomAccessDenyException;
+import bg.uniplovdiv.talkify.common.exception.model.DataValidationException;
+import bg.uniplovdiv.talkify.common.exception.model.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;

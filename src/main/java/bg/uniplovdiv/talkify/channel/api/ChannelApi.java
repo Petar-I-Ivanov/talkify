@@ -9,7 +9,7 @@ import bg.uniplovdiv.talkify.channel.model.ChannelCreateUpdateRequest;
 import bg.uniplovdiv.talkify.channel.model.ChannelSearchCriteria;
 import bg.uniplovdiv.talkify.channel.service.ChannelService;
 import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
-import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
+import bg.uniplovdiv.talkify.common.model.UniqueValueRequest;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelCreate;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelCreateOrUpdate;
 import bg.uniplovdiv.talkify.security.annotations.permissions.channel.ChannelDelete;

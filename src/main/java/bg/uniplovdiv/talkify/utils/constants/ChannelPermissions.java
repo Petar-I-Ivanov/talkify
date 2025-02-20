@@ -4,13 +4,14 @@ import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.channel.model.Channel;
 import java.util.Optional;
+import java.util.Set;
 import lombok.NoArgsConstructor;
 
-// ugly af, do something...
 @NoArgsConstructor(access = PRIVATE)
 public class ChannelPermissions {
 
-  public static final String ALL = "*";
+  private static final String ALL = "*";
+
   public static final String SEND_MESSAGE = "sendMessage";
   public static final String CHANGE_NAME = "changeName";
   public static final String ADD_GUEST = "addGuest";
@@ -19,37 +20,41 @@ public class ChannelPermissions {
   public static final String DELETE_CHANNEL = "deleteChannel";
 
   public static final String buildOwnedChannelPermissions(Channel channel) {
-    var ownerPermissions = getJoinedOwnerPermissions();
+    var ownerPermissions = getOwnerPermissions();
     return buildChannelPermissions(channel, ownerPermissions);
   }
 
   public static final String buildAdminChannelPermissions(Channel channel) {
-    var adminPermissions = getJoinedAdminPermissions();
+    var adminPermissions = getAdminPermissions();
     return buildChannelPermissions(channel, adminPermissions);
   }
 
   public static final String buildGuestChannelPermissions(Channel channel) {
-    var guestPermissions = getJoinedGuestPermissions();
+    var guestPermissions = getGuestPermissions();
     return buildChannelPermissions(channel, guestPermissions);
   }
 
-  private static String getJoinedGuestPermissions() {
-    return SEND_MESSAGE;
+  private static Set<String> getGuestPermissions() {
+    return Set.of(SEND_MESSAGE);
   }
 
-  private static String getJoinedAdminPermissions() {
-    return String.join(",", getJoinedGuestPermissions(), CHANGE_NAME, ADD_GUEST);
+  private static Set<String> getAdminPermissions() {
+    return Set.of(SEND_MESSAGE, CHANGE_NAME, ADD_GUEST);
   }
 
-  private static String getJoinedOwnerPermissions() {
-    return ALL;
+  private static Set<String> getOwnerPermissions() {
+    return Set.of(ALL);
   }
 
-  private static String buildChannelPermissions(Channel channel, String joinedPermissions) {
+  private static String buildChannelPermissions(Channel channel, Set<String> permissions) {
     return Optional.ofNullable(channel)
         .map(Channel::getId)
         .map(String::valueOf)
-        .map(id -> id + ":" + joinedPermissions)
+        .map(id -> id + ":" + joinPermissions(permissions))
         .orElse(null);
+  }
+
+  private static String joinPermissions(Set<String> permission) {
+    return Optional.ofNullable(permission).map(p -> String.join(",", p)).orElse("");
   }
 }

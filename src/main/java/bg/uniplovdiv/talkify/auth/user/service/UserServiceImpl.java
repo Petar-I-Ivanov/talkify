@@ -1,7 +1,7 @@
 package bg.uniplovdiv.talkify.auth.user.service;
 
 import static bg.uniplovdiv.talkify.auth.user.model.UserPredicates.buildPredicates;
-import static bg.uniplovdiv.talkify.common.models.DataValidationException.throwIfCondition;
+import static bg.uniplovdiv.talkify.common.exception.model.DataValidationException.throwIfCondition;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchPrincipal;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.fetchUserId;
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
@@ -22,8 +22,8 @@ import bg.uniplovdiv.talkify.auth.user.model.UserCreateRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserRepository;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
-import bg.uniplovdiv.talkify.common.mail.MailService;
-import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
+import bg.uniplovdiv.talkify.common.mail.service.MailService;
+import bg.uniplovdiv.talkify.common.model.UniqueValueRequest;
 import bg.uniplovdiv.talkify.friendship.service.FriendshipService;
 import jakarta.transaction.Transactional;
 import java.util.Optional;

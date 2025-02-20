@@ -4,7 +4,7 @@ import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.auth.user.model.UserCreateRequest;
 import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
-import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
+import bg.uniplovdiv.talkify.common.model.UniqueValueRequest;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

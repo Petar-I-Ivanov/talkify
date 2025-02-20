@@ -5,7 +5,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import bg.uniplovdiv.talkify.channel.model.Channel;
-import bg.uniplovdiv.talkify.common.models.BaseEntity;
+import bg.uniplovdiv.talkify.common.model.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

@@ -10,7 +10,7 @@ import bg.uniplovdiv.talkify.auth.user.model.UserSearchCriteria;
 import bg.uniplovdiv.talkify.auth.user.model.UserUpdateRequest;
 import bg.uniplovdiv.talkify.auth.user.service.UserService;
 import bg.uniplovdiv.talkify.common.encodedid.EncodedId;
-import bg.uniplovdiv.talkify.common.models.UniqueValueRequest;
+import bg.uniplovdiv.talkify.common.model.UniqueValueRequest;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
 import bg.uniplovdiv.talkify.security.annotations.PublicAccess;
 import bg.uniplovdiv.talkify.security.annotations.permissions.user.UserCreate;

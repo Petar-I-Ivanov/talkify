@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.common.mail;
+package bg.uniplovdiv.talkify.common.mail.service;
 
 import bg.uniplovdiv.talkify.auth.user.model.User;
 import java.util.concurrent.Future;

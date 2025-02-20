@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.common.mail;
+package bg.uniplovdiv.talkify.common.mail.service;
 
 import static bg.uniplovdiv.talkify.common.mail.model.MailPropsBuilder.mailPropsBuilder;
 import static bg.uniplovdiv.talkify.common.mail.model.MailVariable.*;

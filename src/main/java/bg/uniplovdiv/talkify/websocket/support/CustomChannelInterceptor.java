@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.websocket;
+package bg.uniplovdiv.talkify.websocket.support;
 
 import static bg.uniplovdiv.talkify.utils.SecurityUtils.isPermitted;
 import static bg.uniplovdiv.talkify.utils.constants.ChannelPermissions.SEND_MESSAGE;

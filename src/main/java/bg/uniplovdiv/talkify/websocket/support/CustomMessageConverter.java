@@ -1,4 +1,4 @@
-package bg.uniplovdiv.talkify.websocket;
+package bg.uniplovdiv.talkify.websocket.support;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;

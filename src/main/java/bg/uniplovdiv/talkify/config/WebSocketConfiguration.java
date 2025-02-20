@@ -2,8 +2,8 @@ package bg.uniplovdiv.talkify.config;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import bg.uniplovdiv.talkify.websocket.CustomChannelInterceptor;
-import bg.uniplovdiv.talkify.websocket.CustomMessageConverter;
+import bg.uniplovdiv.talkify.websocket.support.CustomChannelInterceptor;
+import bg.uniplovdiv.talkify.websocket.support.CustomMessageConverter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

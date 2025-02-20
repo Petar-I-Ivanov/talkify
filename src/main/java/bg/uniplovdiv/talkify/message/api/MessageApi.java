@@ -1,6 +1,5 @@
 package bg.uniplovdiv.talkify.message.api;
 
-import static bg.uniplovdiv.talkify.utils.EncodedIdUtil.encode;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -12,13 +11,13 @@ import bg.uniplovdiv.talkify.message.model.MessageSearchCriteria;
 import bg.uniplovdiv.talkify.message.model.MessageUpdateRequest;
 import bg.uniplovdiv.talkify.message.service.MessageService;
 import bg.uniplovdiv.talkify.security.annotations.Authenticated;
+import bg.uniplovdiv.talkify.websocket.service.BroadcastService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,16 +36,14 @@ public class MessageApi {
 
   MessageService messageService;
   MessageModelAssembler messageModelAssembler;
-
-  SimpMessagingTemplate webSocketMessenger;
+  BroadcastService broadcastService;
 
   @Authenticated
   @PostMapping
   @ResponseStatus(CREATED)
   public MessageModel create(@Valid @RequestBody MessageCreateRequest request) {
     var message = messageModelAssembler.toModel(messageService.create(request));
-    webSocketMessenger.convertAndSend(
-        String.format("/topic/chat/%s", encode(request.channelId())), message);
+    broadcastService.notifyAboutNewMessage(request.channelId(), message);
     return message;
   }
 

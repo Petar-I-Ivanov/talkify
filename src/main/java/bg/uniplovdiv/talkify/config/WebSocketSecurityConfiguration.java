@@ -1,5 +1,6 @@
 package bg.uniplovdiv.talkify.config;
 
+import static bg.uniplovdiv.talkify.websocket.model.StompPath.CHANNEL_PATH;
 import static org.springframework.messaging.simp.SimpMessageType.CONNECT;
 import static org.springframework.messaging.simp.SimpMessageType.CONNECT_ACK;
 import static org.springframework.messaging.simp.SimpMessageType.MESSAGE;
@@ -22,7 +23,7 @@ public class WebSocketSecurityConfiguration {
     return messages
         .nullDestMatcher()
         .authenticated()
-        .simpSubscribeDestMatchers("/topic/chat/*")
+        .simpSubscribeDestMatchers(CHANNEL_PATH.getPathAsMatcher())
         .authenticated()
         .simpDestMatchers("/app/**")
         .hasRole("USER")

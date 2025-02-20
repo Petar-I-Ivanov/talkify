@@ -2,7 +2,6 @@ package bg.uniplovdiv.talkify.config;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import bg.uniplovdiv.talkify.common.encodedid.EncodedIdService;
 import bg.uniplovdiv.talkify.websocket.CustomChannelInterceptor;
 import bg.uniplovdiv.talkify.websocket.CustomMessageConverter;
 import java.util.List;
@@ -24,7 +23,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
-  EncodedIdService encodedIdService;
   ApplicationProperties properties;
 
   @Override
@@ -46,6 +44,6 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
   @Override
   public void configureClientInboundChannel(ChannelRegistration registration) {
-    registration.interceptors(new CustomChannelInterceptor(encodedIdService));
+    registration.interceptors(new CustomChannelInterceptor());
   }
 }

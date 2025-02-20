@@ -14,7 +14,6 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 public class ApplicationProperties {
 
   String baseUrl;
-  String encodedIdKey;
 
   @NestedConfigurationProperty Headers headers;
   @NestedConfigurationProperty Mail mail;

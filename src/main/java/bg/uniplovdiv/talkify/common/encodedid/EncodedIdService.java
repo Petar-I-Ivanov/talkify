@@ -21,7 +21,14 @@ public interface EncodedIdService {
     return Optional.ofNullable(publicId).map(Long::parseLong).orElse(null);
   }
 
-  static IdMask<Long> buildMask(String key) {
+  static EncodedIdService getInstance(String key) {
+    return Optional.ofNullable(key)
+        .map(EncodedIdService::buildMask)
+        .map(EncodedIdService::buildMaskingInstance)
+        .orElseGet(EncodedIdService::buildNoopInstance);
+  }
+
+  private static IdMask<Long> buildMask(String key) {
     return Optional.ofNullable(key)
         .filter(StringUtils::isNotBlank)
         .map(Bytes::parseHex)
@@ -32,5 +39,23 @@ public interface EncodedIdService {
         .map(Builder::build)
         .map(IdMasks::forLongIds)
         .orElse(null);
+  }
+
+  private static EncodedIdService buildMaskingInstance(IdMask<Long> masker) {
+    return new EncodedIdService() {
+
+      @Override
+      public String encode(Long internalId) {
+        return Optional.ofNullable(internalId).map(masker::mask).orElse(null);
+      }
+
+      public Long decode(String publicId) {
+        return Optional.ofNullable(publicId).map(masker::unmask).orElse(null);
+      }
+    };
+  }
+
+  private static EncodedIdService buildNoopInstance() {
+    return new EncodedIdService() {};
   }
 }

@@ -5,8 +5,6 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
-import bg.uniplovdiv.talkify.config.ApplicationProperties.Headers;
-import java.util.Optional;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,16 +53,7 @@ public class SecurityConfiguration {
       AuthenticationProvider authenticationProvider)
       throws Exception {
     return http.csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
-        .headers(
-            headers ->
-                headers
-                    .frameOptions(FrameOptionsConfig::deny)
-                    .contentSecurityPolicy(
-                        csp ->
-                            Optional.ofNullable(properties.getHeaders())
-                                .map(Headers::getContentSecurityPolicy)
-                                .map(csp::policyDirectives)
-                                .orElse(csp)))
+        .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
         .requestCache(withDefaults())
         .cors(CorsConfigurer::disable)
         .authorizeHttpRequests(
